@@ -4,6 +4,8 @@ import {
 } from 'formik';
 import { useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { validationScheme } from '../../../utils/validators';
 import styles from './newSurveyCreating.module.css';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
@@ -11,16 +13,19 @@ import { ButtonWhite } from '../../atoms/ButtonWhite/ButtonWhite';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import { Loader } from '../../Loader/Loader';
+import { getAccessTokenSelector } from '../../../redux/slices/userSlice';
+import surveyImage from '../../../images/survey_orange.png';
 
 export function NewSurveyCreating() {
   // eslint-disable-next-line max-len
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wbGUxQGdtYWlsLmNvbSIsImlkIjoiMDliZjZjMzYtOWM5My00YmE5LWI1YWUtYWEzNTNlMDgyODI1IiwiaWF0IjoxNjc4ODAyNTk0LCJleHAiOjE2Nzg4MDg1OTR9.V8-7N-GZvwuUOwzUu96y5IgBnHWhUdwQP8R5pDtNVHE';
+  const token = useSelector(getAccessTokenSelector);
   const optionsGroup = {
     optionTitle: '',
     activeLink: '',
   };
   const [selectedFile, setSelectedFile] = useState('');
   const [imageContent, setImageContent] = useState([]);
+  const [newSurveyLink, setNewSurveyLink] = useState();
   const [imageLinkValues, setImageLinkValues] = useState([]);
   const filePicker = useRef();
   const formData = new FormData();
@@ -29,7 +34,7 @@ export function NewSurveyCreating() {
   } = useMutation({
     mutationFn: (preparedValues) => teamProjectApi.addNewSurvey(preparedValues, token)
       .then((result) => {
-        console.log(result.surveyId);
+        setNewSurveyLink(`/surveys/${result.surveyId}`);
       }),
   });
   const {
@@ -145,6 +150,20 @@ export function NewSurveyCreating() {
     return (
       <MainWrap>
         <div className={styles.message}>{errorUpload.message}</div>
+      </MainWrap>
+    );
+  }
+  if (newSurveyLink) {
+    return (
+      <MainWrap>
+        <Link to={newSurveyLink}>
+          <div className={styles.message}>
+            Готово! Перейти к новому опросу.
+          </div>
+        </Link>
+        <div className={styles.surveyImage}>
+          <img src={surveyImage} alt="изображение" />
+        </div>
       </MainWrap>
     );
   }
@@ -315,7 +334,7 @@ export function NewSurveyCreating() {
                           {!isLoadingImage && !isLoadingUpload && (
                             <img
                               src={imageContent[index] || ''}
-                              alt="изображение"
+                              alt="добавьте изображение"
                             />
                           )}
                         </div>
@@ -333,13 +352,13 @@ export function NewSurveyCreating() {
                         )}
                       </div>
                     ))}
-                    <ButtonWhite
+                    <ButtonPurple
                       type="button"
                       // className={styles.buttonAddOption}
                       onClick={() => push(optionsGroup)}
                     >
                       Добавить вариант ответа
-                    </ButtonWhite>
+                    </ButtonPurple>
                   </div>
                 )}
               </FieldArray>

@@ -149,7 +149,6 @@ class TeamProjectApi {
 
   async addNewSurvey(values, token) {
     this.checkToken(token);
-    
     const res = await fetch(`${this.baseUrl}/surveys`, {
       method: 'POST',
       headers: {

@@ -143,3 +143,24 @@ input[type='checkbox'] + label {
 button {
   width: fit-content;
 }
+
+.linkError {
+  color: crimson;
+}
+
+.link {
+  color: rgb(255, 175, 56);
+}
+
+.link:hover,
+.linkError:hover {
+  color: rgb(74, 67, 121);
+}
+
+.surveyImage {
+  margin-left: 40px;
+}
+
+.surveyImage img {
+  width: 200px;
+}
