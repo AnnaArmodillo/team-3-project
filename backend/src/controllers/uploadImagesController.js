@@ -38,8 +38,6 @@ async function uploadFile(req, res) {
 }
 
 async function getUploadedFile(req, res) {
-  try {
-    const filename = req.params.filename;
     try {
         const filename = req.params.filename;
         res.sendFile(path.resolve(uploadFolderPath, filename));
