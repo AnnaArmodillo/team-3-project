@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const uploadFolderPath = __dirname.slice(0, (__dirname.indexOf('src') - 1)) + '/uploads/'
 
 async function uploadFile(req, res) {
     try {
@@ -18,7 +19,7 @@ async function uploadFile(req, res) {
         const md5ImageName = getMd5ImageName(image)
         try {
           // Перемещаем загруженный файл в нашу папку upload под новым именем, соответствующим его md5 подписи, но с прежним расширением
-          image.mv(__dirname + '../../uploads/' + md5ImageName);
+          image.mv(uploadFolderPath + md5ImageName);
           // Все прошло успешно высылаем новое имя файла
         res.status(201).send(JSON.stringify(md5ImageName));
         } catch (error) {
@@ -35,7 +36,7 @@ async function uploadFile(req, res) {
 async function getUploadedFile(req, res) {
     try {
         const filename = req.params.filename;
-        res.sendFile(path.resolve(__dirname, '../uploads', filename));
+        res.sendFile(path.resolve(uploadFolderPath, filename));
       } catch (error) {
         return res.status(404).json('Файл с таким именем не найден')
       }
