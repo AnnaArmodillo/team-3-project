@@ -29,7 +29,7 @@ export const signInFormValidationSchema = Yup.object({
     .required('Не заполнено обязательное поле "Пароль"'),
 });
 
-export const validationScheme = Yup.object({
+export const newSurveyValidationScheme = Yup.object({
   surveyTitle: Yup.string()
     .min(2, 'Заголовок должен состоять минимум из двух символов')
     .max(100, 'Заголовок должен содержать не более 100 символов')
@@ -42,10 +42,12 @@ export const validationScheme = Yup.object({
         'Заголовок ответа является обязательным полем',
       )
         .test('not empty', (value) => value !== ''),
-      linkurl: Yup.string().url(
-        'Необходимо указать корректную ссылку на изображение',
-      ),
       activeLink: Yup.string().url('Необходимо указать корректную ссылку для просмотра'),
     }),
   ),
+});
+
+export const takeSurveyValidationScheme = Yup.object({
+  checked: Yup.string()
+    .required('Ответ не выбран'),
 });

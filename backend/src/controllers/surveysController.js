@@ -78,7 +78,14 @@ function takeSurveyById(req, res) {
       const currentSurvey = DB.surveys.find(
         (survey) => survey.surveyId === surveyId
       );
-      if (currentSurvey.done.includes(userID)) {
+      if (
+        currentSurvey.done.includes(userID) ||
+        (typeof currentSurvey.options[0].checked === 'string'
+          ? currentSurvey.options.some((option) => option.checked === userID)
+          : currentSurvey.options.some((option) => {
+              option.checked.includes(userID);
+            }))
+      ) {
         return res.status(409).json('Вы уже проголосовали в этом опросе');
       }
       if (currentSurvey.surveyType === 'UC') {

@@ -1,4 +1,31 @@
-.uniqueChoiceSurveyPage {
-  background-color: #ddd;
-  min-height: calc(100vh - 150px);
+.surveyPage {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.optionsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.validationMessage {
+  color: red;
+  font-size: 20px;
+  margin-top: 12px;
+}
+
+.message {
+  text-align: center;
+  font-size: 40px;
+  margin: 40px 0 0 40px;
 }

@@ -16,6 +16,12 @@ import { Contacts } from './components/pages/ContactsPage/Contacts';
 import { Secret } from './components/pages/SecretPage/SecretPage';
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 import { SurveyPage } from './components/pages/surveyPage/surveyPage';
+import { SingleChoiceSurveyPage }
+  from './components/pages/SingleChoiceSurveyPage/SingleChoiceSurveyPage';
+import { MultipleChoiceSurveyPage }
+  from './components/pages/MultipleChoiceSurveyPage/MultipleChoiceSurveyPage';
+import { UniqueChoiceSurveyPage }
+  from './components/pages/UniqueChoiceSurveyPage/UniqueChoiceSurveyPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -58,6 +64,30 @@ const Router = createBrowserRouter([
       {
         path: 'mysurveys',
         element: <MySurveys />,
+      },
+      {
+        path: '/surveys/sc/:surveyId',
+        element: (
+          <PrivateRoute>
+            <SingleChoiceSurveyPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/surveys/mc/:surveyId',
+        element: (
+          <PrivateRoute>
+            <MultipleChoiceSurveyPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/surveys/uc/:surveyId',
+        element: (
+          <PrivateRoute>
+            <UniqueChoiceSurveyPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'surveys/:surveyId',

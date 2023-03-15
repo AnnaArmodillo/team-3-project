@@ -217,7 +217,7 @@ class TeamProjectApi {
       throw new Error('Вы уже проголосовали в этом опросе');
     }
     if (res.status === 404) {
-      throw new Error('Такого варианта ответа не существует');
+      throw new Error('Такого варианта ответа не существует или опрос не найден');
     }
     if (res.status >= 400 && res.status < 500) {
       throw new Error(`Произошла ошибка при голосовании. 
@@ -299,11 +299,11 @@ class TeamProjectApi {
       throw new Error('Необходимо авторизоваться');
     }
     if (res.status >= 400 && res.status < 500) {
-      throw new Error(`Произошла ошибка при добавлении опроса. 
+      throw new Error(`Произошла ошибка при загрузке изображения. 
         Проверьте отправляемые данные. Status: ${res.status}`);
     }
     if (res.status >= 500) {
-      throw new Error(`Произошла ошибка при добавлении опроса. 
+      throw new Error(`Произошла ошибка при загрузке изображения. 
         Попробуйте сделать запрос позже. Status: ${res.status}`);
     }
 
