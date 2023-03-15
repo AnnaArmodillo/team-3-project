@@ -6,7 +6,7 @@ import { useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { validationScheme } from '../../../utils/validators';
+import { newSurveyValidationScheme } from '../../../utils/validators';
 import styles from './newSurveyCreating.module.css';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { ButtonWhite } from '../../atoms/ButtonWhite/ButtonWhite';
@@ -25,8 +25,8 @@ export function NewSurveyCreating() {
   };
   const [selectedFile, setSelectedFile] = useState('');
   const [imageContent, setImageContent] = useState([]);
-  const [newSurveyLink, setNewSurveyLink] = useState();
   const [imageLinkValues, setImageLinkValues] = useState([]);
+  const [surveyId, setSurveyID] = useState();
   const filePicker = useRef();
   const formData = new FormData();
   const {
@@ -34,9 +34,27 @@ export function NewSurveyCreating() {
   } = useMutation({
     mutationFn: (preparedValues) => teamProjectApi.addNewSurvey(preparedValues, token)
       .then((result) => {
-        setNewSurveyLink(`/surveys/${result.surveyId}`);
+        setSurveyID(result.surveyId);
       }),
   });
+  function getRoute() {
+    let route = '';
+    switch (surveyId.slice(0, 2)) {
+      case 'SC':
+        route = 'sc';
+        break;
+      case 'MC':
+        route = 'mc';
+        break;
+      case 'UC':
+        route = 'uc';
+        break;
+
+      default:
+        break;
+    }
+    return route;
+  }
   const {
     mutateAsync: mutateAsyncUpload,
     isError: isErrorUpload,
@@ -135,34 +153,21 @@ export function NewSurveyCreating() {
   if (isError) {
     return (
       <MainWrap>
-        <div className={styles.message}>{error.message}</div>
+        <div className={styles.errorMessage}>{error.message}</div>
       </MainWrap>
     );
   }
-  if (isErrorImage) {
+  if (surveyId) {
     return (
       <MainWrap>
-        <div className={styles.message}>{errorImage.message}</div>
-      </MainWrap>
-    );
-  }
-  if (isErrorUpload) {
-    return (
-      <MainWrap>
-        <div className={styles.message}>{errorUpload.message}</div>
-      </MainWrap>
-    );
-  }
-  if (newSurveyLink) {
-    return (
-      <MainWrap>
-        <Link to={newSurveyLink}>
-          <div className={styles.message}>
-            Готово! Перейти к новому опросу.
-          </div>
+        <Link to={`/surveys/${getRoute()}/${surveyId}`}>
+          <div className={styles.successMessage}>Готово! Перейти к новому опросу.</div>
         </Link>
         <div className={styles.surveyImage}>
-          <img src={surveyImage} alt="изображение" />
+          <img
+            src={surveyImage}
+            alt="изображение"
+          />
         </div>
       </MainWrap>
     );
@@ -178,7 +183,7 @@ export function NewSurveyCreating() {
             options: [optionsGroup],
             allowExtraOption: false,
           }}
-          validationSchema={validationScheme}
+          validationSchema={newSurveyValidationScheme}
           onSubmit={async (values) => {
             valuesPrepareHandler(values);
           }}
@@ -192,7 +197,7 @@ export function NewSurveyCreating() {
                 placeholder="заголовок опроса"
               />
               <ErrorMessage
-                className={styles.errorMessage}
+                className={styles.validationMessage}
                 name="surveyTitle"
                 component="div"
               />
@@ -254,7 +259,7 @@ export function NewSurveyCreating() {
                 </label>
               </div>
               <ErrorMessage
-                className={styles.errorMessage}
+                className={styles.validationMessage}
                 name="surveyType"
                 component="div"
               />
@@ -274,7 +279,7 @@ export function NewSurveyCreating() {
                             placeholder="вариант ответа"
                           />
                           <ErrorMessage
-                            className={styles.errorMessage}
+                            className={styles.validationMessage}
                             name={`options.${index}.optionTitle`}
                             component="div"
                           />
@@ -284,7 +289,7 @@ export function NewSurveyCreating() {
                             placeholder="ссылка для просмотра"
                           />
                           <ErrorMessage
-                            className={styles.errorMessage}
+                            className={styles.validationMessage}
                             name={`options.${index}.activeLink`}
                             component="div"
                           />
@@ -295,7 +300,7 @@ export function NewSurveyCreating() {
                             value={imageLinkValues[index] || ''}
                           />
                           <ErrorMessage
-                            className={styles.errorMessage}
+                            className={styles.validationMessage}
                             name={`options.${index}.linkurl`}
                             component="div"
                           />
@@ -320,6 +325,12 @@ export function NewSurveyCreating() {
                           onClick={handlePick}
                           title="загрузить файл"
                         >
+                          {(isErrorUpload || isErrorImage)
+                            && (!isLoadingUpload && !isLoadingImage) && (
+                              <div className={styles.messageImage}>
+                                {errorUpload?.message || errorImage?.message}
+                              </div>
+                          )}
                           {(isLoadingImage || isLoadingUpload) && <Loader />}
                           {imageContent[index] && (
                             <button
@@ -331,11 +342,14 @@ export function NewSurveyCreating() {
                               <i className="fa-solid fa-xmark" />
                             </button>
                           )}
-                          {!isLoadingImage && !isLoadingUpload && (
-                            <img
-                              src={imageContent[index] || ''}
-                              alt="добавьте изображение"
-                            />
+                          {!isLoadingImage
+                            && !isLoadingUpload
+                            && !isErrorImage
+                            && !isErrorUpload && (
+                              <img
+                                src={imageContent[index] || ''}
+                                alt="добавьте изображение"
+                              />
                           )}
                         </div>
                         {index > 0 && (

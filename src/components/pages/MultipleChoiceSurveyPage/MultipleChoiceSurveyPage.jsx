@@ -1,9 +1,12 @@
+import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './multipleChoiceSurvey.module.css';
 
-export function MultipleChoiceSurvey() {
+export function MultipleChoiceSurveyPage() {
   return (
-    <div className={styles.multipleChoiceSurveyPage}>
-      <h1>Multiple Choice Survey page</h1>
-    </div>
+    <MainWrap>
+      <div className={styles.multipleChoiceSurveyPage}>
+        <h1>Multiple Choice Survey page</h1>
+      </div>
+    </MainWrap>
   );
 }
