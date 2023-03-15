@@ -45,7 +45,11 @@ const Router = createBrowserRouter([
       },
       {
         path: 'creating',
-        element: <NewSurveyCreating />,
+        element: (
+          <PrivateRoute>
+            <NewSurveyCreating />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'profile',
