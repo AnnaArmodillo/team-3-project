@@ -1,4 +1,5 @@
 .profilePage {
   background-color: #ddd;
   min-height: calc(100vh - 150px);
+  text-align: center;
 }
