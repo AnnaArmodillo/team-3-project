@@ -5,24 +5,24 @@ import { useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
 import { withQuery } from '../../HOCs/withQuery';
-// import styles from './mySurveys.module.css';
+import styles from './mySurveys.module.css';
 import { SurveyItem } from './SurveyItem';
 
 function MySurveysInner({ data }) {
-  if (!data.length) return <h1>Ничего не найдено...</h1>;
+  if (!data.length) return <h1>Опросов не найдено...</h1>;
 
   return (
-    <>
+    <div className={styles.mySurveysPage}>
       <h1>Мои опросы</h1>
-      <div>
+      <ul>
         {data.map((survey) => (
           <SurveyItem
             key={survey.surveyId}
             survey={survey}
           />
         ))}
-      </div>
-    </>
+      </ul>
+    </div>
   );
 }
 
