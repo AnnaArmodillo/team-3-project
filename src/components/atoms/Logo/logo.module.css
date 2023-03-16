@@ -1,5 +1,5 @@
 .containerLogo {
-    height: 100%;
+    height: max-content;
     display: flex;
     gap: 5px;
     align-items: center;
@@ -8,4 +8,8 @@
 
 .containerLogo img {
     height: 40px;
+}
+
+.containerLogo h2 {
+    margin: 0;
 }
