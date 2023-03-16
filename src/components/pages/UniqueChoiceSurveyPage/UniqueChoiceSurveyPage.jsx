@@ -100,7 +100,7 @@ export function UniqueChoiceSurveyPage() {
                 </div>
                 <ErrorMessage
                   className={styles.validationMessage}
-                  name="option"
+                  name="checked"
                   component="div"
                 />
                 <ButtonPurple

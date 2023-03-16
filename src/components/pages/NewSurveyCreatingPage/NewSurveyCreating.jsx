@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { newSurveyValidationScheme } from '../../../utils/validators';
 import styles from './newSurveyCreating.module.css';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
@@ -15,6 +16,7 @@ import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import { Loader } from '../../Loader/Loader';
 import { getAccessTokenSelector } from '../../../redux/slices/userSlice';
 import surveyImage from '../../../images/survey_orange.png';
+import { getSurveyURL } from '../../../utils/helper';
 
 export function NewSurveyCreating() {
   // eslint-disable-next-line max-len
@@ -37,24 +39,6 @@ export function NewSurveyCreating() {
         setSurveyID(result.surveyId);
       }),
   });
-  function getRoute() {
-    let route = '';
-    switch (surveyId.slice(0, 2)) {
-      case 'SC':
-        route = 'sc';
-        break;
-      case 'MC':
-        route = 'mc';
-        break;
-      case 'UC':
-        route = 'uc';
-        break;
-
-      default:
-        break;
-    }
-    return route;
-  }
   const {
     mutateAsync: mutateAsyncUpload,
     isError: isErrorUpload,
@@ -160,8 +144,10 @@ export function NewSurveyCreating() {
   if (surveyId) {
     return (
       <MainWrap>
-        <Link to={`/surveys/${getRoute()}/${surveyId}`}>
-          <div className={styles.successMessage}>Готово! Перейти к новому опросу.</div>
+        <Link to={getSurveyURL(surveyId)}>
+          <div className={styles.successMessage}>
+            Готово! Перейти к новому опросу.
+          </div>
         </Link>
         <div className={styles.surveyImage}>
           <img
@@ -283,11 +269,24 @@ export function NewSurveyCreating() {
                             name={`options.${index}.optionTitle`}
                             component="div"
                           />
-                          <Field
-                            type="text"
-                            name={`options.${index}.activeLink`}
-                            placeholder="ссылка для просмотра"
-                          />
+                          <motion.div
+                            className={styles.motionWrapper}
+                            whileHover={{ scaleX: 0.9, originX: 0 }}
+                          >
+                            <Field
+                              type="text"
+                              name={`options.${index}.activeLink`}
+                              placeholder="ссылка для просмотра"
+                              id="activeLink"
+                              className={styles.activeLink}
+                            />
+                            <motion.div
+                              whileHover={{ opacity: 1 }}
+                              transition={{ duration: 1, delay: 1 }}
+                            >
+                              X
+                            </motion.div>
+                          </motion.div>
                           <ErrorMessage
                             className={styles.validationMessage}
                             name={`options.${index}.activeLink`}
@@ -326,7 +325,8 @@ export function NewSurveyCreating() {
                           title="загрузить файл"
                         >
                           {(isErrorUpload || isErrorImage)
-                            && (!isLoadingUpload && !isLoadingImage) && (
+                            && !isLoadingUpload
+                            && !isLoadingImage && (
                               <div className={styles.messageImage}>
                                 {errorUpload?.message || errorImage?.message}
                               </div>
@@ -376,7 +376,7 @@ export function NewSurveyCreating() {
                   </div>
                 )}
               </FieldArray>
-              <div className={styles.allowExtraOption}>
+              {/* <div className={styles.allowExtraOption}>
                 <Field
                   type="checkbox"
                   name="allowExtraOption"
@@ -385,7 +385,7 @@ export function NewSurveyCreating() {
                 <label htmlFor="allowExtraOption">
                   Разрешить участникам выбор своего варианта
                 </label>
-              </div>
+              </div> */}
               <ButtonPurple
                 type="submit"
                 className={styles.buttonSubmit}

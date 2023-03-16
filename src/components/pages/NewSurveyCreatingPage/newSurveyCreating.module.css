@@ -174,3 +174,13 @@ button {
 .surveyImage img {
   width: 200px;
 }
+
+.activeLink {
+  width: calc(100% - 8px);
+}
+
+.motionWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
