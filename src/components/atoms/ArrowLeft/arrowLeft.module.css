@@ -1,6 +1,6 @@
 .arrowLeft {
     font-size: 20px;
-    color: rgb(159, 159, 159);
+    color: var(--arrow-pale-gray);
     cursor: pointer;
 }
 

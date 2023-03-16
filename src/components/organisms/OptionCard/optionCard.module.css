@@ -1,6 +1,6 @@
 .card {
   display: flex;
-  border: 1px solid grey;
+  border: 1px solid var(--card-grey-color);
   padding: 12px;
   gap: 8px;
   align-items: center;
@@ -31,12 +31,12 @@
 }
 
 .link {
-  color: rgb(255, 175, 56);
+  color: var(--orange-color);
 }
 
 .link:hover,
 .linkError:hover {
-  color: rgb(74, 67, 121);
+  color: var(--text-purple-color);
 }
 
 input[type='radio']:disabled + label {
@@ -49,7 +49,7 @@ input[type='radio'] + label {
 }
 
 .checked {
-  border: 2px solid green;
+  border: 2px solid var(--checked-green-color);
 }
 
 .message {

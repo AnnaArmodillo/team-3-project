@@ -10,11 +10,11 @@ export function Main() {
         <div className={styles.containerLeft}>
           <h1>Создайте опрос в один клик</h1>
           <div className={styles.button}>
-            <ButtonPurple type="button">
-              <Link to="/creating">
+            <Link to="/creating">
+              <ButtonPurple type="button">
                 Новый опрос
-              </Link>
-            </ButtonPurple>
+              </ButtonPurple>
+            </Link>
           </div>
         </div>
         <div className={styles.containerRight}>
