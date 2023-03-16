@@ -1,6 +1,17 @@
+p,
+h1,
+span {
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
 .signupPage {
   background-color: rgba(256, 0, 256, 0.1);
-  min-height: calc(100vh - 150px);
+  min-height: calc(100vh - 280px);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem 2rem;
 }
 
 .linkError {
@@ -14,4 +25,75 @@
 .link:hover,
 .linkError:hover {
   color: rgb(74, 67, 121);
+}
+.signupPageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.alreadyRegistered {
+  color: #555555;
+  font-size: 0.9rem;
+}
+
+.Form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  min-width: 300px;
+  max-width: 880px;
+}
+
+.Form_Group {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: left;
+  gap: 0.2rem;
+  width: 80%
+}
+
+.Form_Field {
+  width: 100%;
+  font-size: 1rem;
+  color: #333;
+  height: 2rem;
+  padding: 0 20px;
+  border-radius: 15px;
+  border: 1px solid #eee;
+  /* outline: 1px solid #555555; */
+}
+
+.Error {
+  color: brown;
+}
+
+.btnWr {
+  display: flex;
+  gap: 2rem;
+}
+
+.Form_Label {
+  position: relative;
+}
+
+.mustHave__description {
+  position: absolute;
+  top: 0;
+  right: -2rem;
+  background-color: white;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  color: #555555;
+  padding: 0.2rem 0.5rem;
+  display: none;
+  transition: opacity .2s, visibility .2s;
+}
+
+.Form_Label:hover .mustHave__description {
+  display: block;
+  opacity: 0.9;
 }
