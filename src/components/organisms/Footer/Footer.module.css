@@ -14,5 +14,5 @@
 }
 
 .footerItem:hover {
-    text-decoration: underline rgb(211, 137, 0);
+    text-decoration: underline var(--orange-color);
 }

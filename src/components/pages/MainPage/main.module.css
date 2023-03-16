@@ -18,7 +18,7 @@
 
 .containerRight {
   border-radius: 50%;
-  background-color: rgb(211, 137, 0);
+  background-color: var(--orange-color);
   position: relative;
   z-index: 0;
 }
