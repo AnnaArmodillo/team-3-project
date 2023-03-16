@@ -13,9 +13,7 @@ import { NewSurveyCreating } from './components/pages/NewSurveyCreatingPage/NewS
 import { Profile } from './components/pages/ProfilePage/ProfilePage';
 import { MySurveys } from './components/pages/MySurveysPage/MySurveysPage';
 import { Contacts } from './components/pages/ContactsPage/Contacts';
-import { Secret } from './components/pages/SecretPage/SecretPage';
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
-import { SurveyPage } from './components/pages/surveyPage/surveyPage';
 import { SingleChoiceSurveyPage }
   from './components/pages/SingleChoiceSurveyPage/SingleChoiceSurveyPage';
 import { MultipleChoiceSurveyPage }
@@ -42,6 +40,10 @@ const Router = createBrowserRouter([
         element: <Main />,
       },
       {
+        path: 'contacts',
+        element: <Contacts />,
+      },
+      {
         path: 'signup',
         element: <Signup />,
       },
@@ -59,11 +61,19 @@ const Router = createBrowserRouter([
       },
       {
         path: 'profile',
-        element: <Profile />,
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'mysurveys',
-        element: <MySurveys />,
+        element: (
+          <PrivateRoute>
+            <MySurveys />
+          </PrivateRoute>
+        ),
       },
       {
         path: '/surveys/sc/:surveyId',
@@ -86,26 +96,6 @@ const Router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <UniqueChoiceSurveyPage />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: 'surveys/:surveyId',
-        element: (
-          <PrivateRoute>
-            <SurveyPage />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: 'contacts',
-        element: <Contacts />,
-      },
-      {
-        path: 'secret',
-        element: (
-          <PrivateRoute>
-            <Secret />
           </PrivateRoute>
         ),
       },
