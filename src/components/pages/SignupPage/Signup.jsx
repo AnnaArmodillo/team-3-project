@@ -61,7 +61,7 @@ export function Signup() {
     <MainWrap>
       <div className={styles.signupPageContainer}>
         <h1>Создание учетной записи</h1>
-        <p className={styles.alreadyRegitered}>
+        <p className={styles.alreadyRegistered}>
           Уже зарегистрированы?
           {' '}
           <Link to="/signin" className={styles.link}>Перейти на страницу входа</Link>
