@@ -1,6 +1,6 @@
 .card {
   display: flex;
-  border: 1px solid gray;
+  border: 1px solid grey;
   padding: 12px;
   gap: 8px;
   align-items: center;
@@ -39,8 +39,13 @@
   color: rgb(74, 67, 121);
 }
 
-input[type="radio"]:disabled + label  {
-    cursor: initial;
+input[type='radio']:disabled + label {
+  cursor: initial;
+  border: 1px dotted grey;
+}
+
+input[type='radio'] + label {
+  transition: all 0.5s ease;
 }
 
 .checked {
@@ -50,4 +55,8 @@ input[type="radio"]:disabled + label  {
 .message {
   text-align: center;
   font-size: 20px;
+}
+
+input[type='radio']:hover:not([disabled]) + label {
+  border: 2px solid rgb(74, 67, 121);
 }

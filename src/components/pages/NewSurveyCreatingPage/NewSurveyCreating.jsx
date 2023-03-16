@@ -376,7 +376,7 @@ export function NewSurveyCreating() {
                   </div>
                 )}
               </FieldArray>
-              <div className={styles.allowExtraOption}>
+              {/* <div className={styles.allowExtraOption}>
                 <Field
                   type="checkbox"
                   name="allowExtraOption"
@@ -385,7 +385,7 @@ export function NewSurveyCreating() {
                 <label htmlFor="allowExtraOption">
                   Разрешить участникам выбор своего варианта
                 </label>
-              </div>
+              </div> */}
               <ButtonPurple
                 type="submit"
                 className={styles.buttonSubmit}
