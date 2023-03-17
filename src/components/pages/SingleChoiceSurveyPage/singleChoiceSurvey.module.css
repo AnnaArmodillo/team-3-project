@@ -20,7 +20,7 @@
   }
   
   .validationMessage {
-    color: red;
+    color: brown;
     font-size: 20px;
     margin-top: 12px;
   }
@@ -29,4 +29,9 @@
     text-align: center;
     font-size: 40px;
     margin: 40px 0 0 40px;
+}
+.thankYou {
+  color: crimson;
+  font-size: xx-large;
+  text-align: center;
 }

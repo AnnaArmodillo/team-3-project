@@ -1,9 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ErrorMessage, Formik } from 'formik';
+import classNames from 'classnames';
+import { Form, ErrorMessage, Formik } from 'formik';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
-  Form, useLocation, useNavigate, useParams,
+  useLocation, useNavigate, useParams,
 } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
@@ -36,20 +37,19 @@ function SingleChoiceSurveyPageInner({ scSurvey, surveyId, accessToken }) {
   if (isLoading) {
     return (
       <MainWrap>
-        <Loader />
+        <div className={styles.singleChoiceSurveyPage}>
+          <Loader />
+        </div>
       </MainWrap>
     );
   }
-  // console.log('scSurvey.done.includes(userId)', scSurvey.done.includes(userId));
+
   function isAvailable() {
     return !(scSurvey.done.includes(userId));
   }
-  // console.log('isAvailable()', isAvailable());
   const submitHandler = async (values) => {
-    console.log({ values });
     const response = await sendSurveyResponse(values);
-    console.log(response);
-    if (response) {
+    if (response.done.includes(userId)) {
       queryClient.invalidateQueries({
         queryKey: ['scSurvey', surveyId],
       });
@@ -60,7 +60,14 @@ function SingleChoiceSurveyPageInner({ scSurvey, surveyId, accessToken }) {
     <MainWrap>
       <div className={styles.singleChoiceSurveyPage}>
         <h1>{scSurvey.title}</h1>
-        {!isAvailable() && <div>Вы уже проголосовали в этом опросе</div>}
+        {!isAvailable() && (
+          <>
+            <i className={classNames('fa-solid fa-heart-circle-check', styles.thankYou)} />
+            <div>
+              Спасибо за ваше участие в этом опросе
+            </div>
+          </>
+        )}
 
         <Formik
           initialValues={{
@@ -71,7 +78,6 @@ function SingleChoiceSurveyPageInner({ scSurvey, surveyId, accessToken }) {
         >
           {(formik) => {
             const { isValid } = formik;
-            console.log({ isValid });
             return (
               <Form className={styles.form}>
                 <div
@@ -122,7 +128,6 @@ export function SingleChoiceSurveyPage() {
     queryFn: () => teamProjectApi.getSurveyById(surveyId, accessToken),
     skip: !accessToken,
   });
-  // console.log({ scSurvey });
   useEffect(() => {
     if (!accessToken) {
       navigate('/signin', {
