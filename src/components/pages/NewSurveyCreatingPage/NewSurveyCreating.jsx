@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
 import {
   Formik, Field, FieldArray, Form, ErrorMessage,
 } from 'formik';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -17,14 +18,15 @@ import { Loader } from '../../Loader/Loader';
 import { getAccessTokenSelector } from '../../../redux/slices/userSlice';
 import surveyImage from '../../../images/survey_orange.png';
 import { getSurveyURL } from '../../../utils/helper';
+import { FormSaver } from '../FormSaver/FormSaver';
 
 export function NewSurveyCreating() {
-  // eslint-disable-next-line max-len
   const token = useSelector(getAccessTokenSelector);
   const optionsGroup = {
     optionTitle: '',
     activeLink: '',
   };
+
   const [selectedFile, setSelectedFile] = useState('');
   const [imageContent, setImageContent] = useState([]);
   const [imageLinkValues, setImageLinkValues] = useState([]);
@@ -50,36 +52,24 @@ export function NewSurveyCreating() {
   const handleChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
-  const {
-    mutateAsync: mutateAsyncImage,
-    isLoading: isLoadingImage,
-    isError: isErrorImage,
-    error: errorImage,
-  } = useMutation({
-    mutationFn: (data) => teamProjectApi.getUploadedFile(data, token),
-  });
-  const getUploadedUrl = async (res, index) => {
-    const resImg = await mutateAsyncImage(res);
-    const blob = await resImg.blob();
-    const url = window.URL.createObjectURL(blob);
-    const imageArray = [...imageContent];
-    const linksArray = [...imageLinkValues];
-    imageArray[index] = url;
-    linksArray[index] = res;
-    setImageContent([...imageArray]);
-    setImageLinkValues([...linksArray]);
-  };
   async function uploadHandler(index) {
     formData.append('image', selectedFile);
     formData.getAll('files');
     const res = await mutateAsyncUpload(formData);
-    setSelectedFile('');
     if (
       res
       !== 'Не выбран файл для загрузки, либо его тип не соответствует типу изображения'
     ) {
-      getUploadedUrl(res, index);
+      const blob = new Blob([selectedFile], { type: 'image/png' });
+      const url = window.URL.createObjectURL(blob);
+      const imageArray = [...imageContent];
+      const linksArray = [...imageLinkValues];
+      imageArray[index] = url;
+      linksArray[index] = res;
+      setImageContent([...imageArray]);
+      setImageLinkValues([...linksArray]);
     }
+    setSelectedFile('');
   }
   const handlePick = (event) => {
     if (!event.target.closest('button') && !event.target.closest('i')) {
@@ -174,10 +164,17 @@ export function NewSurveyCreating() {
             valuesPrepareHandler(values);
           }}
         >
-          {({ values }) => (
+          {({ values, isValid }) => (
             <Form className={styles.formWrapper}>
+              <FormSaver
+                name="Armadillo_NewSurveyForm"
+                imageContent={imageContent}
+                imageLinkValues={imageLinkValues}
+                setImageContent={setImageContent}
+                setImageLinkValues={setImageLinkValues}
+              />
               <Field
-                className={styles.surveyTitle}
+                className={styles.field}
                 type="text"
                 name="surveyTitle"
                 placeholder="заголовок опроса"
@@ -188,7 +185,7 @@ export function NewSurveyCreating() {
                 component="div"
               />
               <div id="surveyTypeGroup">
-                <h4>Тип опроса</h4>
+                <h4 className={styles.text}>Тип опроса</h4>
               </div>
               <div
                 role="group"
@@ -249,7 +246,7 @@ export function NewSurveyCreating() {
                 name="surveyType"
                 component="div"
               />
-              <h4>Варианты ответов:</h4>
+              <h4 className={styles.text}>Варианты ответов:</h4>
               <FieldArray name="options">
                 {({ push, remove }) => (
                   <div className={styles.optionWrapper}>
@@ -263,30 +260,31 @@ export function NewSurveyCreating() {
                             type="text"
                             name={`options.${index}.optionTitle`}
                             placeholder="вариант ответа"
+                            className={styles.field}
                           />
                           <ErrorMessage
                             className={styles.validationMessage}
                             name={`options.${index}.optionTitle`}
                             component="div"
                           />
-                          <motion.div
+                          {/* <motion.div
                             className={styles.motionWrapper}
                             whileHover={{ scaleX: 0.9, originX: 0 }}
-                          >
-                            <Field
-                              type="text"
-                              name={`options.${index}.activeLink`}
-                              placeholder="ссылка для просмотра"
-                              id="activeLink"
-                              className={styles.activeLink}
-                            />
-                            <motion.div
+                          > */}
+                          <Field
+                            type="text"
+                            name={`options.${index}.activeLink`}
+                            placeholder="ссылка для просмотра"
+                            id="activeLink"
+                            className={styles.field}
+                          />
+                          {/* <motion.div
                               whileHover={{ opacity: 1 }}
                               transition={{ duration: 1, delay: 1 }}
                             >
                               X
                             </motion.div>
-                          </motion.div>
+                          </motion.div> */}
                           <ErrorMessage
                             className={styles.validationMessage}
                             name={`options.${index}.activeLink`}
@@ -297,6 +295,7 @@ export function NewSurveyCreating() {
                             placeholder="ссылка на изображение"
                             onChange={(event) => changeImageLinkHandler(event, index)}
                             value={imageLinkValues[index] || ''}
+                            className={styles.field}
                           />
                           <ErrorMessage
                             className={styles.validationMessage}
@@ -324,14 +323,14 @@ export function NewSurveyCreating() {
                           onClick={handlePick}
                           title="загрузить файл"
                         >
-                          {(isErrorUpload || isErrorImage)
+                          {isErrorUpload
                             && !isLoadingUpload
-                            && !isLoadingImage && (
+                            && (
                               <div className={styles.messageImage}>
-                                {errorUpload?.message || errorImage?.message}
+                                {errorUpload.message}
                               </div>
-                          )}
-                          {(isLoadingImage || isLoadingUpload) && <Loader />}
+                            )}
+                          {isLoadingUpload && <Loader />}
                           {imageContent[index] && (
                             <button
                               type="button"
@@ -342,15 +341,14 @@ export function NewSurveyCreating() {
                               <i className="fa-solid fa-xmark" />
                             </button>
                           )}
-                          {!isLoadingImage
-                            && !isLoadingUpload
-                            && !isErrorImage
-                            && !isErrorUpload && (
+                          {!isLoadingUpload
+                            && !isErrorUpload
+                            && (
                               <img
                                 src={imageContent[index] || ''}
                                 alt="добавьте изображение"
                               />
-                          )}
+                            )}
                         </div>
                         {index > 0 && (
                           <ButtonWhite
@@ -368,7 +366,6 @@ export function NewSurveyCreating() {
                     ))}
                     <ButtonPurple
                       type="button"
-                      // className={styles.buttonAddOption}
                       onClick={() => push(optionsGroup)}
                     >
                       Добавить вариант ответа
@@ -389,6 +386,7 @@ export function NewSurveyCreating() {
               <ButtonPurple
                 type="submit"
                 className={styles.buttonSubmit}
+                disabled={!isValid}
               >
                 Сформировать ссылку на опрос
               </ButtonPurple>

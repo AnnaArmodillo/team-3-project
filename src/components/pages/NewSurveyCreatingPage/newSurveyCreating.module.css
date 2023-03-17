@@ -12,21 +12,20 @@
 }
 
 .pageTitle {
-  margin-left: 40px;
+  margin: 0 0 20px 0;
+  color: #333;
 }
 
 .formWrapper {
   display: flex;
-  margin: 20px;
   flex-direction: column;
-  padding: 20px;
   gap: 20px;
 }
 
 .validationMessage {
   color: red;
   font-size: 20px;
-  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 .optionWrapper {
@@ -40,19 +39,19 @@
 .option {
   display: flex;
   margin-bottom: 20px;
-  gap: 20px;
+  gap: 80px;
   align-items: flex-start;
 }
 
 .optionInputWrapper {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 40%;
   gap: 12px;
 }
 
 .image {
-  width: 30%;
+  width: 25%;
   height: auto;
   min-height: 100px;
   max-height: 200px;
@@ -83,19 +82,16 @@ input[type='radio'] {
   flex-direction: column;
   gap: 8px;
   cursor: pointer;
-  border: 1px solid gray;
-  padding: 8px;
+  font-size: 1rem;
+  color: #333;
+  padding: 0 20px;
+  border-radius: 15px;
+  border: 1px solid #eee;
 }
 
 .typeDescription {
   font-weight: 400;
   font-size: 0.8em;
-}
-
-.typeTitle {
-  height: 30%;
-  text-align: center;
-  font-weight: 400;
 }
 
 input[type='radio']:checked + label {
@@ -175,12 +171,27 @@ button {
   width: 200px;
 }
 
-.activeLink {
-  width: calc(100% - 8px);
-}
-
 .motionWrapper {
   display: flex;
-  justify-content: space-between;
+  width: calc(100% + 40px);
+}
+
+.buttonClear {
+  /* position: relative;
+  top: 0;
+  right: 0; */
+}
+
+.field {
+  font-size: 1rem;
+  color: #333;
+  height: 2rem;
+  padding: 0 20px;
+  border-radius: 15px;
+  border: 1px solid #eee;
   width: 100%;
+}
+
+.text {
+  color: #333;
 }
