@@ -95,6 +95,7 @@ export function UniqueChoiceSurveyPage() {
                       key={option.optionId}
                       option={option}
                       isAvailable={isAvailable()}
+                      surveyType="UC"
                     />
                   ))}
                 </div>
