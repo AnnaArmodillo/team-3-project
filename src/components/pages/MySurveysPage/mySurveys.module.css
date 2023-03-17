@@ -2,3 +2,8 @@
   background-color: #ddd;
   min-height: calc(100vh - 150px);
 }
+
+.mySurveysItem {
+  background-color: #ddd;
+  margin-bottom: 4px;
+}
