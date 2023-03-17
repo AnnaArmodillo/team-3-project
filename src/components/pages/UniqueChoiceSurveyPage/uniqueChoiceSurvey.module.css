@@ -21,7 +21,7 @@
 .validationMessage {
   color: red;
   font-size: 20px;
-  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 .message {
