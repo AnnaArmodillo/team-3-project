@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import classNames from 'classnames';
-import { Form, ErrorMessage, Formik } from 'formik';
+import {
+  Form, ErrorMessage, Formik,
+} from 'formik';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -8,7 +10,7 @@ import {
 } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
-import { takeSurveyValidationScheme } from '../../../utils/validators';
+import { takeMCSurveyValidationScheme } from '../../../utils/validators';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { withQuery } from '../../HOCs/withQuery';
 import { Loader } from '../../Loader/Loader';
@@ -75,9 +77,10 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
 
         <Formik
           initialValues={{
-            checked: '',
+            toggle: false,
+            checked: [],
           }}
-          validationSchema={takeSurveyValidationScheme}
+          validationSchema={takeMCSurveyValidationScheme}
           onSubmit={submitHandler}
         >
           {(formik) => {
