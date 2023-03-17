@@ -14,8 +14,7 @@ import { takeMCSurveyValidationScheme } from '../../../utils/validators';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { withQuery } from '../../HOCs/withQuery';
 import { Loader } from '../../Loader/Loader';
-import { MCOptionCard } from '../../organisms/MCOptionCard/MCOptionCard';
-// import { OptionCard } from '../../organisms/OptionCard/OptionCard';
+import { OptionCard } from '../../organisms/OptionCard/OptionCard';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './multipleChoiceSurvey.module.css';
 
@@ -92,7 +91,7 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
                   className={styles.optionsWrapper}
                 >
                   {mcSurvey.options.map((option) => (
-                    <MCOptionCard
+                    <OptionCard
                       key={option.optionId}
                       option={option}
                       isAvailable={isAvailable()}
