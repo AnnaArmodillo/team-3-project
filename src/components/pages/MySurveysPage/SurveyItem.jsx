@@ -1,18 +1,27 @@
 /* eslint-disable linebreak-style */
-import styles from './mySurveys.module.css';
+import { useNavigate } from 'react-router-dom';
+import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
+// import styles from './mySurveys.module.css';
 
 export function SurveyItem({
   survey,
 }) {
   console.log();
+  const navigate = useNavigate();
+
+  const surveyInfoHandler = () => {
+    navigate(`/servey/${survey.surveyId}`);
+  };
+
   return (
-    <div className={styles.mySurveysPage}>
-      <h2>{survey.title}</h2>
-      <p>{survey.surveyType}</p>
-      {survey.options.map((option) => (
-        <p key={option.optionId}>{JSON.stringify(option)}</p>
-      ))}
-      <div>{JSON.stringify(survey)}</div>
+    <div>
+      <b>{survey.title}</b>
+      {' '}
+      {survey.surveyType}
+      {' '}
+      <ButtonPurple onClick={surveyInfoHandler} type="button">
+        Подробнее
+      </ButtonPurple>
     </div>
   );
 }
