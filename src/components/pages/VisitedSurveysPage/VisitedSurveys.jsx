@@ -3,7 +3,10 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
-import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
+import {
+  getAccessTokenSelector,
+  getUserSelector,
+} from '../../../redux/slices/userSlice';
 import { ArrowLeft } from '../../atoms/ArrowLeft/ArrowLeft';
 import { withQuery } from '../../HOCs/withQuery';
 import { SurveyItem } from '../../molecules/SurveyItem/SurveyItem';
@@ -23,9 +26,18 @@ const VisitedSurveysInner = withQuery(({ visitedSurveys }) => {
           <ArrowLeft clickBackHandler={clickBackHandler} />
           <h2>Посещенные опросы</h2>
         </div>
-        <div className={styles.listSurveys}>
-          { visitedSurveys.map((survey) => <SurveyItem key={survey.surveyId} survey={survey} />) }
-        </div>
+        {!visitedSurveys.length && (
+          <p>
+            Здесь появятся опросы, в которых вы проголосуете или просто просмотрите
+          </p>
+        )}
+        {!!visitedSurveys.length && (
+          <div className={styles.listSurveys}>
+            {visitedSurveys.map((survey) => (
+              <SurveyItem key={survey.surveyId} survey={survey} />
+            ))}
+          </div>
+        )}
       </section>
     </MainWrap>
   );
@@ -49,7 +61,12 @@ export function VisitedSurveys() {
   }, [userId]);
 
   console.log({
-    data, isLoading, isFetching, isError, error, refetch,
+    data,
+    isLoading,
+    isFetching,
+    isError,
+    error,
+    refetch,
   });
 
   return (
