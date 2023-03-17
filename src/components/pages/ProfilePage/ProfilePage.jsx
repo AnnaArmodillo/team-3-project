@@ -6,6 +6,7 @@ import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getUserSelector } from '../../../redux/slices/userSlice';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { withQuery } from '../../HOCs/withQuery';
+import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './profile.module.css';
 
 function ProfileInner({ data }) {
@@ -19,37 +20,39 @@ function ProfileInner({ data }) {
   };
 
   const surveysInfoHandler = () => {
-    navigate('/mysurveys');
+    navigate('/visited');
   };
 
   return (
-    <div className={styles.profilePage}>
-      <h1>Пользователь</h1>
-      <p>
-        <b>Имя:</b>
-        {' '}
-        {name}
-      </p>
-      <p>
-        <b>Email:</b>
-        {' '}
-        {email}
-      </p>
-      <p>
-        <b>Id:</b>
-        {' '}
-        {id}
-      </p>
-      <div>
-        <ButtonPurple onClick={mySurveysInfoHandler} type="button">
-          Мои опросы
-        </ButtonPurple>
-        {' '}
-        <ButtonPurple onClick={surveysInfoHandler} type="button">
-          Участвовал в опросах
-        </ButtonPurple>
+    <MainWrap>
+      <div className={styles.profilePage}>
+        <h1>Пользователь</h1>
+        <p>
+          <b>Имя:</b>
+          {' '}
+          {name}
+        </p>
+        <p>
+          <b>Email:</b>
+          {' '}
+          {email}
+        </p>
+        <p>
+          <b>Id:</b>
+          {' '}
+          {id}
+        </p>
+        <div>
+          <ButtonPurple onClick={mySurveysInfoHandler} type="button">
+            Мои опросы
+          </ButtonPurple>
+          {' '}
+          <ButtonPurple onClick={surveysInfoHandler} type="button">
+            Посещенные опросы
+          </ButtonPurple>
+        </div>
       </div>
-    </div>
+    </MainWrap>
   );
 }
 
