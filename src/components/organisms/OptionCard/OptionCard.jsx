@@ -12,7 +12,7 @@ import {
 import { Loader } from '../../Loader/Loader';
 import styles from './optionCard.module.css';
 
-export function OptionCard({ option, isAvailable }) {
+export function OptionCard({ option, isAvailable, surveyType }) {
   const { id } = useSelector(getUserSelector);
   const accessToken = useSelector(getAccessTokenSelector);
   const [url, setUrl] = useState('');
@@ -33,8 +33,19 @@ export function OptionCard({ option, isAvailable }) {
     return false;
   }
   function isDisabled() {
-    if (option.checked !== '' || !isAvailable) {
-      return true;
+    switch (surveyType) {
+      case 'SC':
+        if (!isAvailable) {
+          return true;
+        }
+        break;
+      case 'UC':
+        if (option.checked !== '' || !isAvailable) {
+          return true;
+        }
+        break;
+      default:
+        return false;
     }
     return false;
   }
