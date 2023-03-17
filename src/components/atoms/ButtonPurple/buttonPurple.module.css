@@ -1,13 +1,15 @@
+@import url("../../../variables.css");
+
 .button {
-    background-color: rgb(130, 122, 186);
-    color: white;
+    background-color: var(--button-purple-color);
+    color: var(--text-white-color);
 }
 
 .button:hover:not([disabled]) {
-    box-shadow: 2px 2px rgb(65, 61, 93);
+    box-shadow: 2px 2px var(--box-shadow-color);
 }
 
 .button:disabled {
     cursor: initial;
-    background-color: rgba(130, 122, 186, 0.452);
+    background-color: var(--button-disabled-purple-color);
 }

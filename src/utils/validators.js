@@ -51,3 +51,9 @@ export const takeSurveyValidationScheme = Yup.object({
   checked: Yup.string()
     .required('Ответ не выбран'),
 });
+
+export const takeMCSurveyValidationScheme = Yup.object({
+  checked: Yup.array()
+    .required('Ответ не выбран')
+    .min(1, 'Необходимо выбрать хотя бы один ответ'),
+});

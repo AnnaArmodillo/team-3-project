@@ -1,6 +1,6 @@
 .card {
   display: flex;
-  border: 1px solid grey;
+  border: 1px solid var(--card-grey-color);
   padding: 12px;
   gap: 8px;
   align-items: center;
@@ -31,17 +31,17 @@
 }
 
 .link {
-  color: rgb(255, 175, 56);
+  color: var(--orange-color);
 }
 
 .link:hover,
 .linkError:hover {
-  color: rgb(74, 67, 121);
+  color: var(--text-purple-color);
 }
 
 input[type='radio']:disabled + label {
   cursor: initial;
-  border: 1px dotted grey;
+  border: 1px dotted var(--card-grey-color);
 }
 
 input[type='radio'] + label {
@@ -49,7 +49,7 @@ input[type='radio'] + label {
 }
 
 .checked {
-  border: 2px solid green;
+  border: 2px solid var(--checked-green-color);
 }
 
 .message {
@@ -58,5 +58,88 @@ input[type='radio'] + label {
 }
 
 input[type='radio']:hover:not([disabled]) + label {
-  border: 2px solid rgb(74, 67, 121);
+  border: 2px solid var(--text-purple-color);
+  }
+  
+  /* Checkbox styles */
+  
+  .checkboxWr {
+    display: flex;
+    min-width: 100%;
+  }
+  
+  .checkboxWr>label {
+    min-width: 300px;
+    max-width: 80%;
+  }
+  
+  .checkbox {
+    position: relative;
+    z-index: -1;
+    opacity: 0;
+    margin: 10px 0 0 20px;
+    /* display: none; */
+  }
+  
+  .checkbox+label {
+    position: relative;
+    padding: 0 0 0 60px;
+    cursor: pointer;
+  }
+  
+  .checkbox+label:before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: -50px;
+    width: 26px;
+    height: 50px;
+    border-radius: 13px;
+    background: var(--arrow-pale-gray);
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, .2);
+    transition: .2s;
+  }
+  
+  .checkbox+label:after {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: -48px;
+    width: 22px;
+    height: 22px;
+    border-radius: 10px;
+    background: #FFF;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
+    transition: .2s;
+  }
+  
+  .checkbox:checked+label:before {
+    background: var(--button-purple-color);
+  }
+  
+  .checkbox:checked+label:after {
+    top: 48px;
+  }
+  
+  .checkbox:checked+label {
+    /* background: #6DBA68; */
+    /* background: #CAC2FF; */
+    background: #FFAF19;
+  }
+  
+  .checkbox:focus+label:before {
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, .2), 0 0 0 3px var(--orange-color);
+  }
+  
+  .checkbox+label {
+    transition: all 0.5s ease;
+  }
+  
+  .checkbox:hover:not([disabled])+label {
+    border: 2px solid var(--text-purple-color);
+}
+
+.checkbox:disabled+label {
+  cursor: initial;
+  border: 1px dotted var(--card-grey-color);
 }

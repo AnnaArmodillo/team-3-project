@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getUserSelector } from '../../../redux/slices/userSlice';
+import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { withQuery } from '../../HOCs/withQuery';
 import styles from './profile.module.css';
 
@@ -11,6 +12,15 @@ function ProfileInner({ data }) {
   const {
     name, email, id,
   } = data;
+  const navigate = useNavigate();
+
+  const mySurveysInfoHandler = () => {
+    navigate('/mysurveys');
+  };
+
+  const surveysInfoHandler = () => {
+    navigate('/mysurveys');
+  };
 
   return (
     <div className={styles.profilePage}>
@@ -30,6 +40,15 @@ function ProfileInner({ data }) {
         {' '}
         {id}
       </p>
+      <div>
+        <ButtonPurple onClick={mySurveysInfoHandler} type="button">
+          Мои опросы
+        </ButtonPurple>
+        {' '}
+        <ButtonPurple onClick={surveysInfoHandler} type="button">
+          Участвовал в опросах
+        </ButtonPurple>
+      </div>
     </div>
   );
 }
