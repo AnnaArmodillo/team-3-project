@@ -33,19 +33,13 @@ export function OptionCard({ option, isAvailable, surveyType }) {
     return false;
   }
   function isDisabled() {
-    switch (surveyType) {
-      case 'SC':
-        if (!isAvailable) {
-          return true;
-        }
-        break;
-      case 'UC':
-        if (option.checked !== '' || !isAvailable) {
-          return true;
-        }
-        break;
-      default:
-        return false;
+    if (surveyType === 'UC') {
+      if (option.checked !== '' || !isAvailable) {
+        return true;
+      }
+    }
+    if (!isAvailable) {
+      return true;
     }
     return false;
   }
@@ -60,6 +54,47 @@ export function OptionCard({ option, isAvailable, surveyType }) {
       }),
     enabled: checkIsImageUploaded(),
   });
+
+  if (surveyType === 'MC') {
+    return (
+      <div className={styles.checkboxWr}>
+        <Field
+          type="checkbox"
+          name="checked"
+          id={option.optionId}
+          value={option.optionId}
+          disabled={isDisabled()}
+          className={styles.checkbox}
+        />
+        <label
+          htmlFor={option.optionId}
+          className={classNames({ [styles.checked]: isChecked() }, [styles.card])}
+        >
+          <div className={styles.info}>
+            <div>{option.optionTitle}</div>
+            <Link
+              to={option.activeLink}
+              className={styles.link}
+            >
+              {option.activeLink}
+            </Link>
+          </div>
+          <div className={styles.image}>
+            {isLoading && checkIsImageUploaded() && <Loader />}
+            {isError && <div className={styles.message}>{error.message}</div>}
+            {((!checkIsImageUploaded() && option.image)
+              || (checkIsImageUploaded && (!isLoading && !isError))) && (
+                <img
+                  src={url || option.image}
+                  alt="изображение"
+                />
+            )}
+          </div>
+        </label>
+      </div>
+    );
+  }
+
   return (
     <>
       <Field
