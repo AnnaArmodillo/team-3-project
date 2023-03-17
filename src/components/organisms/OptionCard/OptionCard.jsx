@@ -33,19 +33,13 @@ export function OptionCard({ option, isAvailable, surveyType }) {
     return false;
   }
   function isDisabled() {
-    switch (surveyType) {
-      case 'SC':
-        if (!isAvailable) {
-          return true;
-        }
-        break;
-      case 'UC':
-        if (option.checked !== '' || !isAvailable) {
-          return true;
-        }
-        break;
-      default:
-        return false;
+    if (surveyType === 'UC') {
+      if (option.checked !== '' || !isAvailable) {
+        return true;
+      }
+    }
+    if (!isAvailable) {
+      return true;
     }
     return false;
   }
