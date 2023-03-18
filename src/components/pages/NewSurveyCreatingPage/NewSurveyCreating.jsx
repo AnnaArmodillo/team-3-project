@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { newSurveyValidationScheme } from '../../../utils/validators';
 import styles from './newSurveyCreating.module.css';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
+import { ButtonGrey } from '../../atoms/ButtonGrey/ButtonGrey';
 import { ButtonWhite } from '../../atoms/ButtonWhite/ButtonWhite';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
@@ -399,7 +400,7 @@ export function NewSurveyCreating() {
                             )}
                         </div>
                         {index > 0 && (
-                        <ButtonWhite
+                        <ButtonGrey
                           type="button"
                           className={styles.buttonDelete}
                           onClick={() => {
@@ -408,7 +409,7 @@ export function NewSurveyCreating() {
                           }}
                         >
                           Удалить
-                        </ButtonWhite>
+                        </ButtonGrey>
                         )}
                       </div>
                     ))}
