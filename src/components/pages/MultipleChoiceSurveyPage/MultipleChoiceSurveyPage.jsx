@@ -12,6 +12,7 @@ import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/u
 import { MC } from '../../../utils/constants';
 import { takeMCSurveyValidationScheme } from '../../../utils/validators';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
+import { SurveyTotalVotes } from '../../atoms/SurveyTotalVotes/SurveyTotalVotes';
 import { SurveyTypeInfo } from '../../atoms/SurveyTypeInfo/SurveyTypeInfo';
 import { withQuery } from '../../HOCs/withQuery';
 import { Loader } from '../../Loader/Loader';
@@ -36,6 +37,8 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
       </MainWrap>
     );
   }
+
+  const votesTotal = mcSurvey.done.length;
 
   const {
     mutateAsync: sendSurveyResponse, isError, error, isLoading,
@@ -123,6 +126,7 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
             );
           }}
         </Formik>
+        <SurveyTotalVotes counter={votesTotal} />
       </div>
     </MainWrap>
   );
