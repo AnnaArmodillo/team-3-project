@@ -103,10 +103,10 @@ const Router = createBrowserRouter([
       {
         path: '/visited',
         element: (
-           <PrivateRoute>
-          <VisitedSurveys />
+          <PrivateRoute>
+            <VisitedSurveys />
           </PrivateRoute>
-          ),
+        ),
       },
     ],
   },

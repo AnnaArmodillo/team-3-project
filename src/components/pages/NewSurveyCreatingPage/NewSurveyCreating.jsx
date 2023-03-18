@@ -1,12 +1,12 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
 import {
   Formik, Field, FieldArray, Form, ErrorMessage,
 } from 'formik';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { newSurveyValidationScheme } from '../../../utils/validators';
 import styles from './newSurveyCreating.module.css';
@@ -150,11 +150,9 @@ export function NewSurveyCreating() {
               </ButtonPurple>
             </Link>
             {' '}
-            <Link to="/creating">
-              <ButtonPurple type="button">
-                Новый опрос
-              </ButtonPurple>
-            </Link>
+            <ButtonPurple type="button" onClick={() => window.location.reload()}>
+              Новый опрос
+            </ButtonPurple>
           </div>
         </div>
         <div className={styles.surveyImage}>
