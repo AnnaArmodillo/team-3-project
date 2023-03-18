@@ -1,12 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getAccessTokenSelector, signOut } from '../../../redux/slices/userSlice';
-import { ButtonWhite } from '../../atoms/ButtonWhite/ButtonWhite';
+import { ButtonGrey } from '../../atoms/ButtonGrey/ButtonGrey';
 
 export function SignOutButton() {
   const dispatch = useDispatch();
   const accessToken = useSelector(getAccessTokenSelector);
+  const navigate = useNavigate();
 
   const {
     mutateAsync: signOutMutation,
@@ -16,14 +18,15 @@ export function SignOutButton() {
   const signOutHandler = async () => {
     await signOutMutation(accessToken);
     dispatch(signOut());
+    navigate('/');
   };
 
   return (
-    <ButtonWhite
+    <ButtonGrey
       type="button"
       onClick={signOutHandler}
     >
       Выйти
-    </ButtonWhite>
+    </ButtonGrey>
   );
 }

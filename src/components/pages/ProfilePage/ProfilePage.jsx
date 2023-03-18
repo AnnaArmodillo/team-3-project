@@ -6,6 +6,7 @@ import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getUserSelector } from '../../../redux/slices/userSlice';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { withQuery } from '../../HOCs/withQuery';
+import { SignOutButton } from '../../molecules/SignOutButton/SignOutButton';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './profile.module.css';
 
@@ -50,6 +51,7 @@ function ProfileInner({ data }) {
           <ButtonPurple onClick={surveysInfoHandler} type="button">
             Посещенные опросы
           </ButtonPurple>
+          <SignOutButton />
         </div>
       </div>
     </MainWrap>

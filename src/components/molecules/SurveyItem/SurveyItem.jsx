@@ -6,11 +6,9 @@ import styles from './surveyItem.module.css';
 import avatar from '../../../images/avatar.png';
 
 export function SurveyItem({ survey }) {
-  console.log({ survey });
   const user = useSelector(getUserSelector);
 
   const isUserDone = survey.done.find((item) => item === user.id);
-  console.log({ isUserDone });
 
   const formatSurveysType = () => {
     let type = '';
