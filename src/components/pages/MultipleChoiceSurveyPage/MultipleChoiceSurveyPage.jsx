@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import classNames from 'classnames';
 import {
   Form, ErrorMessage, Formik,
 } from 'formik';
@@ -10,10 +9,15 @@ import {
 } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
+import { MC } from '../../../utils/constants';
 import { takeMCSurveyValidationScheme } from '../../../utils/validators';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
+import { SurveyTypeInfo } from '../../atoms/SurveyTypeInfo/SurveyTypeInfo';
 import { withQuery } from '../../HOCs/withQuery';
 import { Loader } from '../../Loader/Loader';
+import {
+  ThankYouForVotingMessage,
+} from '../../molecules/ThankYouForVotingMessage/ThankYouForVotingMessage';
 import { OptionCard } from '../../organisms/OptionCard/OptionCard';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './multipleChoiceSurvey.module.css';
@@ -21,8 +25,17 @@ import styles from './multipleChoiceSurvey.module.css';
 function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
   const { id: userId } = useSelector(getUserSelector);
   const queryClient = useQueryClient();
-  if (!mcSurvey) console.log('No mcData');
-  console.log({ mcSurvey });
+  if (!mcSurvey) {
+    return (
+      <MainWrap>
+        <div className={styles.multipleChoiceSurveyPage}>
+          <div className={styles.message}>
+            <p>Данные опроса не получены</p>
+          </div>
+        </div>
+      </MainWrap>
+    );
+  }
 
   const {
     mutateAsync: sendSurveyResponse, isError, error, isLoading,
@@ -30,7 +43,6 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
     mutationFn: (values) => teamProjectApi.takeSurveyById(surveyId, values, accessToken),
   });
   if (isError) {
-    console.log('Произошла ошибка при отправке ответа на опрос', error);
     return (
       <MainWrap>
         <div className={styles.multipleChoiceSurveyPage}>
@@ -65,14 +77,13 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
     <MainWrap>
       <div className={styles.multipleChoiceSurveyPage}>
         <h1>{mcSurvey.title}</h1>
-        {!isAvailable() && (
-          <>
-            <i className={classNames('fa-solid fa-heart-circle-check', styles.thankYou)} />
-            <div>
-              Спасибо за Ваше участие в этом опросе
-            </div>
-          </>
-        )}
+        {!isAvailable()
+          ? (
+            <ThankYouForVotingMessage />
+          )
+          : (
+            <SurveyTypeInfo surveyType={MC} />
+          )}
 
         <Formik
           initialValues={{

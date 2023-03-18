@@ -9,6 +9,7 @@ import {
   getAccessTokenSelector,
   getUserSelector,
 } from '../../../redux/slices/userSlice';
+import { MC, UC } from '../../../utils/constants';
 import { Loader } from '../../Loader/Loader';
 import styles from './optionCard.module.css';
 
@@ -36,7 +37,7 @@ export function OptionCard({ option, isAvailable, surveyType }) {
     return false;
   }
   function isDisabled() {
-    if (surveyType === 'UC') {
+    if (surveyType === UC) {
       if (option.checked !== '' || !isAvailable) {
         return true;
       }
@@ -58,7 +59,7 @@ export function OptionCard({ option, isAvailable, surveyType }) {
     enabled: checkIsImageUploaded(),
   });
 
-  if (surveyType === 'MC') {
+  if (surveyType === MC) {
     return (
       <div className={styles.checkboxWr}>
         <Field
