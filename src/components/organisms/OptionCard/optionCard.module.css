@@ -5,13 +5,14 @@
   gap: 8px;
   align-items: center;
   cursor: pointer;
+  width: 100%;
 }
 
 .info {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 70%;
+  min-width: 70%;
   gap: 12px;
 }
 
