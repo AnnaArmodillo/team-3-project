@@ -1,8 +1,17 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getUserSelector } from '../../../redux/slices/userSlice';
 import { getSurveyURL } from '../../../utils/helper';
 import styles from './surveyItem.module.css';
+import avatar from '../../../images/avatar.png';
 
 export function SurveyItem({ survey }) {
+  console.log({ survey });
+  const user = useSelector(getUserSelector);
+
+  const isUserDone = survey.done.find((item) => item === user.id);
+  console.log({ isUserDone });
+
   const formatSurveysType = () => {
     let type = '';
     switch (survey.surveyType) {
@@ -33,18 +42,29 @@ export function SurveyItem({ survey }) {
               {formatSurveysType()}
             </span>
             <span>
-              <i className="fa-regular fa-clock" />
-              <span className={styles.isOpen}>oткрыт</span>
+              {!!isUserDone && (
+                <>
+                  <i className="fa-regular fa-clock" />
+                  <span className={styles.isDone}>пройден</span>
+                </>
+              )}
+              {!isUserDone && (
+                <>
+                  <i className="fa-regular fa-clock" />
+                  <span className={styles.isNoDone}>не пройден</span>
+                </>
+              )}
             </span>
             <span>
               <i className="fa-regular fa-trash-can" />
-              <span>удалить</span>
+              <span className={styles.spanDelete}>удалить</span>
             </span>
           </div>
         </div>
 
         <div className={styles.containerBottom}>
-          здесь будет аватар и имя автора опроса
+          <img src={avatar} alt="avatar" />
+          <p>{user.name}</p>
         </div>
       </div>
     </Link>

@@ -9,4 +9,6 @@
     --card-grey-color: gray;
     --checked-green-color: rgb(0, 115, 0);
     --bc-pale-gray: rgb(235, 234, 234);
+    --danger-text-color: rgb(129, 44, 44);
+    --bc-gradient: linear-gradient(120deg, white 30%, rgb(223, 217, 255) 70%, rgb(255, 175, 56) 120%);
 }
