@@ -2,7 +2,7 @@
 import {
   Formik, Field, FieldArray, Form, ErrorMessage,
 } from 'formik';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -77,6 +77,21 @@ export function NewSurveyCreating() {
       filePicker.current.click();
     }
   };
+  function deletePreviousLink() {
+    console.log({ currentIndex });
+    const imageArray = [...imageContent];
+    const linksArray = [...imageLinkValues];
+    imageArray[currentIndex] = '';
+    linksArray[currentIndex] = '';
+    setImageContent([...imageArray]);
+    setImageLinkValues([...linksArray]);
+    setImageLinkValues([...linksArray]);
+  }
+  useEffect(() => {
+    if (isErrorUpload) {
+      deletePreviousLink();
+    }
+  }, [isErrorUpload]);
   function deleteImageHandler(index) {
     const imageArray = [...imageContent];
     const linksArray = [...imageLinkValues];
