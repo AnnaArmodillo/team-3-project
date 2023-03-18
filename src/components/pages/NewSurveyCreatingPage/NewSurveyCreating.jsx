@@ -6,8 +6,6 @@ import { useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-// eslint-disable-next-line no-unused-vars
-import { motion } from 'framer-motion';
 import { newSurveyValidationScheme } from '../../../utils/validators';
 import styles from './newSurveyCreating.module.css';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
@@ -180,7 +178,9 @@ export function NewSurveyCreating() {
             valuesPrepareHandler(values);
           }}
         >
-          {({ values, isValid }) => (
+          {({
+            values, isValid, setFieldValue,
+          }) => (
             <Form className={styles.formWrapper}>
               <FormSaver
                 name={LS_FORM_SAVER_KEY}
@@ -283,24 +283,23 @@ export function NewSurveyCreating() {
                             name={`options.${index}.optionTitle`}
                             component="div"
                           />
-                          {/* <motion.div
-                            className={styles.motionWrapper}
-                            whileHover={{ scaleX: 0.9, originX: 0 }}
-                          > */}
-                          <Field
-                            type="text"
-                            name={`options.${index}.activeLink`}
-                            placeholder="ссылка для просмотра"
-                            id="activeLink"
-                            className={styles.field}
-                          />
-                          {/* <motion.div
-                              whileHover={{ opacity: 1 }}
-                              transition={{ duration: 1, delay: 1 }}
+                          <div className={styles.activeLinkWrapper}>
+                            <Field
+                              type="text"
+                              name={`options.${index}.activeLink`}
+                              placeholder="ссылка для просмотра"
+                              id="activeLink"
+                              className={styles.field}
+                            />
+                            <button
+                              type="button"
+                              title="очистить поле"
+                              onClick={() => setFieldValue(`options.${index}.activeLink`, '')}
+                              className={styles.buttonClear}
                             >
-                              X
-                            </motion.div>
-                          </motion.div> */}
+                              <i className="fa-solid fa-xmark" />
+                            </button>
+                          </div>
                           <ErrorMessage
                             className={styles.validationMessage}
                             name={`options.${index}.activeLink`}
@@ -326,12 +325,12 @@ export function NewSurveyCreating() {
                             onChange={handleChange}
                           />
                           {selectedFile !== '' && (
-                            <ButtonWhite
-                              type="button"
-                              onClick={() => uploadHandler(index)}
-                            >
-                              Загрузить файл
-                            </ButtonWhite>
+                          <ButtonWhite
+                            type="button"
+                            onClick={() => uploadHandler(index)}
+                          >
+                            Загрузить файл
+                          </ButtonWhite>
                           )}
                         </div>
                         <div
@@ -348,14 +347,14 @@ export function NewSurveyCreating() {
                             )}
                           {isLoadingUpload && <Loader />}
                           {imageContent[index] && (
-                            <button
-                              type="button"
-                              title="удалить файл"
-                              className={styles.buttonImageDelete}
-                              onClick={() => deleteImageHandler(index)}
-                            >
-                              <i className="fa-solid fa-xmark" />
-                            </button>
+                          <button
+                            type="button"
+                            title="удалить файл"
+                            className={styles.buttonImageDelete}
+                            onClick={() => deleteImageHandler(index)}
+                          >
+                            <i className="fa-solid fa-xmark" />
+                          </button>
                           )}
                           {!isLoadingUpload
                             && !isErrorUpload
@@ -367,16 +366,16 @@ export function NewSurveyCreating() {
                             )}
                         </div>
                         {index > 0 && (
-                          <ButtonWhite
-                            type="button"
-                            className={styles.buttonDelete}
-                            onClick={() => {
-                              deleteWithOptionHandler(index);
-                              remove(index);
-                            }}
-                          >
-                            Удалить
-                          </ButtonWhite>
+                        <ButtonWhite
+                          type="button"
+                          className={styles.buttonDelete}
+                          onClick={() => {
+                            deleteWithOptionHandler(index);
+                            remove(index);
+                          }}
+                        >
+                          Удалить
+                        </ButtonWhite>
                         )}
                       </div>
                     ))}
