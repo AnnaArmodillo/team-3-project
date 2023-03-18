@@ -27,7 +27,10 @@ export function OptionCard({ option, isAvailable, surveyType }) {
     return true;
   }
   function isChecked() {
-    if (option.checked === id) {
+    if ((option.checked === id) && (surveyType === 'UC')) {
+      return true;
+    }
+    if (option.checked.includes(id)) {
       return true;
     }
     return false;

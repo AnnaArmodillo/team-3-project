@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import classNames from 'classnames';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -72,7 +73,14 @@ export function UniqueChoiceSurveyPage() {
     <MainWrap>
       <div className={styles.surveyPage}>
         <h1>{survey.title}</h1>
-        {!isAvailable() && <div>Вы уже проголосовали в этом опросе</div>}
+        {!isAvailable() && (
+          <>
+            <i className={classNames('fa-solid fa-heart-circle-check', styles.thankYou)} />
+            <div>
+              Спасибо за Ваше участие в этом опросе
+            </div>
+          </>
+        )}
         <Formik
           initialValues={{
             checked: '',
