@@ -60,7 +60,6 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
       </MainWrap>
     );
   }
-
   function isAvailable() {
     return !(mcSurvey.done.includes(userId));
   }
@@ -72,7 +71,6 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
       });
     }
   };
-
   return (
     <MainWrap>
       <div className={styles.multipleChoiceSurveyPage}>
