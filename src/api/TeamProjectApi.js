@@ -281,6 +281,31 @@ class TeamProjectApi {
     return res.json();
   }
 
+  async deleteSurveyFromVisited(surveyId, token) {
+    this.checkToken(token);
+
+    const res = await fetch(`${this.baseUrl}/surveys/${surveyId}`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+        'Content-Type': 'application/json',
+      },
+    });
+    if (res.status === 404) {
+      throw new Error('Опрос не найден');
+    }
+    if (res.status >= 400 && res.status < 500) {
+      throw new Error(`Произошла ошибка. 
+        Проверьте отправляемые данные. Status: ${res.status}`);
+    }
+    if (res.status >= 500) {
+      throw new Error(`Произошла ошибка. 
+        Попробуйте сделать запрос позже. Status: ${res.status}`);
+    }
+
+    return res.json();
+  }
+
   async uploadFile(formData, token) {
     this.checkToken(token);
     const res = await fetch(`${this.baseUrl}/upload`, {
