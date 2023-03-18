@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   margin: 0 auto;
+  width: 100%;
 }
 
 .surveyTitle {
@@ -13,7 +14,7 @@
 
 .pageTitle {
   margin: 0 0 20px 0;
-  color: #333;
+  color: var(--text-purple-color);
 }
 
 .formWrapper {
@@ -23,7 +24,7 @@
 }
 
 .validationMessage {
-  color: red;
+  color: var(--orange-color);
   font-size: 20px;
   margin-bottom: 12px;
 }
@@ -83,10 +84,10 @@ input[type='radio'] {
   gap: 8px;
   cursor: pointer;
   font-size: 1rem;
-  color: #333;
+  color: var(--text-purple-color);
   padding: 0 20px;
   border-radius: 15px;
-  border: 1px solid #eee;
+  border: 1px solid var(--bc-pale-gray);
 }
 
 .typeDescription {
@@ -95,7 +96,7 @@ input[type='radio'] {
 }
 
 input[type='radio']:checked + label {
-  border: 2px solid green;
+  border: 2px solid var(--checked-green-color);
 }
 
 input[type='file'],
@@ -111,13 +112,13 @@ input[type='checkbox'] + label {
   position: absolute;
   top: 0;
   right: 0;
-  color: black;
+  color: var(--text-purple-color);
   border-radius: 0;
   width: fit-content;
   height: auto;
   min-height: unset;
   padding: 4px;
-  background-color: white;
+  background-color: var(--text-white-color);
 }
 
 .hidden {
@@ -150,17 +151,13 @@ button {
   width: fit-content;
 }
 
-.linkError {
-  color: crimson;
-}
-
 .link {
-  color: rgb(255, 175, 56);
+  color: var(--orange-color);
 }
 
 .link:hover,
 .linkError:hover {
-  color: rgb(74, 67, 121);
+  color: var(--text-purple-color);
 }
 
 .surveyImage {
@@ -171,29 +168,35 @@ button {
   width: 200px;
 }
 
-.motionWrapper {
-  display: flex;
-  width: calc(100% + 40px);
+.activeLinkWrapper {
+  position: relative;
 }
 
 .buttonClear {
-  /* position: relative;
-  top: 0;
-  right: 0; */
+  position: absolute;
+  top: calc(1rem - 12px);
+  right: -30px;
+  color: var(--text-purple-color);
+  border-radius: 0;
+  width: fit-content;
+  height: auto;
+  min-height: unset;
+  padding: 4px;
+  background-color: var(--text-white-color);
 }
 
 .field {
   font-size: 1rem;
-  color: #333;
+  color: var(--text-purple-color);
   height: 2rem;
   padding: 0 20px;
   border-radius: 15px;
-  border: 1px solid #eee;
+  border: 1px solid var(--bc-pale-gray);
   width: 100%;
 }
 
 .text {
-  color: #333;
+  color: var(--text-purple-color);
 }
 .messageWrapper {
   display: flex;
