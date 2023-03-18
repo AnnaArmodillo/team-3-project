@@ -118,7 +118,7 @@ class TeamProjectApi {
         Попробуйте сделать запрос позже. Status: ${res.status}`);
     }
 
-    return res.json();
+    return res;
   }
 
   async refreshToken(values, token) {
