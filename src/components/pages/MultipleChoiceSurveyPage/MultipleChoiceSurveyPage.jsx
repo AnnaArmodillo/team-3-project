@@ -21,8 +21,17 @@ import styles from './multipleChoiceSurvey.module.css';
 function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
   const { id: userId } = useSelector(getUserSelector);
   const queryClient = useQueryClient();
-  if (!mcSurvey) console.log('No mcData');
-  console.log({ mcSurvey });
+  if (!mcSurvey) {
+    return (
+      <MainWrap>
+        <div className={styles.multipleChoiceSurveyPage}>
+          <div className={styles.message}>
+            <p>Данные опроса не получены</p>
+          </div>
+        </div>
+      </MainWrap>
+    );
+  }
 
   const {
     mutateAsync: sendSurveyResponse, isError, error, isLoading,
@@ -30,7 +39,6 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
     mutationFn: (values) => teamProjectApi.takeSurveyById(surveyId, values, accessToken),
   });
   if (isError) {
-    console.log('Произошла ошибка при отправке ответа на опрос', error);
     return (
       <MainWrap>
         <div className={styles.multipleChoiceSurveyPage}>
