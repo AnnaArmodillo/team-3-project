@@ -1,17 +1,23 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import classNames from 'classnames';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
-import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
+import {
+  getAccessTokenSelector,
+  getUserSelector,
+} from '../../../redux/slices/userSlice';
 import { OptionCard } from '../../organisms/OptionCard/OptionCard';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import styles from './uniqueChoiceSurvey.module.css';
 import { takeSurveyValidationScheme } from '../../../utils/validators';
 import { Loader } from '../../Loader/Loader';
+import { ThankYouForVotingMessage }
+  from '../../molecules/ThankYouForVotingMessage/ThankYouForVotingMessage';
+import { SurveyTypeInfo } from '../../atoms/SurveyTypeInfo/SurveyTypeInfo';
+import { UC } from '../../../utils/constants';
 
 export function UniqueChoiceSurveyPage() {
   const { surveyId } = useParams();
@@ -32,7 +38,6 @@ export function UniqueChoiceSurveyPage() {
   const {
     data: survey,
     isError: isErrorSurvey,
-    error: errorSurvey,
     isLoading: isLoadingSurvey,
   } = useQuery({
     queryKey: ['survey', surveyId],
@@ -50,22 +55,40 @@ export function UniqueChoiceSurveyPage() {
     });
   }
   function isAvailable() {
-    if (survey.done.includes(id) || survey.options.some((option) => option.checked === id)) {
+    if (
+      survey.done.includes(id)
+      || survey.options.some((option) => option.checked === id)
+    ) {
       return false;
     }
     return true;
   }
-  if (isErrorSurvey || isError) {
+  if (isErrorSurvey) {
     return (
       <MainWrap>
-        <div className={styles.message}>{errorSurvey?.message || error?.message}</div>
+        <div className={styles.surveyPage}>
+          <div className={styles.message}>
+            <p>Данные опроса не получены</p>
+          </div>
+        </div>
+      </MainWrap>
+    );
+  }
+  if (isError) {
+    return (
+      <MainWrap>
+        <div className={styles.surveyPage}>
+          <div className={styles.message}>{error.message}</div>
+        </div>
       </MainWrap>
     );
   }
   if (isLoadingSurvey || isLoading) {
     return (
       <MainWrap>
-        <Loader />
+        <div className={styles.surveyPage}>
+          <Loader />
+        </div>
       </MainWrap>
     );
   }
@@ -73,13 +96,10 @@ export function UniqueChoiceSurveyPage() {
     <MainWrap>
       <div className={styles.surveyPage}>
         <h1>{survey.title}</h1>
-        {!isAvailable() && (
-          <>
-            <i className={classNames('fa-solid fa-heart-circle-check', styles.thankYou)} />
-            <div>
-              Спасибо за Ваше участие в этом опросе
-            </div>
-          </>
+        {!isAvailable() ? (
+          <ThankYouForVotingMessage />
+        ) : (
+          <SurveyTypeInfo surveyType={UC} />
         )}
         <Formik
           initialValues={{
