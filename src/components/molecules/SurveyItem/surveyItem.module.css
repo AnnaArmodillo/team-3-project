@@ -1,11 +1,12 @@
 .surveyItem {
-    height: 100px;
+    min-height: 100px;
     background-color: var(--bc-pale-gray);
     border-radius: 15px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 15px;
 }
 
 .surveyItem h5 {
@@ -16,12 +17,13 @@
 .containerTop {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 10px;
 }
 
 .containerSubinfo {
     display: flex;
-    gap: 50px;
+    flex-wrap: wrap;
+    gap: 10px 50px;
 }
 
 .containerSubinfo span {

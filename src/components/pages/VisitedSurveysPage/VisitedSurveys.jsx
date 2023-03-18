@@ -60,15 +60,6 @@ export function VisitedSurveys() {
     if (!userId) navigate('/signin');
   }, [userId]);
 
-  console.log({
-    data,
-    isLoading,
-    isFetching,
-    isError,
-    error,
-    refetch,
-  });
-
   return (
     <VisitedSurveysInner
       visitedSurveys={data}
