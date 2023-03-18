@@ -29,6 +29,7 @@ export function NewSurveyCreating() {
   const [imageContent, setImageContent] = useState([]);
   const [imageLinkValues, setImageLinkValues] = useState([]);
   const [surveyId, setSurveyID] = useState();
+  const [currentIndex, setCurrentIndex] = useState('');
   const filePicker = useRef();
   const formData = new FormData();
   const {
@@ -52,6 +53,7 @@ export function NewSurveyCreating() {
     setSelectedFile(event.target.files[0]);
   };
   async function uploadHandler(index) {
+    setCurrentIndex(index);
     formData.append('image', selectedFile);
     formData.getAll('files');
     const res = await mutateAsyncUpload(formData);
@@ -340,12 +342,28 @@ export function NewSurveyCreating() {
                         >
                           {isErrorUpload
                             && !isLoadingUpload
+                            && (currentIndex === index)
                             && (
                               <div className={styles.messageImage}>
                                 {errorUpload.message}
                               </div>
                             )}
-                          {isLoadingUpload && <Loader />}
+                          {isErrorUpload
+                            && !isLoadingUpload
+                            && (currentIndex !== index)
+                            && (
+                              <img
+                                src={imageContent[index] || ''}
+                                alt="добавьте изображение"
+                              />
+                            )}
+                          {isLoadingUpload && (currentIndex === index) && <Loader />}
+                          {isLoadingUpload && (currentIndex !== index) && (
+                          <img
+                            src={imageContent[index] || ''}
+                            alt="добавьте изображение"
+                          />
+                          )}
                           {imageContent[index] && (
                           <button
                             type="button"
