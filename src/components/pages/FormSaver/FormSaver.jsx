@@ -8,9 +8,6 @@ export function FormSaver({
 }) {
   const { values, setValues } = useFormikContext();
   const prefValuesRef = useRef();
-  // console.log(imageContent);
-  // console.log(imageLinkValues);
-
   const preparedValues = {
     values,
     imageLinkValues,
@@ -19,12 +16,9 @@ export function FormSaver({
   const onSave = () => {
     window.localStorage.setItem(name, JSON.stringify(preparedValues));
   };
-
   const debouncedOnSave = useDebouncedCallback(onSave, 1000);
-
   useEffect(() => {
     const savedForm = window.localStorage.getItem(name);
-
     if (savedForm) {
       const parsedForm = JSON.parse(savedForm);
       prefValuesRef.current = parsedForm;
@@ -33,16 +27,13 @@ export function FormSaver({
       setImageLinkValues(parsedForm.imageLinkValues);
     }
   }, [name, setValues, setImageContent, setImageLinkValues]);
-
   useEffect(() => {
     if (!isEqual(prefValuesRef.current, preparedValues)) {
       debouncedOnSave(preparedValues);
     }
   });
-
   useEffect(() => {
     prefValuesRef.current = preparedValues;
   });
-
   return null;
 }

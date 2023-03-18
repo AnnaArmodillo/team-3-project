@@ -1,21 +1,22 @@
 .surveyPage {
-  width: 80%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  min-height: calc(100vh - 280px);
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+    align-items: center;
+    gap: 1rem;
 }
 
 .optionsWrapper {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1rem;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1rem;
 }
 
 .validationMessage {
@@ -28,4 +29,10 @@
   text-align: center;
   font-size: 40px;
   margin: 40px 0 0 40px;
+}
+
+.thankYou {
+  color: crimson;
+  font-size: xx-large;
+  text-align: center;
 }

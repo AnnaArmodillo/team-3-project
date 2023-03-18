@@ -48,7 +48,7 @@ input[type='radio'] + label {
   transition: all 0.5s ease;
 }
 
-.checked {
+input[type='radio'] + label.checked {
   border: 2px solid var(--checked-green-color);
 }
 

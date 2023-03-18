@@ -136,7 +136,7 @@ input[type='checkbox'] + label {
   margin: 40px 0 0 40px;
 }
 
-.errorMessage, .successMessage {
+.errorMessage {
   text-align: center;
   font-size: 40px;
   margin: 40px 0 0 40px;
@@ -164,7 +164,7 @@ button {
 }
 
 .surveyImage {
-  margin-left: 40px;
+  margin: 0 0 0 20px;
 }
 
 .surveyImage img {
@@ -194,4 +194,20 @@ button {
 
 .text {
   color: #333;
+}
+.messageWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+.surveyLink {
+  font-size: 20px;
+  margin: 40px 0;
+  text-align: left;
+}
+
+.successMessage {
+  text-align: left;
+  font-size: 40px;
 }

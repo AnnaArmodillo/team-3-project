@@ -69,7 +69,7 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
           <>
             <i className={classNames('fa-solid fa-heart-circle-check', styles.thankYou)} />
             <div>
-              Спасибо за ваше участие в этом опросе
+              Спасибо за Ваше участие в этом опросе
             </div>
           </>
         )}

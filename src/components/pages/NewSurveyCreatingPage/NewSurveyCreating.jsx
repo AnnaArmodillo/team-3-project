@@ -26,7 +26,7 @@ export function NewSurveyCreating() {
     optionTitle: '',
     activeLink: '',
   };
-
+  const LS_FORM_SAVER_KEY = 'Armadillo_NewSurveyForm';
   const [selectedFile, setSelectedFile] = useState('');
   const [imageContent, setImageContent] = useState([]);
   const [imageLinkValues, setImageLinkValues] = useState([]);
@@ -39,6 +39,7 @@ export function NewSurveyCreating() {
     mutationFn: (preparedValues) => teamProjectApi.addNewSurvey(preparedValues, token)
       .then((result) => {
         setSurveyID(result.surveyId);
+        localStorage.removeItem(LS_FORM_SAVER_KEY);
       }),
   });
   const {
@@ -134,11 +135,28 @@ export function NewSurveyCreating() {
   if (surveyId) {
     return (
       <MainWrap>
-        <Link to={getSurveyURL(surveyId)}>
+        <div className={styles.messageWrapper}>
           <div className={styles.successMessage}>
-            Готово! Перейти к новому опросу.
+            Готово! Созданный опрос доступен по ссылке:
+            {' '}
+            <p className={styles.surveyLink}>
+              {getSurveyURL(surveyId)}
+            </p>
           </div>
-        </Link>
+          <div>
+            <Link to={getSurveyURL(surveyId)}>
+              <ButtonPurple>
+                Перейти к опросу
+              </ButtonPurple>
+            </Link>
+            {' '}
+            <Link to="/creating">
+              <ButtonPurple type="button">
+                Новый опрос
+              </ButtonPurple>
+            </Link>
+          </div>
+        </div>
         <div className={styles.surveyImage}>
           <img
             src={surveyImage}
@@ -167,7 +185,7 @@ export function NewSurveyCreating() {
           {({ values, isValid }) => (
             <Form className={styles.formWrapper}>
               <FormSaver
-                name="Armadillo_NewSurveyForm"
+                name={LS_FORM_SAVER_KEY}
                 imageContent={imageContent}
                 imageLinkValues={imageLinkValues}
                 setImageContent={setImageContent}
