@@ -1,0 +1,35 @@
+.surveyItem {
+    height: 100px;
+    background-color: var(--bc-pale-gray);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.surveyItem h5 {
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.containerTop {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.containerSubinfo {
+    display: flex;
+    gap: 50px;
+}
+
+.containerSubinfo span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.isOpen {
+    color: var(--checked-green-color)
+}

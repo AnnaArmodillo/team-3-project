@@ -5,24 +5,33 @@ import { useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
 import { withQuery } from '../../HOCs/withQuery';
+import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './mySurveys.module.css';
 import { SurveyItem } from './SurveyItem';
 
 function MySurveysInner({ data }) {
-  if (!data.length) return <h1>Опросов не найдено...</h1>;
+  if (!data.length) {
+    return (
+      <MainWrap>
+        <h1>Опросов не найдено...</h1>
+      </MainWrap>
+    );
+  }
 
   return (
-    <div className={styles.mySurveysPage}>
-      <h1>Мои опросы</h1>
-      <ul>
-        {data.map((survey) => (
-          <SurveyItem
-            key={survey.surveyId}
-            survey={survey}
-          />
-        ))}
-      </ul>
-    </div>
+    <MainWrap>
+      <div className={styles.mySurveysPage}>
+        <h1>Мои опросы</h1>
+        <ul>
+          {data.map((survey) => (
+            <SurveyItem
+              key={survey.surveyId}
+              survey={survey}
+            />
+          ))}
+        </ul>
+      </div>
+    </MainWrap>
   );
 }
 
@@ -40,10 +49,10 @@ export function MySurveys() {
     queryKey: ['SurveysByAuthorFetch', userId],
     queryFn: () => teamProjectApi.getSurveysByAuthor(userId, accessToken),
   });
-  console.log({ data });
+  // console.log({ data });
 
   useEffect(() => {
-    console.log('MySurveysPage', { userId });
+    // console.log('MySurveysPage', { userId });
     if (!userId) navigate('/signin');
   }, [userId]);
 
