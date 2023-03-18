@@ -1,5 +1,6 @@
 .surveyItem {
     min-height: 100px;
+    height: calc(100% - 40px);
     background-color: var(--bc-pale-gray);
     border-radius: 15px;
     padding: 20px;
@@ -7,6 +8,11 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 15px;
+    cursor: context-menu;
+}
+
+.surveyItem:hover {
+    background: var(--bc-gradient);
 }
 
 .surveyItem h5 {
@@ -32,6 +38,30 @@
     gap: 10px;
 }
 
-.isOpen {
+.isDone {
     color: var(--checked-green-color)
+}
+
+.isNoDone {
+    color: var(--danger-text-color)
+}
+
+.spanDelete {
+    cursor: pointer;
+}
+
+.spanDelete:hover {
+    text-decoration: underline var(--orange-color);
+    text-underline-position: under;
+}
+
+.containerBottom {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.containerBottom img {
+    width: 30px;
+    height: 30px;
 }
