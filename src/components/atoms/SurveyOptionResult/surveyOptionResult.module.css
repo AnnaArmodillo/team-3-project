@@ -3,7 +3,13 @@
   align-items: center;
   justify-content: flex-start;
   font-size: xx-small;
-  color: var(--text-purple-color);
+  color: var(--card-grey-color);
   margin: 0;
   padding: 0;
+}
+
+.result:hover {
+  color: var(--text-purple-color);
+  font-size: small;
+  transition: .5s;
 }
