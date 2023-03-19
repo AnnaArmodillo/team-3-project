@@ -9,7 +9,8 @@ import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './signup.module.css';
 import { Loader } from '../../Loader/Loader';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
-import { ButtonWhite } from '../../atoms/ButtonWhite/ButtonWhite';
+import { RequiredFieldTooltip } from '../../molecules/RequiredFieldTooltip/RequiredFieldTooltip';
+import { ButtonGrey } from '../../atoms/ButtonGrey/ButtonGrey';
 
 const initialValues = {
   email: '',
@@ -75,10 +76,7 @@ export function Signup() {
             <div className={styles.Form_Group}>
               <p className={styles.Form_Label}>
                 Электронная почта
-                <span><sup>&#9913;</sup></span>
-                <span className={styles.mustHave__description}>
-                  Этот элемент является обязательным
-                </span>
+                <RequiredFieldTooltip />
               </p>
               <Field
                 id="email"
@@ -97,10 +95,7 @@ export function Signup() {
             <div className={styles.Form_Group}>
               <p className={styles.Form_Label}>
                 Имя
-                <span><sup>&#9913;</sup></span>
-                <span className={styles.mustHave__description}>
-                  Этот элемент является обязательным
-                </span>
+                <RequiredFieldTooltip />
               </p>
               <Field
                 name="name"
@@ -118,10 +113,7 @@ export function Signup() {
             <div className={styles.Form_Group}>
               <p className={styles.Form_Label}>
                 Пароль
-                <span><sup>&#9913;</sup></span>
-                <span className={styles.mustHave__description}>
-                  Этот элемент является обязательным
-                </span>
+                <RequiredFieldTooltip />
               </p>
               <Field
                 name="password"
@@ -142,12 +134,12 @@ export function Signup() {
               >
                 Зарегистрироваться
               </ButtonPurple>
-              <ButtonWhite
+              <ButtonGrey
                 type="reset"
                 disabled={isLoading}
               >
                 Сбросить
-              </ButtonWhite>
+              </ButtonGrey>
             </div>
           </Form>
         </Formik>
