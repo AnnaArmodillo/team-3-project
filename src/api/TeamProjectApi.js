@@ -34,9 +34,9 @@ class TeamProjectApi {
     return res.json();
   }
 
-  async getAllUsers(search, token) {
+  async getAllUsers(token) {
     this.checkToken(token);
-    const res = await fetch(`${this.baseUrl}/users/search/${search}`, {
+    const res = await fetch(`${this.baseUrl}/users`, {
       headers: {
         authorization: this.getAuthorizationHeader(token),
         'Content-type': 'application/json',
@@ -46,6 +46,29 @@ class TeamProjectApi {
     if (res.status >= 400 && res.status < 500) {
       throw new Error(`Произошла ошибка при получении списка пользователей. 
         Проверьте отправляемые данные. Status: ${res.status}`);
+    }
+    if (res.status >= 500) {
+      throw new Error(`Произошла ошибка при получении списка пользователей. 
+        Попробуйте сделать запрос позже. Status: ${res.status}`);
+    }
+
+    return res.json();
+  }
+
+  async getUsersByEmail(search, token) {
+    this.checkToken(token);
+    const res = await fetch(`${this.baseUrl}/users/search/${search}`, {
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+        'Content-type': 'application/json',
+      },
+    });
+
+    if (res.status === 404) {
+      throw new Error(
+        // eslint-disable-next-line max-len
+        'Пользователь с таким email не найден. Вы можете пригласить его пройти опрос по прямой ссылке',
+      );
     }
     if (res.status >= 500) {
       throw new Error(`Произошла ошибка при получении списка пользователей. 
@@ -219,7 +242,9 @@ class TeamProjectApi {
       throw new Error('Вы уже проголосовали в этом опросе');
     }
     if (res.status === 404) {
-      throw new Error('Такого варианта ответа не существует или опрос не найден');
+      throw new Error(
+        'Такого варианта ответа не существует или опрос не найден',
+      );
     }
     if (res.status >= 400 && res.status < 500) {
       throw new Error(`Произошла ошибка при голосовании. 
@@ -358,6 +383,31 @@ class TeamProjectApi {
       throw new Error(`Произошла ошибка при получении изображения. 
         Попробуйте сделать запрос позже. Status: ${res.status}`);
     }
+    return res;
+  }
+
+  async sendInvitations(values, token) {
+    console.log(values);
+    this.checkToken(token);
+    const res = await fetch(`${this.baseUrl}/invitations`, {
+      method: 'PUT',
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    });
+    if (res.status === 401) {
+      throw new Error('Необходимо авторизоваться');
+    }
+    if (res.status === 404) {
+      throw new Error('Пользователь с таким email не найден');
+    }
+    if (res.status >= 500) {
+      throw new Error(`Произошла ошибка при отправке приглашений. 
+        Попробуйте сделать запрос позже. Status: ${res.status}`);
+    }
+
     return res;
   }
 }

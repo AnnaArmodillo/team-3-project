@@ -95,7 +95,7 @@ function searchUserByEmail(req, res) {
       }
       return res.json(resultEmails);
     } else {
-      return res.sendStatus(404);
+      return res.status(404).json('Пользователь с таким email не найден');
     }
   } catch (error) {
     return res.sendStatus(500);
