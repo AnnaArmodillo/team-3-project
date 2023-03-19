@@ -4,33 +4,38 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
+import { ArrowLeft } from '../../atoms/ArrowLeft/ArrowLeft';
 import { withQuery } from '../../HOCs/withQuery';
+import { SurveyItem } from '../../molecules/SurveyItem/SurveyItem';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './mySurveys.module.css';
-import { SurveyItem } from './SurveyItem';
 
-function MySurveysInner({ data }) {
-  if (!data.length) {
-    return (
-      <MainWrap>
-        <h1>Опросов не найдено...</h1>
-      </MainWrap>
-    );
-  }
+function MySurveysInner({ mySurveys }) {
+  const navigate = useNavigate();
+  const clickBackHandler = () => {
+    navigate(-1);
+  };
 
   return (
     <MainWrap>
-      <div className={styles.mySurveysPage}>
-        <h1>Мои опросы</h1>
-        <ul>
-          {data.map((survey) => (
-            <SurveyItem
-              key={survey.surveyId}
-              survey={survey}
-            />
-          ))}
-        </ul>
-      </div>
+      <section className={styles.mySurveys}>
+        <div className={styles.title}>
+          <ArrowLeft clickBackHandler={clickBackHandler} />
+          <h2>Мои опросы</h2>
+        </div>
+        {!mySurveys.length && (
+          <p>
+            Здесь появятся созданные вами опросы
+          </p>
+        )}
+        {!!mySurveys.length && (
+          <div className={styles.listSurveys}>
+            {mySurveys.map((survey) => (
+              <SurveyItem key={survey.surveyId} survey={survey} />
+            ))}
+          </div>
+        )}
+      </section>
     </MainWrap>
   );
 }
@@ -49,17 +54,15 @@ export function MySurveys() {
     queryKey: ['SurveysByAuthorFetch', userId],
     queryFn: () => teamProjectApi.getSurveysByAuthor(userId, accessToken),
   });
-  // console.log({ data });
 
   useEffect(() => {
-    // console.log('MySurveysPage', { userId });
     if (!userId) navigate('/signin');
   }, [userId]);
 
   return (userId
     && (
       <MySurveysInnerWithQuery
-        data={data}
+        mySurveys={data}
         isLoading={isLoading}
         isError={isError}
         error={error}
