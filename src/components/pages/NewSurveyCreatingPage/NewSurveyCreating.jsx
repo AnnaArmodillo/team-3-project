@@ -4,11 +4,12 @@ import {
 } from 'formik';
 import { useEffect, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { newSurveyValidationScheme } from '../../../utils/validators';
 import styles from './newSurveyCreating.module.css';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
+import { ButtonGrey } from '../../atoms/ButtonGrey/ButtonGrey';
 import { ButtonWhite } from '../../atoms/ButtonWhite/ButtonWhite';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
@@ -16,7 +17,8 @@ import { Loader } from '../../Loader/Loader';
 import { getAccessTokenSelector } from '../../../redux/slices/userSlice';
 import surveyImage from '../../../images/survey_orange.png';
 import { getSurveyURL } from '../../../utils/helper';
-import { FormSaver } from '../FormSaver/FormSaver';
+import { FormSaver } from '../../organisms/FormSaver/FormSaver';
+import { setSurvey } from '../../../redux/slices/surveySlice';
 
 export function NewSurveyCreating() {
   const token = useSelector(getAccessTokenSelector);
@@ -32,6 +34,7 @@ export function NewSurveyCreating() {
   const [currentIndex, setCurrentIndex] = useState('');
   const filePicker = useRef();
   const formData = new FormData();
+  const dispatch = useDispatch();
   const {
     mutateAsync, isError, error, isLoading,
   } = useMutation({
@@ -78,7 +81,6 @@ export function NewSurveyCreating() {
     }
   };
   function deletePreviousLink() {
-    console.log({ currentIndex });
     const imageArray = [...imageContent];
     const linksArray = [...imageLinkValues];
     imageArray[currentIndex] = '';
@@ -133,6 +135,11 @@ export function NewSurveyCreating() {
       ...linksArray.slice(index + 1),
     ]);
   }
+  useEffect(() => {
+    if (surveyId) {
+      dispatch(setSurvey(surveyId));
+    }
+  }, [surveyId]);
   if (isLoading) {
     return (
       <MainWrap>
@@ -158,17 +165,21 @@ export function NewSurveyCreating() {
               {getSurveyURL(surveyId)}
             </p>
           </div>
-          <div>
+          <div className={styles.buttonsWrapper}>
             <Link to={getSurveyURL(surveyId)}>
               <ButtonPurple>
                 Перейти к опросу
               </ButtonPurple>
             </Link>
-            {' '}
             <ButtonPurple type="button" onClick={() => window.location.reload()}>
               Новый опрос
             </ButtonPurple>
           </div>
+          <Link to="/invitation">
+            <ButtonPurple>
+              Пригласить других пользователей пройти опрос
+            </ButtonPurple>
+          </Link>
         </div>
         <div className={styles.surveyImage}>
           <img
@@ -399,16 +410,15 @@ export function NewSurveyCreating() {
                             )}
                         </div>
                         {index > 0 && (
-                        <ButtonWhite
+                        <ButtonGrey
                           type="button"
-                          className={styles.buttonDelete}
                           onClick={() => {
                             deleteWithOptionHandler(index);
                             remove(index);
                           }}
                         >
                           Удалить
-                        </ButtonWhite>
+                        </ButtonGrey>
                         )}
                       </div>
                     ))}
@@ -433,7 +443,6 @@ export function NewSurveyCreating() {
               </div> */}
               <ButtonPurple
                 type="submit"
-                className={styles.buttonSubmit}
                 disabled={!isValid}
               >
                 Сформировать ссылку на опрос

@@ -11,7 +11,7 @@ function getAllUsers(req, res) {
   try {
     return res.json(
       DB.users.map((user) => {
-        const { password, ...noPasswordUser } = user;
+        const { password, accessToken, refreshToken, ...noPasswordUser } = user;
         return noPasswordUser;
       })
     );
@@ -70,6 +70,7 @@ async function addNewUser(req, res) {
       email: userData.email,
       id: crypto.randomUUID(),
       password: hashPassword,
+      invitations: [],
     };
     DB.users.push(newUser);
     const { password, ...noPasswordUser } = newUser;
@@ -80,9 +81,29 @@ async function addNewUser(req, res) {
     return res.sendStatus(500);
   }
 }
-
+function searchUserByEmail(req, res) {
+  try {
+    const userEmail = req.params.userEmail;
+    const resultUsers = DB.users.filter((user) => user.email.toLowerCase().indexOf(userEmail.toLowerCase()) > -1);
+    if (resultUsers.length) {
+      const resultEmails = resultUsers.map((user) => {
+        const { email } = user;
+        return email;
+      })
+      if(resultEmails.length === 1) {
+        return res.json(resultEmails[0]);
+      }
+      return res.json(resultEmails);
+    } else {
+      return res.sendStatus(404);
+    }
+  } catch (error) {
+    return res.sendStatus(500);
+  }
+}
 export const usersController = {
   getAllUsers,
   getUserByID,
   addNewUser,
+  searchUserByEmail,
 };

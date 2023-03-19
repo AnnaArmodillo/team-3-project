@@ -21,6 +21,7 @@ import { MultipleChoiceSurveyPage }
 import { UniqueChoiceSurveyPage }
   from './components/pages/UniqueChoiceSurveyPage/UniqueChoiceSurveyPage';
 import { VisitedSurveys } from './components/pages/VisitedSurveysPage/VisitedSurveys';
+import { InvitationPage } from './components/pages/InvitationPage/InvitationPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -65,6 +66,14 @@ const Router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Profile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'invitation',
+        element: (
+          <PrivateRoute>
+            <InvitationPage />
           </PrivateRoute>
         ),
       },

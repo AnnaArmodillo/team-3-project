@@ -1,0 +1,82 @@
+.invitationPage {
+  min-height: calc(100vh - 280px);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.pageTitle {
+  margin: 0 0 20px 0;
+  color: var(--text-purple-color);
+}
+
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.usersWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.user {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 80px;
+  align-items: flex-start;
+}
+
+.field {
+  font-size: 1rem;
+  color: var(--text-purple-color);
+  height: 2rem;
+  padding: 0 20px;
+  border-radius: 15px;
+  border: 1px solid var(--bc-pale-gray);
+  width: 90%;
+}
+
+.buttonClear {
+  position: absolute;
+  top: calc(1rem - 12px);
+  right: -30px;
+  color: var(--text-purple-color);
+  border-radius: 0;
+  width: fit-content;
+  height: auto;
+  min-height: unset;
+  padding: 4px;
+  background-color: var(--text-white-color);
+}
+
+.validationMessage {
+  color: var(--danger-text-color);
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  gap: 12px;
+  position: relative;
+}
+
+input::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+.errorMessage {
+  text-align: center;
+  font-size: 40px;
+  margin: 40px 0 0 40px;
+}

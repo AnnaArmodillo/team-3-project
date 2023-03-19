@@ -9,6 +9,7 @@ export const initState = {
     accessToken: '',
     refreshToken: '',
   },
+  survey: '',
 };
 
 export const getInitState = () => {
