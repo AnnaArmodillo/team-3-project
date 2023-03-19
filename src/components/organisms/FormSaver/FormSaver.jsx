@@ -4,10 +4,13 @@ import isEqual from 'react-fast-compare';
 import { useDebouncedCallback } from 'use-debounce';
 
 export function FormSaver({
-  name, imageContent, imageLinkValues, setImageContent, setImageLinkValues,
+  name, ...rest
 }) {
   const { values, setValues } = useFormikContext();
   const prefValuesRef = useRef();
+  const {
+    imageLinkValues, imageContent, setImageContent, setImageLinkValues,
+  } = rest;
   const preparedValues = {
     values,
     imageLinkValues,

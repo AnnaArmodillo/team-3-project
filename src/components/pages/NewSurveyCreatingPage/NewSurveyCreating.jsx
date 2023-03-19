@@ -17,7 +17,7 @@ import { Loader } from '../../Loader/Loader';
 import { getAccessTokenSelector } from '../../../redux/slices/userSlice';
 import surveyImage from '../../../images/survey_orange.png';
 import { getSurveyURL } from '../../../utils/helper';
-import { FormSaver } from '../FormSaver/FormSaver';
+import { FormSaver } from '../../organisms/FormSaver/FormSaver';
 
 export function NewSurveyCreating() {
   const token = useSelector(getAccessTokenSelector);
@@ -79,7 +79,6 @@ export function NewSurveyCreating() {
     }
   };
   function deletePreviousLink() {
-    console.log({ currentIndex });
     const imageArray = [...imageContent];
     const linksArray = [...imageLinkValues];
     imageArray[currentIndex] = '';
@@ -159,17 +158,21 @@ export function NewSurveyCreating() {
               {getSurveyURL(surveyId)}
             </p>
           </div>
-          <div>
+          <div className={styles.buttonsWrapper}>
             <Link to={getSurveyURL(surveyId)}>
               <ButtonPurple>
                 Перейти к опросу
               </ButtonPurple>
             </Link>
-            {' '}
             <ButtonPurple type="button" onClick={() => window.location.reload()}>
               Новый опрос
             </ButtonPurple>
           </div>
+          <Link to="/invitation">
+            <ButtonPurple>
+              Пригласить других пользователей пройти опрос
+            </ButtonPurple>
+          </Link>
         </div>
         <div className={styles.surveyImage}>
           <img
@@ -402,7 +405,6 @@ export function NewSurveyCreating() {
                         {index > 0 && (
                         <ButtonGrey
                           type="button"
-                          className={styles.buttonDelete}
                           onClick={() => {
                             deleteWithOptionHandler(index);
                             remove(index);
@@ -434,7 +436,6 @@ export function NewSurveyCreating() {
               </div> */}
               <ButtonPurple
                 type="submit"
-                className={styles.buttonSubmit}
                 disabled={!isValid}
               >
                 Сформировать ссылку на опрос

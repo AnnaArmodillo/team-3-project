@@ -57,3 +57,12 @@ export const takeMCSurveyValidationScheme = Yup.object({
     .required('Ответ не выбран')
     .min(1, 'Необходимо выбрать хотя бы один ответ'),
 });
+
+export const InviteUsersValidationScheme = Yup.object({
+  users: Yup.array(
+    Yup.string()
+      .email('Некорректный адрес электронной почты')
+      .required('Не указан адрес электронной почты')
+      .typeError('Необходимо указать хотя бы одного пользователя'),
+  ),
+});
