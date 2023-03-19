@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   ErrorMessage, Field, FieldArray, Form, Formik,
 } from 'formik';
@@ -25,12 +25,6 @@ export function InvitationPage() {
   const usersGroup = {
     email: '',
   };
-  function valuesPrepareHandler(values) {
-    console.log(values);
-    console.log(surveyId);
-    const invitations = { ...values, surveyId };
-    console.log(JSON.stringify(invitations));
-  }
   function changeSearchHandler(event, index) {
     const searchArray = [...searchValue];
     searchArray[index] = event.target.value;
@@ -55,9 +49,21 @@ export function InvitationPage() {
     error,
   } = useQuery({
     queryKey: ['allUsers', search],
-    queryFn: () => teamProjectApi.getAllUsers(search, token),
+    queryFn: () => teamProjectApi.getUsersByEmail(search, token),
     enabled: isQueryEnabled(),
   });
+  const {
+    mutateAsync,
+    isError: isErrorInvite,
+    error: errorInvite,
+    isLoading: isLoadingInvite,
+  } = useMutation({
+    mutationFn: (values) => teamProjectApi.sendInvitations(values, token),
+  });
+  async function valuesPrepareHandler(values) {
+    const invitations = { ...values, surveyId };
+    await mutateAsync(invitations);
+  }
   const debouncedSearchValue = useDebounce(searchValue[currentIndex] || '', 1000);
   useEffect(() => {
     setSearch(debouncedSearchValue);
@@ -74,6 +80,7 @@ export function InvitationPage() {
   }, [users]);
   console.log(searchValue[currentIndex]);
   console.log(search);
+  console.log(isErrorInvite, isLoadingInvite, errorInvite);
   return (
     <MainWrap>
       <div className={styles.invitationPage}>

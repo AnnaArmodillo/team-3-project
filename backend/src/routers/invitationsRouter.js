@@ -4,5 +4,5 @@ import { invitationsController } from '../controllers/invitationsController.js';
 
 export const invitationsRouter = Router();
 
-invitationsRouter.post('/', checkAuth, invitationsController.sendInvitations);
+invitationsRouter.put('/', checkAuth, invitationsController.sendInvitations);
 
