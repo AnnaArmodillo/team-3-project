@@ -60,9 +60,11 @@ export const takeMCSurveyValidationScheme = Yup.object({
 
 export const InviteUsersValidationScheme = Yup.object({
   users: Yup.array(
-    Yup.string()
-      .email('Некорректный адрес электронной почты')
-      .required('Не указан адрес электронной почты')
-      .typeError('Необходимо указать хотя бы одного пользователя'),
+    Yup.object({
+      email: Yup.string()
+        .email('Некорректный адрес электронной почты')
+        .required('Не указан адрес электронной почты')
+        .typeError('Необходимо указать хотя бы одного пользователя'),
+    }),
   ),
 });

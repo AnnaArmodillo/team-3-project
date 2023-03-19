@@ -12,10 +12,6 @@
   color: var(--text-purple-color);
 }
 
-.userEmailWrapper {
-  position: relative;
-}
-
 .formWrapper {
   display: flex;
   flex-direction: column;
@@ -45,7 +41,7 @@
   padding: 0 20px;
   border-radius: 15px;
   border: 1px solid var(--bc-pale-gray);
-  width: 100%;
+  width: 90%;
 }
 
 .buttonClear {
@@ -72,4 +68,15 @@
   flex-direction: column;
   width: 60%;
   gap: 12px;
+  position: relative;
+}
+
+input::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+.errorMessage {
+  text-align: center;
+  font-size: 40px;
+  margin: 40px 0 0 40px;
 }

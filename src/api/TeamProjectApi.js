@@ -34,9 +34,11 @@ class TeamProjectApi {
     return res.json();
   }
 
-  async getAllUsers() {
-    const res = await fetch(`${this.baseUrl}/users`, {
+  async getAllUsers(search, token) {
+    this.checkToken(token);
+    const res = await fetch(`${this.baseUrl}/users/search/${search}`, {
       headers: {
+        authorization: this.getAuthorizationHeader(token),
         'Content-type': 'application/json',
       },
     });
