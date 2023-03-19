@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getUserSelector } from '../../../redux/slices/userSlice';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
@@ -14,15 +14,6 @@ function ProfileInner({ data }) {
   const {
     name, email, id,
   } = data;
-  const navigate = useNavigate();
-
-  const mySurveysInfoHandler = () => {
-    navigate('/mysurveys');
-  };
-
-  const surveysInfoHandler = () => {
-    navigate('/visited');
-  };
 
   return (
     <MainWrap>
@@ -43,14 +34,20 @@ function ProfileInner({ data }) {
           {' '}
           {id}
         </p>
-        <div>
-          <ButtonPurple onClick={mySurveysInfoHandler} type="button">
-            Мои опросы
-          </ButtonPurple>
+        <div className={styles.button}>
+          <Link to="/mysurveys">
+            <ButtonPurple type="button">
+              Мои опросы
+            </ButtonPurple>
+          </Link>
           {' '}
-          <ButtonPurple onClick={surveysInfoHandler} type="button">
-            Посещенные опросы
-          </ButtonPurple>
+          <Link to="/visited">
+            <ButtonPurple type="button">
+              Посещенные опросы
+            </ButtonPurple>
+          </Link>
+        </div>
+        <div className={styles.button}>
           <SignOutButton />
         </div>
       </div>
@@ -71,10 +68,8 @@ export function Profile() {
     queryKey: ['UserFetch', userId],
     queryFn: () => teamProjectApi.getUserById(userId),
   });
-  console.log({ data });
 
   useEffect(() => {
-    console.log('UserPage', { userId });
     if (!userId) navigate('/signin');
   }, [userId]);
 

@@ -18,6 +18,7 @@ import { ThankYouForVotingMessage }
   from '../../molecules/ThankYouForVotingMessage/ThankYouForVotingMessage';
 import { SurveyTypeInfo } from '../../atoms/SurveyTypeInfo/SurveyTypeInfo';
 import { UC } from '../../../utils/constants';
+import { SurveyTotalVotes } from '../../atoms/SurveyTotalVotes/SurveyTotalVotes';
 
 export function UniqueChoiceSurveyPage() {
   const { surveyId } = useParams();
@@ -92,6 +93,7 @@ export function UniqueChoiceSurveyPage() {
       </MainWrap>
     );
   }
+  const votesTotal = survey.done.length;
   return (
     <MainWrap>
       <div className={styles.surveyPage}>
@@ -142,6 +144,7 @@ export function UniqueChoiceSurveyPage() {
             );
           }}
         </Formik>
+        <SurveyTotalVotes counter={votesTotal} />
       </div>
     </MainWrap>
   );

@@ -1,5 +1,15 @@
 .profilePage {
-  background-color: #ddd;
-  min-height: calc(100vh - 150px);
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.profilePage h1 {
+  margin-bottom: 40px;
+}
+
+.button {
+  margin-top: 40px;
 }

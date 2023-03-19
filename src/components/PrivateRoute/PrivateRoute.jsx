@@ -10,8 +10,6 @@ import {
 } from '../../redux/slices/userSlice';
 
 export const PrivateRoute = ({ children }) => {
-  // console.log('>>>>>>>>>>>>>>>>>>>>>> PrivateRoute <<<<<<<<<<<<<<<<<<<<<');
-
   const accessToken = useSelector(getAccessTokenSelector);
   const refreshToken = useSelector(getRefreshTokenSelector);
   const { id: userId } = useSelector(getUserSelector);
@@ -38,6 +36,12 @@ export const PrivateRoute = ({ children }) => {
 
   if (isError) {
     console.log('Произошла ошибка при обновлении токенов', error);
+    dispatch(signOut());
+    return navigate('/signin', {
+      state: {
+        from: pathname,
+      },
+    });
   }
   if (isLoading) {
     // console.log('teamProjectApi.refreshToken isLoading');
@@ -71,11 +75,8 @@ export const PrivateRoute = ({ children }) => {
         const now = Date.now();
 
         if (expAccess > now && expRefresh > now) {
-          // console.log('start after:', expAccess - now);
-
           timeoutId = window.setTimeout(async () => {
             const data = await mutateAsync(mutationValues);
-            // console.log({ data, now });
             if (data) {
               return dispatch(refreshTokens(data));
             }
@@ -88,7 +89,6 @@ export const PrivateRoute = ({ children }) => {
         if (expAccess < now && expRefresh > now) {
           if (timeoutId) window.clearTimeout(timeoutId);
           const data = await mutateAsync(mutationValues);
-          // console.log({ data });
           if (data) {
             return dispatch(refreshTokens(data));
           }

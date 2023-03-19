@@ -1,0 +1,23 @@
+.tool {
+  position: relative;
+  color: var(--card-grey-color);
+}
+
+.tip {
+  position: absolute;
+  top: -2rem;
+  right: -10rem;
+  background-color: white;
+  border: 1px solid var(--bc-pale-gray);
+  border-radius: 10px;
+  color: var(--card-grey-color);
+  padding: 0.2rem 0.5rem;
+  visibility: hidden;
+  transition: opacity .2s, visibility .5s, color .2s;
+}
+
+.tool:hover .tip {
+  visibility: visible;
+  color: var(--text-purple-color);
+  opacity: 1;
+}
