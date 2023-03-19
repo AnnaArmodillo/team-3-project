@@ -10,8 +10,10 @@ import {
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
 import { MC } from '../../../utils/constants';
+import { getOptionSuccessRate } from '../../../utils/helper';
 import { takeMCSurveyValidationScheme } from '../../../utils/validators';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
+import { SurveyOptionResult } from '../../atoms/SurveyOptionResult/SurveyOptionResult';
 import { SurveyTotalVotes } from '../../atoms/SurveyTotalVotes/SurveyTotalVotes';
 import { SurveyTypeInfo } from '../../atoms/SurveyTypeInfo/SurveyTypeInfo';
 import { withQuery } from '../../HOCs/withQuery';
@@ -103,12 +105,19 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
                   className={styles.optionsWrapper}
                 >
                   {mcSurvey.options.map((option) => (
-                    <OptionCard
-                      key={option.optionId}
-                      option={option}
-                      isAvailable={isAvailable()}
-                      surveyType="MC"
-                    />
+                    <div key={option.optionId} className={styles.option}>
+                      <div className={styles.optionCard}>
+                        <OptionCard
+                          option={option}
+                          isAvailable={isAvailable()}
+                          surveyType={MC}
+                        />
+                      </div>
+                      <SurveyOptionResult
+                        successRate={getOptionSuccessRate(option.checked.length, votesTotal)}
+                        votesNumber={option.checked.length}
+                      />
+                    </div>
                   ))}
                 </div>
                 <ErrorMessage
@@ -116,12 +125,14 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
                   name="checked"
                   component="div"
                 />
-                <ButtonPurple
-                  type="submit"
-                  disabled={!isValid || !isAvailable()}
-                >
-                  Подтвердить выбор
-                </ButtonPurple>
+                <div className={styles.btnWr}>
+                  <ButtonPurple
+                    type="submit"
+                    disabled={!isValid || !isAvailable()}
+                  >
+                    Подтвердить выбор
+                  </ButtonPurple>
+                </div>
               </Form>
             );
           }}
