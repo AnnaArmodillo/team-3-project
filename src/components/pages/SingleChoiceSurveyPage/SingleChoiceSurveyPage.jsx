@@ -10,6 +10,7 @@ import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
 import { takeSurveyValidationScheme } from '../../../utils/validators';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
+import { SurveyTotalVotes } from '../../atoms/SurveyTotalVotes/SurveyTotalVotes';
 import { withQuery } from '../../HOCs/withQuery';
 import { Loader } from '../../Loader/Loader';
 import { OptionCard } from '../../organisms/OptionCard/OptionCard';
@@ -20,6 +21,8 @@ function SingleChoiceSurveyPageInner({ scSurvey, surveyId, accessToken }) {
   const { id: userId } = useSelector(getUserSelector);
   const queryClient = useQueryClient();
   if (!scSurvey) console.log('No scData');
+
+  const votesTotal = scSurvey.done.length;
 
   const {
     mutateAsync: sendSurveyResponse, isError, error, isLoading,
@@ -108,6 +111,7 @@ function SingleChoiceSurveyPageInner({ scSurvey, surveyId, accessToken }) {
             );
           }}
         </Formik>
+        <SurveyTotalVotes counter={votesTotal} />
       </div>
     </MainWrap>
   );
