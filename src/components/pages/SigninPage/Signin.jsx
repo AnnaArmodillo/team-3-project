@@ -10,8 +10,9 @@ import styles from './signin.module.css';
 import { setUser } from '../../../redux/slices/userSlice';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import { Loader } from '../../Loader/Loader';
-import { ButtonWhite } from '../../atoms/ButtonWhite/ButtonWhite';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
+import { RequiredFieldTooltip } from '../../molecules/RequiredFieldTooltip/RequiredFieldTooltip';
+import { ButtonGrey } from '../../atoms/ButtonGrey/ButtonGrey';
 
 export function Signin() {
   const dispatch = useDispatch();
@@ -79,10 +80,7 @@ export function Signin() {
             <div className={styles.Form_Group}>
               <p className={styles.Form_Label}>
                 Электронная почта
-                <span><sup>&#9913;</sup></span>
-                <span className={styles.mustHave__description}>
-                  Этот элемент является обязательным
-                </span>
+                <RequiredFieldTooltip />
               </p>
               <Field
                 name="email"
@@ -100,10 +98,7 @@ export function Signin() {
             <div className={styles.Form_Group}>
               <p className={styles.Form_Label}>
                 Пароль
-                <span><sup>&#9913;</sup></span>
-                <span className={styles.mustHave__description}>
-                  Этот элемент является обязательным
-                </span>
+                <RequiredFieldTooltip />
               </p>
               <Field
                 name="password"
@@ -125,12 +120,12 @@ export function Signin() {
               >
                 Войти
               </ButtonPurple>
-              <ButtonWhite
+              <ButtonGrey
                 type="reset"
                 disabled={isLoading}
               >
                 Сбросить
-              </ButtonWhite>
+              </ButtonGrey>
             </div>
           </Form>
         </Formik>
