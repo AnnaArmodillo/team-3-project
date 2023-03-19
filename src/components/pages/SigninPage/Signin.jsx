@@ -28,7 +28,6 @@ export function Signin() {
   });
 
   if (isError) {
-    console.log('Произошла ошибка при входе в приложение', error);
     return (
       <MainWrap>
         <div className={styles.signupPage}>

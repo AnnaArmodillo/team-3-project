@@ -1,0 +1,11 @@
+.votes {
+  font-size: small;
+  color: var(--card-grey-color);
+  height: 2rem;
+}
+
+.votes:hover {
+  font-size: large;
+  color: var(--text-purple-color);
+  transition: 0.5s;
+}
