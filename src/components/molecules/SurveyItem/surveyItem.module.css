@@ -8,7 +8,7 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 15px;
-    cursor: context-menu;
+    cursor: pointer;
 }
 
 .surveyItem:hover {
