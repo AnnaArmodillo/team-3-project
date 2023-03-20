@@ -180,6 +180,14 @@ export function InvitationPage() {
                           <div className={styles.validationMessage}>
                             {`Пользователь с email ${search} 
                         не найден. Вы можете пригласить его пройти опрос по прямой ссылке`}
+                            <button
+                              type="button"
+                              title="копировать ссылку"
+                              className={styles.buttonCopy}
+                              onClick={() => navigator.clipboard.writeText(surveyId)}
+                            >
+                              <i className="fa-solid fa-copy" />
+                            </button>
                           </div>
                           )}
                         </div>
