@@ -61,7 +61,7 @@ export function OptionCard({ option, isAvailable, surveyType }) {
 
   if (surveyType === MC) {
     return (
-      <div className={styles.checkboxWr}>
+      <>
         <Field
           type="checkbox"
           name="checked"
@@ -95,7 +95,7 @@ export function OptionCard({ option, isAvailable, surveyType }) {
             )}
           </div>
         </label>
-      </div>
+      </>
     );
   }
 
