@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import {
-  getAccessTokenSelector, getUserSelector,
+  getAccessTokenSelector,
 } from '../../../redux/slices/userSlice';
 import { ArrowLeft } from '../../atoms/ArrowLeft/ArrowLeft';
 import { withQuery } from '../../HOCs/withQuery';
@@ -11,15 +11,15 @@ import { SurveyItem } from '../../molecules/SurveyItem/SurveyItem';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './visitedSurveys.module.css';
 
-const VisitedSurveysInner = withQuery(({ data }) => {
-  const user = useSelector(getUserSelector);
+const VisitedSurveysInner = withQuery(({ visitedSurveys }) => {
+  // const user = useSelector(getUserSelector);
   const navigate = useNavigate();
   const clickBackHandler = () => {
     navigate(-1);
   };
 
-  const visitedSurveys = data.filter((survey) => survey.author !== user.id);
-
+  // const visitedSurveys = data.filter((survey) => survey.author !== user.id);
+  console.log({ visitedSurveys });
   return (
     <MainWrap>
       <section className={styles.visitedSurveys}>
@@ -56,7 +56,7 @@ export function VisitedSurveys() {
 
   return (
     <VisitedSurveysInner
-      data={data}
+      visitedSurveys={data}
       isLoading={isLoading}
       // isFetching={isFetching}
       isError={isError}

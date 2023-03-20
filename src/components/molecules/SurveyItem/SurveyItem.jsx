@@ -8,12 +8,12 @@ import styles from './surveyItem.module.css';
 import { MC, SC, UC } from '../../../utils/constants';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 
-export function SurveyItem({ survey }) {
+export function SurveyItem({ survey, isUserAuthor = false }) {
   const user = useSelector(getUserSelector);
   const accessToken = useSelector(getAccessTokenSelector);
 
   const isUserDone = survey.done.find((userId) => userId === user.id);
-  const isUserAuthor = survey.author === user.id;
+  // const isUserAuthor = survey.author === user.id;
 
   const client = useQueryClient();
   const {

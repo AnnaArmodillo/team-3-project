@@ -16,6 +16,8 @@ function MySurveysInner({ mySurveys }) {
     navigate(-1);
   };
 
+  const isUserAuthor = true;
+
   return (
     <MainWrap>
       <section className={styles.mySurveys}>
@@ -31,7 +33,7 @@ function MySurveysInner({ mySurveys }) {
         {!!mySurveys.length && (
           <div className={styles.listSurveys}>
             {mySurveys.map((survey) => (
-              <SurveyItem key={survey.surveyId} survey={survey} />
+              <SurveyItem key={survey.surveyId} survey={survey} isUserAuthor={isUserAuthor} />
             ))}
           </div>
         )}
