@@ -175,11 +175,11 @@ export function NewSurveyCreating() {
               Новый опрос
             </ButtonPurple>
           </div>
-          <Link to="/invitation">
+          {/* <Link to="/invitation">
             <ButtonPurple>
               Пригласить других пользователей пройти опрос
             </ButtonPurple>
-          </Link>
+          </Link> */}
         </div>
         <div className={styles.surveyImage}>
           <img
