@@ -15,6 +15,7 @@ import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import { Loader } from '../../Loader/Loader';
 import styles from './invitationPage.module.css';
 import { getSurveySelector } from '../../../redux/slices/surveySlice';
+import { getQueryKey } from '../../../utils/constants';
 
 export function InvitationPage() {
   const surveyId = useSelector(getSurveySelector);
@@ -56,7 +57,7 @@ export function InvitationPage() {
     return false;
   }
   const { isFetching, isError } = useQuery({
-    queryKey: ['allUsers', search],
+    queryKey: getQueryKey(search),
     queryFn: () => teamProjectApi.getUserByEmail(search, token),
     enabled: isQueryEnabled(),
   });
