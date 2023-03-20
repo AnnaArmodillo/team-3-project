@@ -29,27 +29,8 @@ export const signInFormValidationSchema = Yup.object({
     .required('Не заполнено обязательное поле "Пароль"'),
 });
 
-export const newSurveyValidationScheme = Yup.object({
-  surveyTitle: Yup.string()
-    .min(2, 'Заголовок должен состоять минимум из двух символов')
-    .max(100, 'Заголовок должен содержать не более 100 символов')
-    .required('Заголовок опроса является обязательным полем'),
-  surveyType: Yup.string()
-    .required('Тип опроса является обязательным полем'),
-  options: Yup.array(
-    Yup.object({
-      optionTitle: Yup.string().required(
-        'Заголовок ответа является обязательным полем',
-      )
-        .test('not empty', (value) => value !== ''),
-      activeLink: Yup.string().url('Необходимо указать корректную ссылку для просмотра'),
-    }),
-  ),
-});
-
 export const takeSurveyValidationScheme = Yup.object({
-  checked: Yup.string()
-    .required('Ответ не выбран'),
+  checked: Yup.string().required('Ответ не выбран'),
 });
 
 export const takeMCSurveyValidationScheme = Yup.object({
@@ -58,13 +39,30 @@ export const takeMCSurveyValidationScheme = Yup.object({
     .min(1, 'Необходимо выбрать хотя бы один ответ'),
 });
 
+export const newSurveyValidationScheme = Yup.object({
+  surveyTitle: Yup.string()
+    .min(2, 'Заголовок должен состоять минимум из двух символов')
+    .max(100, 'Заголовок должен содержать не более 100 символов')
+    .required('Заголовок опроса является обязательным полем'),
+  surveyType: Yup.string().required('Тип опроса является обязательным полем'),
+  options: Yup.array(
+    Yup.object({
+      optionTitle: Yup.string()
+        .required('Заголовок ответа является обязательным полем')
+        .test('not empty', (value) => value !== ''),
+      activeLink: Yup.string().url(
+        'Необходимо указать корректную ссылку для просмотра',
+      ),
+    }),
+  ),
+});
+
 export const InviteUsersValidationScheme = Yup.object({
   users: Yup.array(
     Yup.object({
       email: Yup.string()
         .email('Некорректный адрес электронной почты')
-        .required('Не указан адрес электронной почты')
-        .typeError('Необходимо указать хотя бы одного пользователя'),
+        .required('Не указан адрес электронной почты'),
     }),
   ),
 });
