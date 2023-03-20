@@ -206,7 +206,7 @@ button {
 
 .surveyLink {
   font-size: 20px;
-  margin: 40px 0;
+  margin: 40px 0 0 0;
   text-align: left;
 }
 
@@ -219,4 +219,8 @@ button {
   display: flex;
   margin-bottom: 20px;
   gap: 20px;
+}
+
+.copyButton {
+  margin-bottom: 20px;
 }
