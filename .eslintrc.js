@@ -32,5 +32,13 @@ module.exports = {
     'react/jsx-no-bind': 0,
     'dot-notation': 0,
     'jsx-a11y/label-has-associated-control': 0,
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: false,
+        optionalDependencies: false,
+        peerDependencies: false,
+      },
+    ],
   },
 };

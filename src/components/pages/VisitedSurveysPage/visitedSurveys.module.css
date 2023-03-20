@@ -1,0 +1,18 @@
+.visitedSurveys {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.listSurveys {
+    display: grid;
+    grid-template-columns: repeat(2, calc(50% - 15px));;
+    gap: 30px;
+}

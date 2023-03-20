@@ -1,0 +1,15 @@
+.profilePage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.profilePage h1 {
+  margin-bottom: 40px;
+}
+
+.button {
+  margin-top: 40px;
+}

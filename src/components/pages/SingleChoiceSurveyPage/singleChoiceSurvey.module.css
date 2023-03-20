@@ -1,0 +1,49 @@
+.singleChoiceSurveyPage {
+  min-height: calc(100vh - 280px);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+  
+.optionsWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+  
+.validationMessage {
+  color: brown;
+  font-size: 20px;
+  margin-top: 12px;
+}
+  
+.message {
+  text-align: center;
+  font-size: 40px;
+  margin: 40px 0 0 40px;
+}
+
+.option {
+  display: flex;
+  gap: 1rem;
+}
+
+.optionCard {
+  width: calc(80% - 1rem);
+}
+
+.btnWr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

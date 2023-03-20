@@ -1,70 +1,36 @@
-# Getting Started with Create React App
+# Проект Armodillo или ЦентрИзбирКом для вашей домашней демократии
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Этот проект создавался на основе [React](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Доступные скрипты
 
-In the project directory, you can run:
+В директории проекта можно запустить:
 
 ### `npm start`
+Запускает приложение в режиме разработки.\
+Откройте [http://localhost:3000](http://localhost:3000) для просмотра в вашем браузере.
+Страница перезапускается при внесении изменений в код.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Backend
+Во вложенной директории ```backend``` расположен сервер для проекта. Там можно выполнить команды ```npm start``` для запуска бэкенд сервера или ```npm run dev``` для запуска сервера через nodemon. 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Основной функционал проекта
 
-### `npm test`
+- Главная страница проекта. Ответственный исполнитель: @KatlinBulycheva
+- Страница создания опроса. Ответственный исполнитель: @AnnaArmodillo
+- Страница входа в приложение. Ответственный исполнитель: @DYAlex
+- Страница регистрации в приложении. Ответственный исполнитель: @DYAlex
+- Страница профиля. Ответственный исполнитель: @lev33
+- Страница опросов, созданных текущим пользователем. Ответственный исполнитель: @lev33
+- Страница опросов других авторов, которые посещал текущий пользователь.Ответственный исполнитель: @KatlinBulycheva
+- Страница опроса, в котором можно выбрать только один вариант ответа, если его никто до этого не выбрал (примерно как забронировать определенное место, чтобы никто другой уже не мог на него сесть). Ответственный исполнитель: @AnnaArmodillo
+- Страница опроса, в котором можно выбрать только один вариант ответа на вопрос. Ответственный исполнитель: @DYAlex
+- Страница опроса, в котором можно выбрать несколько вариантов ответа на вопрос. Ответственный исполнитель: @DYAlex
+- Страница контактов разработчиков. Ответственный исполнитель: @KatlinBulycheva
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## План развития проекта
+- Возможность удалить свой аккаунт
+- Возможность приглашать к опросу и получать приглашения внутри приложения
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Известные баги
+-  [WONTFIX] При загрузке изображения на бэкенд сервере идет проверка только по mimetype, что может привести к потенциальным проблемам в плане безопасности. Разработка этого сервера не входит в задачи команды по фронтенду и потому работы по исправлению здесь вестись не будут. 

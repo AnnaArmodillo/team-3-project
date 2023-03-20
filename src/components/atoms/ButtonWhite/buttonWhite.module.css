@@ -1,0 +1,10 @@
+@import url("../../../variables.css");
+
+.button {
+    background-color: white;
+    color: var(--text-purple-color);
+}
+
+.button:hover {
+    box-shadow: 2px 2px var(--box-shadow-color);
+}

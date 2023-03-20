@@ -1,0 +1,15 @@
+.containerLogo {
+    height: max-content;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.containerLogo img {
+    height: 40px;
+}
+
+.containerLogo h2 {
+    margin: 0;
+}
