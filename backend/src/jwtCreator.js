@@ -18,9 +18,6 @@ function createRefreshToken(payload) {
 }
 
 const checkToken = (token) => {
-  // console.log('jwt.decode(token, process.env.JWT_SECRET)');
-  // const test = jwt.decode(token, process.env.JWT_SECRET);
-  // console.log({ test });
   // поскольку у нас из токена забирается только id, то можно использовать метод decode, а не verify. jwt.verify блокирует функционал приложения при проверке просроченного токена.
   try {
     return jwt.decode(token, process.env.JWT_SECRET);
