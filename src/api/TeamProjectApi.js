@@ -330,7 +330,7 @@ class TeamProjectApi {
         Попробуйте сделать запрос позже. Status: ${res.status}`);
     }
 
-    return res.json();
+    return res;
   }
 
   async uploadFile(formData, token) {

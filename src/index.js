@@ -21,7 +21,7 @@ import { MultipleChoiceSurveyPage }
 import { UniqueChoiceSurveyPage }
   from './components/pages/UniqueChoiceSurveyPage/UniqueChoiceSurveyPage';
 import { VisitedSurveys } from './components/pages/VisitedSurveysPage/VisitedSurveys';
-import { InvitationPage } from './components/pages/InvitationPage/InvitationPage';
+// import { InvitationPage } from './components/pages/InvitationPage/InvitationPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -69,14 +69,14 @@ const Router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: 'invitation',
-        element: (
-          <PrivateRoute>
-            <InvitationPage />
-          </PrivateRoute>
-        ),
-      },
+      // {
+      //   path: 'invitation',
+      //   element: (
+      //     <PrivateRoute>
+      //       <InvitationPage />
+      //     </PrivateRoute>
+      //   ),
+      // },
       {
         path: 'mysurveys',
         element: (
