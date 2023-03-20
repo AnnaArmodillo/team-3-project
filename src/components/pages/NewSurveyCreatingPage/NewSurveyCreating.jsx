@@ -19,6 +19,7 @@ import surveyImage from '../../../images/survey_orange.png';
 import { getSurveyURL } from '../../../utils/helper';
 import { FormSaver } from '../../organisms/FormSaver/FormSaver';
 import { setSurvey } from '../../../redux/slices/surveySlice';
+import { MC, SC, UC } from '../../../utils/constants';
 
 export function NewSurveyCreating() {
   const token = useSelector(getAccessTokenSelector);
@@ -239,11 +240,11 @@ export function NewSurveyCreating() {
                 <Field
                   type="radio"
                   name="surveyType"
-                  value="SC"
-                  id="SC"
+                  value={SC}
+                  id={SC}
                 />
                 <label
-                  htmlFor="SC"
+                  htmlFor={SC}
                   className={styles.typeCard}
                 >
                   <div className={styles.typeTitle}>Единственный выбор</div>
@@ -255,11 +256,11 @@ export function NewSurveyCreating() {
                 <Field
                   type="radio"
                   name="surveyType"
-                  value="MC"
-                  id="MC"
+                  value={MC}
+                  id={MC}
                 />
                 <label
-                  htmlFor="MC"
+                  htmlFor={MC}
                   className={styles.typeCard}
                 >
                   <div className={styles.typeTitle}>Множественный выбор</div>
@@ -271,11 +272,11 @@ export function NewSurveyCreating() {
                 <Field
                   type="radio"
                   name="surveyType"
-                  value="UC"
-                  id="UC"
+                  value={UC}
+                  id={UC}
                 />
                 <label
-                  htmlFor="UC"
+                  htmlFor={UC}
                   className={styles.typeCard}
                 >
                   <div className={styles.typeTitle}>Уникальный выбор</div>
