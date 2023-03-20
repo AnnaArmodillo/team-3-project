@@ -1,11 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import {
-  getAccessTokenSelector,
-  getUserSelector,
+  getAccessTokenSelector, getUserSelector,
 } from '../../../redux/slices/userSlice';
 import { ArrowLeft } from '../../atoms/ArrowLeft/ArrowLeft';
 import { withQuery } from '../../HOCs/withQuery';
@@ -13,11 +11,14 @@ import { SurveyItem } from '../../molecules/SurveyItem/SurveyItem';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './visitedSurveys.module.css';
 
-const VisitedSurveysInner = withQuery(({ visitedSurveys }) => {
+const VisitedSurveysInner = withQuery(({ data }) => {
+  const user = useSelector(getUserSelector);
   const navigate = useNavigate();
   const clickBackHandler = () => {
     navigate(-1);
   };
+
+  const visitedSurveys = data.filter((survey) => survey.author !== user.id);
 
   return (
     <MainWrap>
@@ -28,7 +29,7 @@ const VisitedSurveysInner = withQuery(({ visitedSurveys }) => {
         </div>
         {!visitedSurveys.length && (
           <p>
-            Здесь появятся опросы, в которых вы проголосуете или просто просмотрите
+            Здесь появятся просмотренные опросы
           </p>
         )}
         {!!visitedSurveys.length && (
@@ -45,26 +46,19 @@ const VisitedSurveysInner = withQuery(({ visitedSurveys }) => {
 
 export function VisitedSurveys() {
   const accessToken = useSelector(getAccessTokenSelector);
-  const user = useSelector(getUserSelector);
-  const userId = user.id;
-  const navigate = useNavigate();
 
   const {
-    data, isLoading, isFetching, isError, error, refetch,
+    data, isLoading, isError, error, refetch,
   } = useQuery({
     queryKey: ['VisitedSurveysFetch'],
     queryFn: () => teamProjectApi.getVisitedSurveys(accessToken),
   });
 
-  useEffect(() => {
-    if (!userId) navigate('/signin');
-  }, [userId]);
-
   return (
     <VisitedSurveysInner
-      visitedSurveys={data}
+      data={data}
       isLoading={isLoading}
-      isFetching={isFetching}
+      // isFetching={isFetching}
       isError={isError}
       error={error}
       refetch={refetch}
