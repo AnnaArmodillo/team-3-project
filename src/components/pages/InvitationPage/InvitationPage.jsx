@@ -15,7 +15,7 @@ import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import { Loader } from '../../Loader/Loader';
 import styles from './invitationPage.module.css';
 import { getSurveySelector } from '../../../redux/slices/surveySlice';
-import { getQueryKey } from '../../../redux/constants';
+import { getQueryKey } from '../../../utils/constants';
 
 export function InvitationPage() {
   const surveyId = useSelector(getSurveySelector);
