@@ -7,8 +7,8 @@ export function Footer() {
       <Link to="./contacts">
         <div className={styles.footerItem}>Контакты</div>
       </Link>
-      <Link to="./contacts">
-        <div className={styles.footerItem}>Отзывы</div>
+      <Link to="./surveys">
+        <div className={styles.footerItem}>Все опросы</div>
       </Link>
       <Link to="./contacts">
         <div className={styles.footerItem}>Справка</div>

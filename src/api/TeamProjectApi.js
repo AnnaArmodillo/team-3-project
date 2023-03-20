@@ -409,6 +409,18 @@ class TeamProjectApi {
 
     return res;
   }
+
+  async getAllSurveys() {
+    const res = await fetch(`${this.baseUrl}/surveys/`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (res.status === 500) {
+      throw new Error('Произошла внутренняя ошибка сервера. Не удалось получить данные опросов');
+    }
+    return res.json();
+  }
 }
 
 export const teamProjectApi = new TeamProjectApi({
