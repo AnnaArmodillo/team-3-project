@@ -4,6 +4,7 @@ import { getUserIdFromToken, updateDB } from '../helper.js';
 function sendInvitations(req, res) {
   try {
     const { users, surveyId } = req.body;
+    console.log(users)
     const token = req.headers.authorization.split(' ')[1];
     const userID = getUserIdFromToken(token);
     try {

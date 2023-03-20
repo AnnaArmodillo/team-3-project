@@ -1,7 +1,8 @@
 /* eslint-disable react/no-array-index-key */
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
-  ErrorMessage, Field, FieldArray, Form, Formik,
+  ErrorMessage,
+  Field, FieldArray, Form, Formik,
 } from 'formik';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -37,19 +38,23 @@ export function InvitationPage() {
     setSearchValue([...searchArray]);
   }
   function isQueryEnabled() {
-    if (!!token && !!search) {
+    if (!token) {
+      return false;
+    }
+    const regExp = '[a-z0-9]+@[a-z]+\\.[a-z]{2,3}';
+    const userData = search.match(regExp);
+    if (userData) {
       return true;
     }
     return false;
   }
   const {
-    data: users,
     isFetching,
     isError,
     error,
   } = useQuery({
     queryKey: ['allUsers', search],
-    queryFn: () => teamProjectApi.getUsersByEmail(search, token),
+    queryFn: () => teamProjectApi.getUserByEmail(search, token),
     enabled: isQueryEnabled(),
   });
   const {
@@ -57,6 +62,7 @@ export function InvitationPage() {
     isError: isErrorInvite,
     error: errorInvite,
     isLoading: isLoadingInvite,
+    isSuccess,
   } = useMutation({
     mutationFn: (values) => teamProjectApi.sendInvitations(values, token),
   });
@@ -64,27 +70,46 @@ export function InvitationPage() {
     const invitations = { ...values, surveyId };
     await mutateAsync(invitations);
   }
-  const debouncedSearchValue = useDebounce(searchValue[currentIndex] || '', 1000);
+  const debouncedSearchValue = useDebounce(
+    searchValue[currentIndex] || '',
+    1500,
+  );
   useEffect(() => {
     setSearch(debouncedSearchValue);
   }, [debouncedSearchValue]);
-  useEffect(() => {
-    if (typeof users === 'string') {
-      console.log(users);
-      console.log({ currentIndex });
-      const searchArray = [...searchValue];
-      searchArray[currentIndex] = users;
-      setSearchValue([...searchArray]);
-      setSearch('');
-    }
-  }, [users]);
-  console.log(searchValue[currentIndex]);
-  console.log(search);
-  console.log(isErrorInvite, isLoadingInvite, errorInvite);
+  if (isLoadingInvite) {
+    return (
+      <MainWrap>
+        <div className={styles.invitationPage}>
+          <Loader />
+        </div>
+      </MainWrap>
+    );
+  }
+  if (isErrorInvite) {
+    return (
+      <MainWrap>
+        <div className={styles.invitationPage}>
+          <div className={styles.errorMessage}>{errorInvite.message}</div>
+        </div>
+      </MainWrap>
+    );
+  }
+  if (isSuccess) {
+    return (
+      <MainWrap>
+        <div className={styles.invitationPage}>
+          <div className={styles.successMessage}>Приглашения успешно отправлены</div>
+        </div>
+      </MainWrap>
+    );
+  }
   return (
     <MainWrap>
       <div className={styles.invitationPage}>
-        <h1 className={styles.pageTitle}>Пригласить других пользователей пройти опрос</h1>
+        <h1 className={styles.pageTitle}>
+          Пригласить других пользователей пройти опрос
+        </h1>
         <Formik
           initialValues={{
             users: [usersGroup],
@@ -95,9 +120,7 @@ export function InvitationPage() {
           }}
         >
           {({ values, isValid, setFieldValue }) => (
-            <Form
-              className={styles.formWrapper}
-            >
+            <Form className={styles.formWrapper}>
               <FieldArray name="users">
                 {({ push, remove }) => (
                   <div className={styles.usersWrapper}>
@@ -106,59 +129,50 @@ export function InvitationPage() {
                         className={styles.user}
                         key={index}
                       >
-                        <div className={styles.inputWrapper}>
-                          <Field
-                            type="email"
-                            name={`users.${index}.email`}
-                            placeholder="укажите email пользователя"
-                            className={styles.field}
-                            value={searchValue[index] || ''}
-                            onChange={(event) => changeSearchHandler(event, index)}
-                            list="emails"
-                            onBlur={() => setFieldValue(`users.${index}.email`, searchValue[index])}
-                          />
-                          {users && typeof users === 'object' && (
-                            <datalist
-                              id="emails"
+                        <div className={styles.userInputWrapper}>
+                          <div className={styles.inputWrapper}>
+                            <Field
+                              type="email"
+                              name={`users.${index}.email`}
+                              placeholder="укажите email пользователя"
+                              className={styles.field}
+                              value={searchValue[index] || ''}
+                              onChange={(event) => changeSearchHandler(event, index)}
+                              onBlur={() => setFieldValue(
+                                `users.${index}.email`,
+                                searchValue[index],
+                              )}
+                            />
+                            <button
+                              type="button"
+                              title="очистить поле"
+                              onClick={() => clearSearchValue(index)}
+                              className={styles.buttonClear}
                             >
-                              {users
-                                && users.map((user) => (
-                                  <option
-                                    key={user}
-                                    value={user}
-                                  >
-                                    {user}
-                                  </option>
-                                ))}
-                            </datalist>
-                          )}
-                          <ErrorMessage
-                            className={styles.validationMessage}
-                            name={`users.${index}`}
-                            component="div"
-                          />
-                          <button
-                            type="button"
-                            title="очистить поле"
-                            onClick={() => clearSearchValue(index)}
-                            className={styles.buttonClear}
-                          >
-                            <i className="fa-solid fa-xmark" />
-                          </button>
+                              <i className="fa-solid fa-xmark" />
+                            </button>
+                          </div>
                         </div>
                         {index > 0 && (
-                          <ButtonGrey
-                            type="button"
-                            onClick={() => remove(index)}
-                          >
-                            Удалить
-                          </ButtonGrey>
+                          <div className={styles.buttonDelete}>
+                            <ButtonGrey
+                              type="button"
+                              onClick={() => remove(index)}
+                            >
+                              Удалить
+                            </ButtonGrey>
+                          </div>
                         )}
+                        <ErrorMessage
+                          className={styles.validationMessage}
+                          name={`users.${index}.email`}
+                          component="div"
+                        />
                       </div>
                     ))}
                     {isFetching && <Loader />}
                     {isError && (
-                    <div className={styles.errorMessage}>{error.message}</div>
+                      <div className={styles.errorMessage}>{error.message}</div>
                     )}
                     <ButtonPurple
                       type="button"
