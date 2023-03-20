@@ -3,6 +3,13 @@ import { surveysValidationSchema } from '../validators/surveysValidator.js';
 import { DB } from '../DB/db.js';
 import { getUserIdFromToken, updateDB } from '../helper.js';
 
+function getAllSurveys(req, res) {
+  try {
+    return res.json(DB.surveys);
+  } catch (error) {
+    return res.sendStatus(500);
+  }
+};
 function getSurveyById(req, res) {
   try {
     const token = req.headers.authorization.split(' ')[1];
@@ -147,5 +154,6 @@ export const surveysController = {
   addNewSurvey,
   getSurveyById,
   takeSurveyById,
-  deleteSurveyFromVisited
+  deleteSurveyFromVisited,
+  getAllSurveys,
 };
