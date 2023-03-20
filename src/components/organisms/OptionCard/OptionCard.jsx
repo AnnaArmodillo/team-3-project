@@ -79,8 +79,9 @@ export function OptionCard({ option, isAvailable, surveyType }) {
             <Link
               to={option.activeLink}
               className={styles.link}
+              target="_blank"
             >
-              {option.activeLink}
+              Нажать для просмотра
             </Link>
           </div>
           <div className={styles.image}>
@@ -117,8 +118,9 @@ export function OptionCard({ option, isAvailable, surveyType }) {
           <Link
             to={option.activeLink}
             className={styles.link}
+            target="_blank"
           >
-            {option.activeLink}
+            Нажать для просмотра
           </Link>
         </div>
         <div className={styles.image}>
