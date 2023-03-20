@@ -63,12 +63,14 @@ export function InvitationPage() {
   });
   const {
     mutateAsync,
+    data: users,
     isError: isErrorInvite,
     error: errorInvite,
     isLoading: isLoadingInvite,
-    isSuccess,
   } = useMutation({
-    mutationFn: (values) => teamProjectApi.sendInvitations(values, token),
+    mutationFn: (values) => teamProjectApi.sendInvitations(values, token)
+      .then((response) => response.json())
+      .then((res) => res),
   });
   async function valuesPrepareHandler(values) {
     const invitations = { ...values, surveyId };
@@ -99,12 +101,22 @@ export function InvitationPage() {
       </MainWrap>
     );
   }
-  if (isSuccess) {
+  if (users) {
     return (
       <MainWrap>
         <div className={styles.invitationPage}>
           <div className={styles.successMessage}>
-            Приглашения успешно отправлены
+            Приглашения успешно отправлены следующим пользователям:
+            {' '}
+            {users.usersSuccess.join(', ')}
+            .
+          </div>
+          <div className={styles.successMessage}>
+            Пользователи со следующими email не найдены:
+            {' '}
+            {users.usersFail.join(', ')}
+            {' '}
+            не найдены.
           </div>
         </div>
       </MainWrap>
