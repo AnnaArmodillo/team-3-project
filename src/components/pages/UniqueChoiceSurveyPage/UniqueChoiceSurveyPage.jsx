@@ -1,7 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Link, useLocation, useNavigate, useParams,
+} from 'react-router-dom';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import {
@@ -17,8 +19,9 @@ import { Loader } from '../../Loader/Loader';
 import { ThankYouForVotingMessage }
   from '../../molecules/ThankYouForVotingMessage/ThankYouForVotingMessage';
 import { SurveyTypeInfo } from '../../atoms/SurveyTypeInfo/SurveyTypeInfo';
-import { UC } from '../../../utils/constants';
+import { UC, getQueryKeyUCSurvey } from '../../../utils/constants';
 import { SurveyTotalVotes } from '../../atoms/SurveyTotalVotes/SurveyTotalVotes';
+import { setSurvey } from '../../../redux/slices/surveySlice';
 
 export function UniqueChoiceSurveyPage() {
   const { surveyId } = useParams();
@@ -27,6 +30,7 @@ export function UniqueChoiceSurveyPage() {
   const navigate = useNavigate();
   const { id } = useSelector(getUserSelector);
   const accessToken = useSelector(getAccessTokenSelector);
+  const dispatch = useDispatch();
   useEffect(() => {
     if (!accessToken) {
       navigate('/signin', {
@@ -41,7 +45,7 @@ export function UniqueChoiceSurveyPage() {
     isError: isErrorSurvey,
     isLoading: isLoadingSurvey,
   } = useQuery({
-    queryKey: ['survey', surveyId],
+    queryKey: getQueryKeyUCSurvey(surveyId),
     queryFn: () => teamProjectApi.getSurveyById(surveyId, accessToken),
   });
   const {
@@ -52,8 +56,19 @@ export function UniqueChoiceSurveyPage() {
   async function submitHandler(values) {
     await mutateAsync(values);
     queryClient.invalidateQueries({
-      queryKey: ['survey', surveyId],
+      queryKey: getQueryKeyUCSurvey(surveyId),
     });
+  }
+  useEffect(() => {
+    if (surveyId) {
+      dispatch(setSurvey(surveyId));
+    }
+  }, [surveyId]);
+  function isAuthor() {
+    if (survey.isAuthor === id) {
+      return true;
+    }
+    return false;
   }
   function isAvailable() {
     if (
@@ -145,6 +160,13 @@ export function UniqueChoiceSurveyPage() {
           }}
         </Formik>
         <SurveyTotalVotes counter={votesTotal} />
+        {isAuthor && (
+          <Link to="/invitation">
+            <ButtonPurple>
+              Пригласить других пользователей пройти этот опрос
+            </ButtonPurple>
+          </Link>
+        )}
       </div>
     </MainWrap>
   );

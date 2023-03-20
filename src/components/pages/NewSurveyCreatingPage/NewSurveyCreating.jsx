@@ -10,7 +10,6 @@ import { newSurveyValidationScheme } from '../../../utils/validators';
 import styles from './newSurveyCreating.module.css';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { ButtonGrey } from '../../atoms/ButtonGrey/ButtonGrey';
-import { ButtonWhite } from '../../atoms/ButtonWhite/ButtonWhite';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import { Loader } from '../../Loader/Loader';
@@ -20,6 +19,7 @@ import { getSurveyURL } from '../../../utils/helper';
 import { FormSaver } from '../../organisms/FormSaver/FormSaver';
 import { setSurvey } from '../../../redux/slices/surveySlice';
 import { MC, SC, UC } from '../../../utils/constants';
+import placeholderImage from '../../../images/placeholder_image.png';
 
 export function NewSurveyCreating() {
   const token = useSelector(getAccessTokenSelector);
@@ -189,11 +189,11 @@ export function NewSurveyCreating() {
               Новый опрос
             </ButtonPurple>
           </div>
-          {/* <Link to="/invitation">
+          <Link to="/invitation">
             <ButtonPurple>
               Пригласить других пользователей пройти опрос
             </ButtonPurple>
-          </Link> */}
+          </Link>
         </div>
         <div className={styles.surveyImage}>
           <img
@@ -365,12 +365,12 @@ export function NewSurveyCreating() {
                             onChange={handleChange}
                           />
                           {selectedFile !== '' && (
-                            <ButtonWhite
+                            <ButtonPurple
                               type="button"
                               onClick={() => uploadHandler(index)}
                             >
                               Загрузить файл
-                            </ButtonWhite>
+                            </ButtonPurple>
                           )}
                         </div>
                         <div
@@ -389,7 +389,7 @@ export function NewSurveyCreating() {
                             && !isLoadingUpload
                             && currentIndex !== index && (
                               <img
-                                src={imageContent[index] || ''}
+                                src={imageContent[index] || placeholderImage}
                                 alt="добавьте изображение"
                               />
                           )}
@@ -398,7 +398,7 @@ export function NewSurveyCreating() {
                           )}
                           {isLoadingUpload && currentIndex !== index && (
                             <img
-                              src={imageContent[index] || ''}
+                              src={imageContent[index] || placeholderImage}
                               alt="добавьте изображение"
                             />
                           )}
@@ -414,7 +414,7 @@ export function NewSurveyCreating() {
                           )}
                           {!isLoadingUpload && !isErrorUpload && (
                             <img
-                              src={imageContent[index] || ''}
+                              src={imageContent[index] || placeholderImage}
                               alt="добавьте изображение"
                             />
                           )}
