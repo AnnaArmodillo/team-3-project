@@ -8,7 +8,6 @@ function sendInvitations(req, res) {
     const userID = getUserIdFromToken(token);
     const usersSuccess = [];
     const usersFail = [];
-    console.log(users);
     try {
       users.map((userFromReq) => {
         const currentUser = DB.users.find(

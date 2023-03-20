@@ -16,6 +16,7 @@ import { Loader } from '../../Loader/Loader';
 import styles from './invitationPage.module.css';
 import { getSurveySelector } from '../../../redux/slices/surveySlice';
 import { getQueryKey } from '../../../utils/constants';
+import { getSurveyURL } from '../../../utils/helper';
 
 export function InvitationPage() {
   const surveyId = useSelector(getSurveySelector);
@@ -196,7 +197,7 @@ export function InvitationPage() {
                               type="button"
                               title="копировать ссылку"
                               className={styles.buttonCopy}
-                              onClick={() => navigator.clipboard.writeText(surveyId)}
+                              onClick={() => navigator.clipboard.writeText(getSurveyURL(surveyId))}
                             >
                               <i className="fa-solid fa-copy" />
                             </button>
