@@ -22,6 +22,7 @@ export function InvitationPage() {
   const surveyId = useSelector(getSurveySelector);
   const token = useSelector(getAccessTokenSelector);
   const [searchValue, setSearchValue] = useState([]);
+  const [errors, setErrors] = useState([]);
   const [search, setSearch] = useState('');
   const [currentIndex, setCurrentIndex] = useState('');
   const usersGroup = {
@@ -84,6 +85,14 @@ export function InvitationPage() {
   useEffect(() => {
     setSearch(debouncedSearchValue);
   }, [debouncedSearchValue]);
+  useEffect(() => {
+    if (isError) {
+      const errorsArray = [...errors];
+      errorsArray[currentIndex] = `Пользователь с email ${search} 
+      не найден. Вы можете пригласить его пройти опрос по прямой ссылке`;
+      setErrors([...errorsArray]);
+    }
+  }, [isError]);
   if (isLoadingInvite) {
     return (
       <MainWrap>
@@ -189,10 +198,9 @@ export function InvitationPage() {
                           className={styles.validationMessage}
                           name={`users.${index}.email`}
                         >
-                          {isError && index === currentIndex && (
+                          {errors[index] && (
                           <div className={styles.validationMessage}>
-                            {`Пользователь с email ${search} 
-                        не найден. Вы можете пригласить его пройти опрос по прямой ссылке`}
+                            {errors[index]}
                             <button
                               type="button"
                               title="копировать ссылку"
