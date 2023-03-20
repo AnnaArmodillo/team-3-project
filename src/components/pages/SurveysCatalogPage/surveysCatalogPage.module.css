@@ -1,0 +1,18 @@
+.surveysCatalogPage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.surveysCatalogContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.surveyWr {
+  max-width: calc(50% - 1rem);
+}
