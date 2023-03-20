@@ -61,7 +61,7 @@ export function OptionCard({ option, isAvailable, surveyType }) {
 
   if (surveyType === MC) {
     return (
-      <div className={styles.checkboxWr}>
+      <>
         <Field
           type="checkbox"
           name="checked"
@@ -79,8 +79,9 @@ export function OptionCard({ option, isAvailable, surveyType }) {
             <Link
               to={option.activeLink}
               className={styles.link}
+              target="_blank"
             >
-              {option.activeLink}
+              Нажать для просмотра
             </Link>
           </div>
           <div className={styles.image}>
@@ -95,7 +96,7 @@ export function OptionCard({ option, isAvailable, surveyType }) {
             )}
           </div>
         </label>
-      </div>
+      </>
     );
   }
 
@@ -117,8 +118,9 @@ export function OptionCard({ option, isAvailable, surveyType }) {
           <Link
             to={option.activeLink}
             className={styles.link}
+            target="_blank"
           >
-            {option.activeLink}
+            Нажать для просмотра
           </Link>
         </div>
         <div className={styles.image}>
