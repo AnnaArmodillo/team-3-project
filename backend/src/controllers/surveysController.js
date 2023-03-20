@@ -15,7 +15,6 @@ function getSurveyById(req, res) {
     const token = req.headers.authorization.split(' ')[1];
     const userID = getUserIdFromToken(token);
     const surveyId = req.params.surveyId;
-    console.log('DB.surveys', DB.surveys);
     const currentSurvey = DB.surveys.find(
       (survey) => survey.surveyId === surveyId
     );
