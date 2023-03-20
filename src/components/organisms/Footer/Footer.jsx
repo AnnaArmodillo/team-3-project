@@ -7,8 +7,12 @@ export function Footer() {
       <Link to="./contacts">
         <div className={styles.footerItem}>Контакты</div>
       </Link>
-      <div className={styles.footerItem}>Отзывы</div>
-      <div className={styles.footerItem}>Справка</div>
+      <Link to="./contacts">
+        <div className={styles.footerItem}>Отзывы</div>
+      </Link>
+      <Link to="./contacts">
+        <div className={styles.footerItem}>Справка</div>
+      </Link>
     </footer>
   );
 }

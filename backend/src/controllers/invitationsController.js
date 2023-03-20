@@ -9,7 +9,6 @@ function sendInvitations(req, res) {
     try {
       users.map((userFromReq) => {
         const currentUser = DB.users.find((user) => user.email === userFromReq.email);
-        console.log(currentUser)
         currentUser.invitations.push({
           survey: surveyId,
           fromUser: userID,

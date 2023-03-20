@@ -387,7 +387,6 @@ class TeamProjectApi {
   }
 
   async sendInvitations(values, token) {
-    console.log(values);
     this.checkToken(token);
     const res = await fetch(`${this.baseUrl}/invitations`, {
       method: 'PUT',
