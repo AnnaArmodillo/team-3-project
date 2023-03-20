@@ -55,7 +55,7 @@ class TeamProjectApi {
     return res.json();
   }
 
-  async getUsersByEmail(search, token) {
+  async getUserByEmail(search, token) {
     this.checkToken(token);
     const res = await fetch(`${this.baseUrl}/users/search/${search}`, {
       headers: {

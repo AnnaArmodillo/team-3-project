@@ -84,18 +84,12 @@ async function addNewUser(req, res) {
 function searchUserByEmail(req, res) {
   try {
     const userEmail = req.params.userEmail;
-    const resultUsers = DB.users.filter((user) => user.email.toLowerCase().indexOf(userEmail.toLowerCase()) > -1);
-    if (resultUsers.length) {
-      const resultEmails = resultUsers.map((user) => {
-        const { email } = user;
-        return email;
-      })
-      if(resultEmails.length === 1) {
-        return res.json(resultEmails[0]);
-      }
-      return res.json(resultEmails);
-    } else {
-      return res.status(404).json('Пользователь с таким email не найден');
+    const resultUser = DB.users.find((user) => user.email.toLowerCase() === userEmail);
+    try {
+      const {email} = resultUser;
+    return res.json(email);
+    } catch (error) {
+      return res.status(404).json(`Пользователь с email ${userEmail} не найден`);
     }
   } catch (error) {
     return res.sendStatus(500);
