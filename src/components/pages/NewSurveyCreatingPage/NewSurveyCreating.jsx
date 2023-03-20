@@ -172,7 +172,7 @@ export function NewSurveyCreating() {
             <div className={styles.copyButton}>
               <ButtonGrey
                 type="button"
-                onClick={() => navigator.clipboard.writeText(surveyId)}
+                onClick={() => navigator.clipboard.writeText(getSurveyURL(surveyId))}
               >
                 Копировать ссылку
               </ButtonGrey>
