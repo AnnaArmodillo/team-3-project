@@ -1,7 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
-  ErrorMessage,
   Field, FieldArray, Form, Formik,
 } from 'formik';
 import { useEffect, useState } from 'react';
@@ -37,6 +36,14 @@ export function InvitationPage() {
     searchArray[index] = '';
     setSearchValue([...searchArray]);
   }
+  function deleteWithOptionHandler(index) {
+    const searchArray = [...searchValue];
+    searchArray[index] = '';
+    setSearchValue([
+      ...searchArray.slice(0, index),
+      ...searchArray.slice(index + 1),
+    ]);
+  }
   function isQueryEnabled() {
     if (!token) {
       return false;
@@ -48,11 +55,7 @@ export function InvitationPage() {
     }
     return false;
   }
-  const {
-    isFetching,
-    isError,
-    error,
-  } = useQuery({
+  const { isFetching, isError } = useQuery({
     queryKey: ['allUsers', search],
     queryFn: () => teamProjectApi.getUserByEmail(search, token),
     enabled: isQueryEnabled(),
@@ -99,7 +102,9 @@ export function InvitationPage() {
     return (
       <MainWrap>
         <div className={styles.invitationPage}>
-          <div className={styles.successMessage}>Приглашения успешно отправлены</div>
+          <div className={styles.successMessage}>
+            Приглашения успешно отправлены
+          </div>
         </div>
       </MainWrap>
     );
@@ -157,23 +162,29 @@ export function InvitationPage() {
                           <div className={styles.buttonDelete}>
                             <ButtonGrey
                               type="button"
-                              onClick={() => remove(index)}
+                              onClick={() => {
+                                deleteWithOptionHandler(index);
+                                remove(index);
+                              }}
                             >
                               Удалить
                             </ButtonGrey>
                           </div>
                         )}
-                        <ErrorMessage
+                        <div
                           className={styles.validationMessage}
                           name={`users.${index}.email`}
-                          component="div"
-                        />
+                        >
+                          {isError && index === currentIndex && (
+                          <div className={styles.validationMessage}>
+                            {`Пользователь с email ${search} 
+                        не найден. Вы можете пригласить его пройти опрос по прямой ссылке`}
+                          </div>
+                          )}
+                        </div>
                       </div>
                     ))}
                     {isFetching && <Loader />}
-                    {isError && (
-                      <div className={styles.errorMessage}>{error.message}</div>
-                    )}
                     <ButtonPurple
                       type="button"
                       onClick={() => push(usersGroup)}
