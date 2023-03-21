@@ -14,3 +14,24 @@
 .surveyItem:hover {
     background: var(--bc-gradient);
 }
+
+.containerSubinfo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 50px;
+}
+
+.containerSubinfo span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.spanDelete {
+    cursor: pointer;
+}
+
+.spanDelete:hover {
+    text-decoration: underline var(--orange-color);
+    text-underline-position: under;
+}
