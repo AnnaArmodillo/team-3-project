@@ -439,7 +439,31 @@ class TeamProjectApi {
       throw new Error(`Произошла ошибка при удалении пользователя. Status: ${res.status}`);
     }
     if (res.status >= 500) {
-      throw new Error(`Произошла ошибка при выходе из приложения. 
+      throw new Error(`Произошла ошибка при удалении пользователя. 
+        Попробуйте сделать запрос позже. Status: ${res.status}`);
+    }
+    return res;
+  }
+
+  async deleteInvitation(values, token) {
+    this.checkToken(token);
+    const res = await fetch(`${this.baseUrl}/invitations`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (res.status === 401) {
+      throw new Error('Необходимо авторизоваться');
+    }
+    if (res.status >= 400 && res.status < 500) {
+      throw new Error(`Произошла ошибка при удалении приглашения. Status: ${res.status}`);
+    }
+    if (res.status >= 500) {
+      throw new Error(`Произошла ошибка при удалении приглашения. 
         Попробуйте сделать запрос позже. Status: ${res.status}`);
     }
     return res;
