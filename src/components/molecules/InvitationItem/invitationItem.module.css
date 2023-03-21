@@ -1,0 +1,16 @@
+.surveyItem {
+    min-height: 100px;
+    height: calc(100%);
+    background-color: var(--bc-pale-gray);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 15px;
+    cursor: pointer;
+}
+
+.surveyItem:hover {
+    background: var(--bc-gradient);
+}
