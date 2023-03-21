@@ -94,10 +94,10 @@ export function SurveyItem({ survey }) {
           </div>
         </div>
 
-        <div className={styles.containerBottom}>
-          {/* <img src={avatar} alt="avatar" />
-          <p>{user.name}</p> */}
-        </div>
+        {/* <div className={styles.containerBottom}>
+          <img src={avatar} alt="avatar" />
+          <p>{user.name}</p>
+        </div> */}
       </div>
     </Link>
   );

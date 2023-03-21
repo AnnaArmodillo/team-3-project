@@ -3,3 +3,15 @@
     align-items: center;
     gap: 50px;
 }
+
+@media (max-width: 450px) {
+    .title {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .h2 {
+        font-size: 1.3rem;
+    }
+}
