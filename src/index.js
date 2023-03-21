@@ -23,6 +23,7 @@ import { UniqueChoiceSurveyPage }
 import { VisitedSurveys } from './components/pages/VisitedSurveysPage/VisitedSurveys';
 import { InvitationPage } from './components/pages/InvitationPage/InvitationPage';
 import { SurveysCatalogPage } from './components/pages/SurveysCatalogPage/SurveysCatalogPage';
+import { Doc } from './components/pages/DocPage/Doc';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -121,6 +122,10 @@ const Router = createBrowserRouter([
             <VisitedSurveys />
           </PrivateRoute>
         ),
+      },
+      {
+        path: '/doc',
+        element: <Doc />,
       },
     ],
   },

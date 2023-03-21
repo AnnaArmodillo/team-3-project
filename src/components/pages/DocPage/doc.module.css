@@ -1,0 +1,11 @@
+.containerWrapped {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.containerList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
