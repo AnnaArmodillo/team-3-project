@@ -79,13 +79,15 @@ export function OptionCard({
         >
           <div className={styles.info}>
             <div>{option.optionTitle}</div>
-            <Link
-              to={option.activeLink}
-              className={styles.link}
-              target="_blank"
-            >
-              Нажать для просмотра
-            </Link>
+            {option.activeLink && (
+              <Link
+                to={option.activeLink}
+                className={styles.link}
+                target="_blank"
+              >
+                Нажать для просмотра
+              </Link>
+            )}
           </div>
           <div className={styles.image}>
             {isLoading && checkIsImageUploaded() && <Loader />}
@@ -118,13 +120,15 @@ export function OptionCard({
       >
         <div className={styles.info}>
           <div>{option.optionTitle}</div>
-          <Link
-            to={option.activeLink}
-            className={styles.link}
-            target="_blank"
-          >
-            Нажать для просмотра
-          </Link>
+          {option.activeLink && (
+            <Link
+              to={option.activeLink}
+              className={styles.link}
+              target="_blank"
+            >
+              Нажать для просмотра
+            </Link>
+          )}
         </div>
         <div className={styles.image}>
           {isLoading && checkIsImageUploaded() && <Loader />}
