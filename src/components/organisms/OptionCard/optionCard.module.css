@@ -104,6 +104,7 @@ input[type='radio']:hover:not([disabled])+label {
   }
   
   .checkbox:hover:not([disabled])+label {
+    background: linear-gradient(120deg, rgb(255, 175, 56) -100%, white 30%, rgb(223, 217, 255) 180%);
     border: 2px solid var(--text-purple-color);
 }
 
