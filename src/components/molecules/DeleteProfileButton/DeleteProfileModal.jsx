@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
-import { getAccessTokenSelector, signOut } from '../../../redux/slices/userSlice';
+import { getAccessTokenSelector, getUserSelector, signOut } from '../../../redux/slices/userSlice';
 import { Modal } from '../../organisms/Modal/Modal';
 
 export function DeleteProfileModal({
@@ -11,14 +11,13 @@ export function DeleteProfileModal({
   const dispatch = useDispatch();
   const accessToken = useSelector(getAccessTokenSelector);
   const navigate = useNavigate();
+  const { id } = useSelector(getUserSelector);
 
-  const {
-    mutateAsync: signOutMutation,
-  } = useMutation({
-    mutationFn: (values) => teamProjectApi.signOut(values),
+  const { mutateAsync } = useMutation({
+    mutationFn: () => teamProjectApi.deleteUserById(id, accessToken),
   });
   const deleteProfileHandler = async () => {
-    await signOutMutation(accessToken);
+    await mutateAsync();
     dispatch(signOut());
     navigate('/');
   };
