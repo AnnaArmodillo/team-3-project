@@ -421,6 +421,29 @@ class TeamProjectApi {
     }
     return res.json();
   }
+
+  async deleteUserById(userID, token) {
+    this.checkToken(token);
+    const res = await fetch(`${this.baseUrl}/users/${userID}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (res.status === 401) {
+      throw new Error('Необходимо авторизоваться');
+    }
+    if (res.status >= 400 && res.status < 500) {
+      throw new Error(`Произошла ошибка при удалении пользователя. Status: ${res.status}`);
+    }
+    if (res.status >= 500) {
+      throw new Error(`Произошла ошибка при выходе из приложения. 
+        Попробуйте сделать запрос позже. Status: ${res.status}`);
+    }
+    return res;
+  }
 }
 
 export const teamProjectApi = new TeamProjectApi({
