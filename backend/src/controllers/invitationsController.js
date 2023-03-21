@@ -8,17 +8,36 @@ function sendInvitations(req, res) {
     const userID = getUserIdFromToken(token);
     const usersSuccess = [];
     const usersFail = [];
+    const usersDouble = [];
+
     try {
+      function isTheSameInvitation(invitation) {
+        if (invitation.fromUser === userID && invitation.survey === surveyId) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      function isAlreadyInvited(currentUser) {
+        const index = currentUser.invitations.find((invitation) => isTheSameInvitation(invitation));
+          if (index) {
+            return true;
+          } else {
+            return false;
+          }
+      }
       users.map((userFromReq) => {
         const currentUser = DB.users.find(
           (user) => user.email === userFromReq.email
         );
-        if (currentUser) {
+        if (currentUser && !isAlreadyInvited(currentUser)) {
           currentUser.invitations.push({
             survey: surveyId,
             fromUser: userID,
           });
           usersSuccess.push(userFromReq.email);
+        } else if (currentUser && isAlreadyInvited(currentUser)) {
+          usersDouble.push(userFromReq.email);
         } else {
           usersFail.push(userFromReq.email);
         }
@@ -28,7 +47,7 @@ function sendInvitations(req, res) {
     } catch (error) {
       return res.status(404).json('Пользователь с таким email не найден');
     }
-    const response = { usersSuccess, usersFail };
+    const response = { usersSuccess, usersFail, usersDouble };
     return res.status(201).json(response);
   } catch (error) {
     return res.sendStatus(500);

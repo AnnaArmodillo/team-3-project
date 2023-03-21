@@ -131,6 +131,14 @@ export function InvitationPage() {
             .
           </div>
           )}
+          {users.usersDouble[0] && (
+          <div className={styles.successMessage}>
+            Пользователи со следующими email уже получали Ваше приглашение к этому опросу:
+            {' '}
+            {users.usersDouble.join(', ')}
+            .
+          </div>
+          )}
         </div>
       </MainWrap>
     );
