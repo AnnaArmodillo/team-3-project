@@ -115,19 +115,22 @@ export function InvitationPage() {
     return (
       <MainWrap>
         <div className={styles.invitationPage}>
+          {users.usersSuccess[0] && (
           <div className={styles.successMessage}>
             Приглашения успешно отправлены следующим пользователям:
             {' '}
             {users.usersSuccess.join(', ')}
             .
           </div>
+          )}
+          {users.usersFail[0] && (
           <div className={styles.successMessage}>
             Пользователи со следующими email не найдены:
             {' '}
             {users.usersFail.join(', ')}
-            {' '}
-            не найдены.
+            .
           </div>
+          )}
         </div>
       </MainWrap>
     );
