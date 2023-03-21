@@ -16,6 +16,7 @@ function getAllUsers(req, res) {
       })
     );
   } catch (error) {
+    console.log(error)
     return res.sendStatus(500);
   }
 }
@@ -95,9 +96,23 @@ function searchUserByEmail(req, res) {
     return res.sendStatus(500);
   }
 }
+function deleteUserByID(req, res) {
+  try {
+    const userID = req.params.userID;
+    const filteredDB = DB.users.filter((user) => user.id !== userID);
+    DB.users = filteredDB;
+    const newContent = `export const DB = ${JSON.stringify(DB)}`;
+    updateDB(newContent);
+    return res.sendStatus(202);
+  } catch (error) {
+    console.log(error)
+    return res.sendStatus(500);
+  }
+}
 export const usersController = {
   getAllUsers,
   getUserByID,
   addNewUser,
   searchUserByEmail,
+  deleteUserByID,
 };
