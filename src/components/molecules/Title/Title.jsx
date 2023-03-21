@@ -11,7 +11,7 @@ export function Title({ title }) {
   return (
     <div className={styles.title}>
       <ArrowLeft clickBackHandler={clickBackHandler} />
-      <h2>{title}</h2>
+      <h2 className={styles.h2}>{title}</h2>
     </div>
   );
 }
