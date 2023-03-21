@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Link, useLocation, useNavigate, useParams,
+  useLocation, useNavigate, useParams,
 } from 'react-router-dom';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
@@ -22,6 +22,7 @@ import { SurveyTypeInfo } from '../../atoms/SurveyTypeInfo/SurveyTypeInfo';
 import { UC, getQueryKeyUCSurvey } from '../../../utils/constants';
 import { SurveyTotalVotes } from '../../atoms/SurveyTotalVotes/SurveyTotalVotes';
 import { setSurvey } from '../../../redux/slices/surveySlice';
+import { InvitationPageLink } from '../../organisms/InvitationPageLink/InvitationPageLink';
 
 export function UniqueChoiceSurveyPage() {
   const { surveyId } = useParams();
@@ -64,12 +65,6 @@ export function UniqueChoiceSurveyPage() {
       dispatch(setSurvey(surveyId));
     }
   }, [surveyId]);
-  function isAuthor() {
-    if (survey.isAuthor === id) {
-      return true;
-    }
-    return false;
-  }
   function isAvailable() {
     if (
       survey.done.includes(id)
@@ -160,13 +155,7 @@ export function UniqueChoiceSurveyPage() {
           }}
         </Formik>
         <SurveyTotalVotes counter={votesTotal} />
-        {isAuthor && (
-          <Link to="/invitation">
-            <ButtonPurple>
-              Пригласить других пользователей пройти этот опрос
-            </ButtonPurple>
-          </Link>
-        )}
+        <InvitationPageLink author={survey.author} id={id} />
       </div>
     </MainWrap>
   );

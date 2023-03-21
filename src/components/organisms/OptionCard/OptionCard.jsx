@@ -9,11 +9,13 @@ import {
   getAccessTokenSelector,
   getUserSelector,
 } from '../../../redux/slices/userSlice';
-import { MC, UC } from '../../../utils/constants';
+import { getQueryKeyImage, MC, UC } from '../../../utils/constants';
 import { Loader } from '../../Loader/Loader';
 import styles from './optionCard.module.css';
 
-export function OptionCard({ option, isAvailable, surveyType }) {
+export function OptionCard({
+  option, isAvailable, surveyType,
+}) {
   const { id } = useSelector(getUserSelector);
   const accessToken = useSelector(getAccessTokenSelector);
   const [url, setUrl] = useState('');
@@ -47,8 +49,10 @@ export function OptionCard({ option, isAvailable, surveyType }) {
     }
     return false;
   }
-  const { isError, error, isLoading } = useQuery({
-    queryKey: ['image', option.image],
+  const {
+    isError, error, isLoading,
+  } = useQuery({
+    queryKey: getQueryKeyImage(option.image),
     queryFn: () => teamProjectApi
       .getUploadedFile(option.image, accessToken)
       .then((res) => res.blob())
@@ -58,7 +62,6 @@ export function OptionCard({ option, isAvailable, surveyType }) {
       }),
     enabled: checkIsImageUploaded(),
   });
-
   if (surveyType === MC) {
     return (
       <>

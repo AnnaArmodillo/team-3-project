@@ -37,3 +37,10 @@ export const getOptionSuccessRate = (votes, votesTotal) => {
   }
   return ((votes * 100) / votesTotal);
 };
+
+export function isAuthor(author, id) {
+  if (author === id) {
+    return true;
+  }
+  return false;
+}

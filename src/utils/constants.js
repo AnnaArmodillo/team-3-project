@@ -7,3 +7,6 @@ export function getQueryKey(search) {
 export function getQueryKeyUCSurvey(surveyID) {
   return ['UCSurvey', surveyID];
 }
+export function getQueryKeyImage(image) {
+  return ['image', image];
+}

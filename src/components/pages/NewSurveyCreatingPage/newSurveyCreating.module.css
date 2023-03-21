@@ -38,21 +38,25 @@
 }
 
 .option {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   margin-bottom: 20px;
-  gap: 80px;
+  column-gap: 20px;
   align-items: flex-start;
 }
 
 .optionInputWrapper {
   display: flex;
   flex-direction: column;
-  width: 40%;
+  width: 80%;
   gap: 12px;
+  grid-column: 1;
+  grid-row: 1 / span 2;
 }
 
 .image {
-  width: 25%;
+  width: 100%;
   height: auto;
   min-height: 100px;
   max-height: 200px;
@@ -60,6 +64,8 @@
   cursor: pointer;
   display: flex;
   justify-content: flex-end;
+  grid-column: 2;
+  grid-row: 1 / span 2;
 }
 
 .image img {
@@ -221,6 +227,12 @@ button {
   gap: 20px;
 }
 
-.copyButton {
-  margin-bottom: 20px;
+.buttonUpload {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.buttonDeleteOption {
+  grid-column: 3;
+  grid-row: 2;
 }

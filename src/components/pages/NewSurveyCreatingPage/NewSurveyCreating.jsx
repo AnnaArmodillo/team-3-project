@@ -20,6 +20,7 @@ import { FormSaver } from '../../organisms/FormSaver/FormSaver';
 import { setSurvey } from '../../../redux/slices/surveySlice';
 import { MC, SC, UC } from '../../../utils/constants';
 import placeholderImage from '../../../images/placeholder_image.png';
+import { CopyLinkButton } from '../../atoms/CopyLinkButton/CopyLinkButton';
 
 export function NewSurveyCreating() {
   const token = useSelector(getAccessTokenSelector);
@@ -168,15 +169,9 @@ export function NewSurveyCreating() {
               ref={textAreaRef}
             >
               {getSurveyURL(surveyId)}
+              {' '}
+              <CopyLinkButton surveyId={surveyId} />
             </p>
-            <div className={styles.copyButton}>
-              <ButtonGrey
-                type="button"
-                onClick={() => navigator.clipboard.writeText(getSurveyURL(surveyId))}
-              >
-                Копировать ссылку
-              </ButtonGrey>
-            </div>
           </div>
           <div className={styles.buttonsWrapper}>
             <Link to={getSurveyURL(surveyId)}>
@@ -364,15 +359,16 @@ export function NewSurveyCreating() {
                             ref={filePicker}
                             onChange={handleChange}
                           />
-                          {selectedFile !== '' && (
-                            <ButtonPurple
-                              type="button"
-                              onClick={() => uploadHandler(index)}
-                            >
-                              Загрузить файл
-                            </ButtonPurple>
-                          )}
                         </div>
+                        {selectedFile !== '' && (
+                        <ButtonPurple
+                          type="button"
+                          className={styles.buttonUpload}
+                          onClick={() => uploadHandler(index)}
+                        >
+                          Загрузить файл
+                        </ButtonPurple>
+                        )}
                         <div
                           className={styles.image}
                           onClick={handlePick}
@@ -422,12 +418,13 @@ export function NewSurveyCreating() {
                         {index > 0 && (
                           <ButtonGrey
                             type="button"
+                            className={styles.buttonDeleteOption}
                             onClick={() => {
                               deleteWithOptionHandler(index);
                               remove(index);
                             }}
                           >
-                            Удалить
+                            Удалить этот вариант
                           </ButtonGrey>
                         )}
                       </div>
