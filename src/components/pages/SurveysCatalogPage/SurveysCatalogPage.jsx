@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
+import { SURVEYS_CATALOG_PAGE } from '../../../utils/constants';
 import { Loader } from '../../Loader/Loader';
 import { SurveyItem } from '../../molecules/SurveyItem/SurveyItem';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
@@ -12,7 +13,7 @@ export function SurveysCatalogPage() {
     isError,
     error,
   } = useQuery({
-    queryKey: ['SurveysCatalogPage'],
+    queryKey: [SURVEYS_CATALOG_PAGE],
     queryFn: () => teamProjectApi.getAllSurveys(),
   });
   if (isLoading) {

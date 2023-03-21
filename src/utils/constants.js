@@ -10,3 +10,5 @@ export function getQueryKeyUCSurvey(surveyID) {
 export function getQueryKeyImage(image) {
   return ['image', image];
 }
+
+export const SURVEYS_CATALOG_PAGE = 'SurveysCatalogPage';
