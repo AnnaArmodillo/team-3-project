@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 export function getSurveyURL(surveyId) {
   const route = surveyId.slice(0, 2).toLowerCase();
   const surveyURL = `http://localhost:3000/surveys/${route}/${surveyId}`;
@@ -35,7 +36,7 @@ export const getOptionSuccessRate = (votes, votesTotal) => {
   if (votes === 0) {
     return 0;
   }
-  return ((votes * 100) / votesTotal);
+  return ((votes * 100) / votesTotal).toFixed(2).replace('.', ',');
 };
 
 export function isAuthor(author, id) {
