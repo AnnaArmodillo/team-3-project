@@ -52,7 +52,10 @@ function ProfileInner({ data }) {
         {!!invitations.length && (
           <div className={styles.listSurveys}>
             {invitations.map((invitation) => (
-              <InvitationItem key={invitation.survey} invitation={invitation} />
+              <InvitationItem
+                key={invitation.survey + invitation.fromUser}
+                invitation={invitation}
+              />
             ))}
           </div>
         )}
