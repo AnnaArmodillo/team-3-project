@@ -7,13 +7,14 @@ import { getUserSelector } from '../../../redux/slices/userSlice';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { withQuery } from '../../HOCs/withQuery';
 import { DeleteProfileButton } from '../../molecules/DeleteProfileButton/DeleteProfileButton';
+import { InvitationItem } from '../../molecules/InvitationItem/InvitationItem';
 import { SignOutButton } from '../../molecules/SignOutButton/SignOutButton';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './profile.module.css';
 
 function ProfileInner({ data }) {
   const {
-    name, email, id,
+    name, email, id, invitations,
   } = data;
 
   return (
@@ -48,6 +49,13 @@ function ProfileInner({ data }) {
             </ButtonPurple>
           </Link>
         </div>
+        {!!invitations.length && (
+          <div className={styles.listSurveys}>
+            {invitations.map((invitation) => (
+              <InvitationItem key={invitation.survey} invitation={invitation} />
+            ))}
+          </div>
+        )}
         <div className={styles.button}>
           <SignOutButton />
         </div>
