@@ -67,7 +67,7 @@ async function addNewUser(req, res) {
     );
     const newUser = {
       name: userData.name,
-      email: userData.email,
+      email: userData.email.toLowerCase(),
       id: crypto.randomUUID(),
       password: hashPassword,
       invitations: [],
@@ -83,8 +83,8 @@ async function addNewUser(req, res) {
 }
 function searchUserByEmail(req, res) {
   try {
-    const userEmail = req.params.userEmail;
-    const resultUser = DB.users.find((user) => user.email.toLowerCase() === userEmail);
+    const userEmail = req.params.userEmail.toLowerCase();
+    const resultUser = DB.users.find((user) => user.email === userEmail);
     try {
       const {email} = resultUser;
     return res.json(email);

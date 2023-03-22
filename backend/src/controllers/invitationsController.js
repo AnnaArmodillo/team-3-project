@@ -9,44 +9,39 @@ function sendInvitations(req, res) {
     const usersSuccess = [];
     const usersFail = [];
     const usersDouble = [];
-
-    try {
-      function isTheSameInvitation(invitation) {
-        if (invitation.fromUser === userID && invitation.survey === surveyId) {
+    function isTheSameInvitation(invitation) {
+      if (invitation.fromUser === userID && invitation.survey === surveyId) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    function isAlreadyInvited(currentUser) {
+      const index = currentUser.invitations.find((invitation) => isTheSameInvitation(invitation));
+        if (index) {
           return true;
         } else {
           return false;
         }
-      }
-      function isAlreadyInvited(currentUser) {
-        const index = currentUser.invitations.find((invitation) => isTheSameInvitation(invitation));
-          if (index) {
-            return true;
-          } else {
-            return false;
-          }
-      }
-      users.map((userFromReq) => {
-        const currentUser = DB.users.find(
-          (user) => user.email === userFromReq.email
-        );
-        if (currentUser && !isAlreadyInvited(currentUser)) {
-          currentUser.invitations.push({
-            survey: surveyId,
-            fromUser: userID,
-          });
-          usersSuccess.push(userFromReq.email);
-        } else if (currentUser && isAlreadyInvited(currentUser)) {
-          usersDouble.push(userFromReq.email);
-        } else {
-          usersFail.push(userFromReq.email);
-        }
-      });
-      const newContent = `export const DB = ${JSON.stringify(DB)}`;
-      updateDB(newContent);
-    } catch (error) {
-      return res.status(404).json('Пользователь с таким email не найден');
     }
+    users.map((userFromReq) => {
+      const currentUser = DB.users.find(
+        (user) => user.email === userFromReq.email.toLowerCase()
+      );
+      if (currentUser && !isAlreadyInvited(currentUser)) {
+        currentUser.invitations.push({
+          survey: surveyId,
+          fromUser: userID,
+        });
+        usersSuccess.push(userFromReq.email.toLowerCase());
+      } else if (currentUser && isAlreadyInvited(currentUser)) {
+        usersDouble.push(userFromReq.email.toLowerCase());
+      } else {
+        usersFail.push(userFromReq.email.toLowerCase());
+      }
+    });
+    const newContent = `export const DB = ${JSON.stringify(DB)}`;
+    updateDB(newContent);
     const response = { usersSuccess, usersFail, usersDouble };
     return res.status(201).json(response);
   } catch (error) {

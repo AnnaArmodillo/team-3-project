@@ -221,6 +221,7 @@ export function InvitationPage() {
                     {isFetching && <Loader />}
                     <ButtonPurple
                       type="button"
+                      disabled={isFetching}
                       onClick={() => push(usersGroup)}
                     >
                       Добавить пользователя

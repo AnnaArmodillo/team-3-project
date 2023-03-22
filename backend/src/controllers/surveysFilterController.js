@@ -1,5 +1,5 @@
 import { DB } from '../DB/db.js';
-import { getUserIdFromToken, updateDB } from '../helper.js';
+import { getUserIdFromToken } from '../helper.js';
 
 function getVisitedSurveys(req, res) {
   try {
