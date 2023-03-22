@@ -1,15 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getSearchSelector } from '../../../redux/slices/filterSlice';
-import { getAccessTokenSelector } from '../../../redux/slices/userSlice';
 import { SURVEYS_CATALOG_PAGE } from '../../../utils/constants';
 import { withQuery } from '../../HOCs/withQuery';
 import { SurveyItem } from '../../molecules/SurveyItem/SurveyItem';
 import Search from '../../organisms/Search/Search';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
+import { FILTER_QUERY_NAME, getFilteredSurveys } from '../Filters/constants';
+import { Filters } from '../Filters/Filters';
 import styles from './surveysCatalogPage.module.css';
 
 function SurveysCatalogPageInner({ surveys, search }) {
@@ -18,6 +18,7 @@ function SurveysCatalogPageInner({ surveys, search }) {
       <MainWrap>
         <div className={styles.surveysCatalogPage}>
           <Search />
+          <div className={styles.filters}><Filters /></div>
           <h1>
             {search
               ? (
@@ -41,15 +42,9 @@ function SurveysCatalogPageInner({ surveys, search }) {
 }
 const SurveysCatalogPageInnerWithQuery = withQuery(SurveysCatalogPageInner);
 function SurveysCatalogPage() {
-  const accessToken = useSelector(getAccessTokenSelector);
-  const navigate = useNavigate();
   const search = useSelector(getSearchSelector);
-
-  useEffect(() => {
-    if (!accessToken) {
-      navigate('/signin');
-    }
-  }, [accessToken]);
+  const [searchParams] = useSearchParams();
+  const currentFilterNameFromQuery = searchParams.get(FILTER_QUERY_NAME);
 
   const {
     data: surveys = [],
@@ -75,10 +70,12 @@ function SurveysCatalogPage() {
     enabled: !!search,
   });
 
+  let filteredSurveys = [];
   if (search) {
+    filteredSurveys = getFilteredSurveys(surveysFromSearch, currentFilterNameFromQuery);
     return (
       <SurveysCatalogPageInnerWithQuery
-        surveys={surveysFromSearch}
+        surveys={filteredSurveys}
         isError={isErrorFromSearch}
         isLoading={isLoadingFromSearch}
         error={errorFromSearch}
@@ -87,10 +84,12 @@ function SurveysCatalogPage() {
       />
     );
   }
-
+  if (currentFilterNameFromQuery) {
+    filteredSurveys = getFilteredSurveys(surveys, currentFilterNameFromQuery);
+  } else { filteredSurveys = surveys; }
   return (
     <SurveysCatalogPageInnerWithQuery
-      surveys={surveys}
+      surveys={filteredSurveys}
       isError={isError}
       isLoading={isLoading}
       error={error}
