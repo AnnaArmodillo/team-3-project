@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
+import { getQueryKeySurveysByAuthor } from '../../../utils/constants';
 import { ArrowLeft } from '../../atoms/ArrowLeft/ArrowLeft';
 import { withQuery } from '../../HOCs/withQuery';
 import { SurveyItem } from '../../molecules/SurveyItem/SurveyItem';
@@ -51,7 +52,7 @@ export function MySurveys() {
   const {
     data, isLoading, isError, error, refetch,
   } = useQuery({
-    queryKey: ['SurveysByAuthorFetch', userId],
+    queryKey: getQueryKeySurveysByAuthor(userId),
     queryFn: () => teamProjectApi.getSurveysByAuthor(userId, accessToken),
   });
 
