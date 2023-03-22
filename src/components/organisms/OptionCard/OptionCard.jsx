@@ -52,7 +52,7 @@ export function OptionCard({
   const {
     isError, error, isLoading,
   } = useQuery({
-    queryKey: getQueryKeyImage(option.image),
+    queryKey: getQueryKeyImage(option.image, option.optionId),
     queryFn: () => teamProjectApi
       .getUploadedFile(option.image, accessToken)
       .then((res) => res.blob())

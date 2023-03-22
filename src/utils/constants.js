@@ -19,8 +19,8 @@ export function getQueryKey(search) {
 export function getQueryKeyUCSurvey(surveyID) {
   return ['UCSurvey', surveyID];
 }
-export function getQueryKeyImage(image) {
-  return ['image', image];
+export function getQueryKeyImage(image, id) {
+  return ['image', image, id];
 }
 export function getQueryKeySurveysByAuthor(userId) {
   return ['SurveysByAuthorFetch', userId];
