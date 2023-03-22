@@ -1,21 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-// import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getSearchSelector } from '../../../redux/slices/filterSlice';
 import { getAccessTokenSelector } from '../../../redux/slices/userSlice';
 import { SURVEYS_CATALOG_PAGE } from '../../../utils/constants';
 import { withQuery } from '../../HOCs/withQuery';
-// import { Loader } from '../../Loader/Loader';
 import { SurveyItem } from '../../molecules/SurveyItem/SurveyItem';
 import Search from '../../organisms/Search/Search';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './surveysCatalogPage.module.css';
 
 function SurveysCatalogPageInner({ surveys, search }) {
-  console.log({ surveys });
   if (surveys) {
     return (
       <MainWrap>
@@ -54,9 +51,6 @@ function SurveysCatalogPage() {
     }
   }, [accessToken]);
 
-  // console.log('search before useQuery', search);
-  // console.log('!search', !search);
-  // console.log('!!search', !!search);
   const {
     data: surveys = [],
     isError,
