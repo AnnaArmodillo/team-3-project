@@ -360,15 +360,6 @@ export function NewSurveyCreating() {
                             onChange={handleChange}
                           />
                         </div>
-                        {selectedFile !== '' && (
-                        <ButtonPurple
-                          type="button"
-                          className={styles.buttonUpload}
-                          onClick={() => uploadHandler(index)}
-                        >
-                          Загрузить файл
-                        </ButtonPurple>
-                        )}
                         <div
                           className={styles.image}
                           onClick={handlePick}
@@ -415,6 +406,15 @@ export function NewSurveyCreating() {
                             />
                           )}
                         </div>
+                        {selectedFile !== '' && (
+                        <ButtonPurple
+                          type="button"
+                          className={styles.buttonUpload}
+                          onClick={() => uploadHandler(index)}
+                        >
+                          Загрузить файл
+                        </ButtonPurple>
+                        )}
                         {index > 0 && (
                           <ButtonGrey
                             type="button"
