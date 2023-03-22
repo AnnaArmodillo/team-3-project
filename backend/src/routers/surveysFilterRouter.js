@@ -14,7 +14,3 @@ surveysFilterRouter.get(
   checkAuth,
   surveysFilterController.getSurveysByAuthor
 );
-surveysFilterRouter.get(
-  '/search',
-  surveysFilterController.searchSurveysDB
-);
