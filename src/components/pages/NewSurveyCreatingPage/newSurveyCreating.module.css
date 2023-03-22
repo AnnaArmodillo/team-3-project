@@ -78,13 +78,14 @@ input[type='radio'] {
 }
 
 .typeWrapper {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  max-width: 100%;
 }
 
 .typeCard {
-  width: 200px;
-  height: 200px;
+  width: 100fr;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -236,3 +237,10 @@ button {
   grid-column: 3;
   grid-row: 2;
 }
+
+@media (max-width: 900px) {
+  .typeWrapper {
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: 1fr;
+  }
+} 

@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import * as dotenv from 'dotenv';
 import { usersValidationSchema } from '../validators/usersValidator.js';
 import { DB } from '../DB/db.js';
-import { updateDB } from '../helper.js';
+import { getUserIdFromToken, updateDB } from '../helper.js';
 
 dotenv.config();
 
@@ -97,12 +97,19 @@ function searchUserByEmail(req, res) {
 }
 function deleteUserByID(req, res) {
   try {
-    const userID = req.params.userID;
-    const filteredDB = DB.users.filter((user) => user.id !== userID);
-    DB.users = filteredDB;
-    const newContent = `export const DB = ${JSON.stringify(DB)}`;
-    updateDB(newContent);
-    return res.sendStatus(202);
+    const userIDFromReq = req.params.userID;
+    const token = req.headers.authorization.split(' ')[1];
+    const userId = getUserIdFromToken(token);
+    if(userId === userIDFromReq) {
+      const filteredDB = DB.users.filter((user) => user.id !== userIDFromReq);
+      DB.users = filteredDB;
+      const newContent = `export const DB = ${JSON.stringify(DB)}`;
+      updateDB(newContent);
+      return res.sendStatus(202);
+    }
+    else {
+      return res.status(403).json('Невозможно удалить чужой аккаунт');
+    }
   } catch (error) {
     return res.sendStatus(500);
   }
