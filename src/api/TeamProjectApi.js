@@ -308,6 +308,20 @@ class TeamProjectApi {
     return res.json();
   }
 
+  async searchSurveys(search) {
+    const res = await fetch(`${this.baseUrl}/opensearch?title=${search}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (res.status >= 500) {
+      throw new Error(`Произошла ошибка при получении списка опросов. 
+        Попробуйте сделать запрос позже. Status: ${res.status}`);
+    }
+
+    return res.json();
+  }
+
   async deleteSurveyFromVisited(surveyId, token) {
     this.checkToken(token);
 
@@ -407,6 +421,65 @@ class TeamProjectApi {
         Попробуйте сделать запрос позже. Status: ${res.status}`);
     }
 
+    return res;
+  }
+
+  async getAllSurveys() {
+    const res = await fetch(`${this.baseUrl}/surveys/`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (res.status === 500) {
+      throw new Error('Произошла внутренняя ошибка сервера. Не удалось получить данные опросов');
+    }
+    return res.json();
+  }
+
+  async deleteUserById(userID, token) {
+    this.checkToken(token);
+    const res = await fetch(`${this.baseUrl}/users/${userID}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (res.status === 401) {
+      throw new Error('Необходимо авторизоваться');
+    }
+    if (res.status >= 400 && res.status < 500) {
+      throw new Error(`Произошла ошибка при удалении пользователя. Status: ${res.status}`);
+    }
+    if (res.status >= 500) {
+      throw new Error(`Произошла ошибка при удалении пользователя. 
+        Попробуйте сделать запрос позже. Status: ${res.status}`);
+    }
+    return res;
+  }
+
+  async deleteInvitation(values, token) {
+    this.checkToken(token);
+    const res = await fetch(`${this.baseUrl}/invitations`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this.getAuthorizationHeader(token),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (res.status === 401) {
+      throw new Error('Необходимо авторизоваться');
+    }
+    if (res.status >= 400 && res.status < 500) {
+      throw new Error(`Произошла ошибка при удалении приглашения. Status: ${res.status}`);
+    }
+    if (res.status >= 500) {
+      throw new Error(`Произошла ошибка при удалении приглашения. 
+        Попробуйте сделать запрос позже. Status: ${res.status}`);
+    }
     return res;
   }
 }

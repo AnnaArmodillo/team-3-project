@@ -10,6 +10,7 @@ import { surveysFilterRouter } from './routers/surveysFilterRouter.js';
 import { uploadImagesRouter } from './routers/uploadImagesRouter.js';
 import fileUpload from 'express-fileupload'
 import { invitationsRouter } from './routers/invitationsRouter.js';
+import { surveysOpenSearchRouter } from './routers/surveysOpenSearchRouter.js';
 
 const PORT = 3005;
 
@@ -30,6 +31,7 @@ app.use('/api/v1/users', usersRouter);
 app.use('/api/v1', authRouter);
 app.use('/api/v1/surveys', surveysRouter);
 app.use('/api/v1/surveysfilters', surveysFilterRouter);
+app.use('/api/v1/opensearch', surveysOpenSearchRouter)
 // Это роут для загрузки файлов картинок в папку uploads
 app.use('/api/v1/upload', uploadImagesRouter);
 app.use('/api/v1/invitations', invitationsRouter);

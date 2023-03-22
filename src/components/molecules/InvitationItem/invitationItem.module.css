@@ -1,0 +1,37 @@
+.surveyItem {
+    min-height: 100px;
+    height: calc(100%);
+    background-color: var(--bc-pale-gray);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 15px;
+    cursor: pointer;
+}
+
+.surveyItem:hover {
+    background: var(--bc-gradient);
+}
+
+.containerSubinfo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 50px;
+}
+
+.containerSubinfo span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.spanDelete {
+    cursor: pointer;
+}
+
+.spanDelete:hover {
+    text-decoration: underline var(--orange-color);
+    text-underline-position: under;
+}

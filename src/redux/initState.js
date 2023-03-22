@@ -10,6 +10,9 @@ export const initState = {
     refreshToken: '',
   },
   survey: '',
+  filter: {
+    search: '',
+  },
 };
 
 export const getInitState = () => {

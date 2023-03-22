@@ -8,3 +8,4 @@ usersRouter.get('/', checkAuth, usersController.getAllUsers);
 usersRouter.get('/:userID', usersController.getUserByID);
 usersRouter.post('/', usersController.addNewUser);
 usersRouter.get('/search/:userEmail', checkAuth, usersController.searchUserByEmail);
+usersRouter.delete('/:userID', checkAuth, usersController.deleteUserByID);

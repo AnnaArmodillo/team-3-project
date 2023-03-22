@@ -4,15 +4,18 @@ import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getUserSelector } from '../../../redux/slices/userSlice';
+import { getQueryKeyUser } from '../../../utils/constants';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { withQuery } from '../../HOCs/withQuery';
+import { DeleteProfileButton } from '../../molecules/DeleteProfileButton/DeleteProfileButton';
+import { InvitationItem } from '../../molecules/InvitationItem/InvitationItem';
 import { SignOutButton } from '../../molecules/SignOutButton/SignOutButton';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './profile.module.css';
 
 function ProfileInner({ data }) {
   const {
-    name, email, id,
+    name, email, id, invitations,
   } = data;
 
   return (
@@ -47,8 +50,21 @@ function ProfileInner({ data }) {
             </ButtonPurple>
           </Link>
         </div>
+        {!!invitations.length && (
+          <div className={styles.listSurveys}>
+            {invitations.map((invitation) => (
+              <InvitationItem
+                key={invitation.survey + invitation.fromUser}
+                invitation={invitation}
+              />
+            ))}
+          </div>
+        )}
         <div className={styles.button}>
           <SignOutButton />
+        </div>
+        <div className={styles.button}>
+          <DeleteProfileButton />
         </div>
       </div>
     </MainWrap>
@@ -65,7 +81,7 @@ export function Profile() {
   const {
     data, isLoading, isError, error, refetch,
   } = useQuery({
-    queryKey: ['UserFetch', userId],
+    queryKey: getQueryKeyUser(userId),
     queryFn: () => teamProjectApi.getUserById(userId),
   });
 

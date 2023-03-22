@@ -61,7 +61,7 @@
 
 .validationMessage {
   color: var(--danger-text-color);
-  font-size: 20px;
+  font-size: 16px;
   grid-column: 3;
   text-align: center;
 }
@@ -91,14 +91,5 @@
 
 .successMessage {
   text-align: left;
-  font-size: 40px;
-}
-
-.buttonCopy {
-  background-color: var(--text-white-color);
-}
-
-.buttonCopy i {
-  color: var(--arrow-pale-gray);
-  font-size: 20px;
+  font-size: 28px;
 }

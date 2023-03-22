@@ -13,3 +13,10 @@
 .button {
   margin-top: 40px;
 }
+
+.listSurveys {
+  display: grid;
+  grid-template-columns: repeat(2, calc(50% - 15px));;
+  gap: 30px;
+  margin-top: 30px;
+}

@@ -10,7 +10,6 @@ import { newSurveyValidationScheme } from '../../../utils/validators';
 import styles from './newSurveyCreating.module.css';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { ButtonGrey } from '../../atoms/ButtonGrey/ButtonGrey';
-import { ButtonWhite } from '../../atoms/ButtonWhite/ButtonWhite';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import { Loader } from '../../Loader/Loader';
@@ -20,6 +19,8 @@ import { getSurveyURL } from '../../../utils/helper';
 import { FormSaver } from '../../organisms/FormSaver/FormSaver';
 import { setSurvey } from '../../../redux/slices/surveySlice';
 import { MC, SC, UC } from '../../../utils/constants';
+import placeholderImage from '../../../images/placeholder_image.png';
+import { CopyLinkButton } from '../../atoms/CopyLinkButton/CopyLinkButton';
 
 export function NewSurveyCreating() {
   const token = useSelector(getAccessTokenSelector);
@@ -168,15 +169,9 @@ export function NewSurveyCreating() {
               ref={textAreaRef}
             >
               {getSurveyURL(surveyId)}
+              {' '}
+              <CopyLinkButton surveyId={surveyId} />
             </p>
-            <div className={styles.copyButton}>
-              <ButtonGrey
-                type="button"
-                onClick={() => navigator.clipboard.writeText(surveyId)}
-              >
-                Копировать ссылку
-              </ButtonGrey>
-            </div>
           </div>
           <div className={styles.buttonsWrapper}>
             <Link to={getSurveyURL(surveyId)}>
@@ -189,11 +184,11 @@ export function NewSurveyCreating() {
               Новый опрос
             </ButtonPurple>
           </div>
-          {/* <Link to="/invitation">
+          <Link to="/invitation">
             <ButtonPurple>
               Пригласить других пользователей пройти опрос
             </ButtonPurple>
-          </Link> */}
+          </Link>
         </div>
         <div className={styles.surveyImage}>
           <img
@@ -364,14 +359,6 @@ export function NewSurveyCreating() {
                             ref={filePicker}
                             onChange={handleChange}
                           />
-                          {selectedFile !== '' && (
-                            <ButtonWhite
-                              type="button"
-                              onClick={() => uploadHandler(index)}
-                            >
-                              Загрузить файл
-                            </ButtonWhite>
-                          )}
                         </div>
                         <div
                           className={styles.image}
@@ -389,7 +376,7 @@ export function NewSurveyCreating() {
                             && !isLoadingUpload
                             && currentIndex !== index && (
                               <img
-                                src={imageContent[index] || ''}
+                                src={imageContent[index] || placeholderImage}
                                 alt="добавьте изображение"
                               />
                           )}
@@ -398,7 +385,7 @@ export function NewSurveyCreating() {
                           )}
                           {isLoadingUpload && currentIndex !== index && (
                             <img
-                              src={imageContent[index] || ''}
+                              src={imageContent[index] || placeholderImage}
                               alt="добавьте изображение"
                             />
                           )}
@@ -414,20 +401,30 @@ export function NewSurveyCreating() {
                           )}
                           {!isLoadingUpload && !isErrorUpload && (
                             <img
-                              src={imageContent[index] || ''}
+                              src={imageContent[index] || placeholderImage}
                               alt="добавьте изображение"
                             />
                           )}
                         </div>
+                        {selectedFile !== '' && (
+                        <ButtonPurple
+                          type="button"
+                          className={styles.buttonUpload}
+                          onClick={() => uploadHandler(index)}
+                        >
+                          Загрузить файл
+                        </ButtonPurple>
+                        )}
                         {index > 0 && (
                           <ButtonGrey
                             type="button"
+                            className={styles.buttonDeleteOption}
                             onClick={() => {
                               deleteWithOptionHandler(index);
                               remove(index);
                             }}
                           >
-                            Удалить
+                            Удалить этот вариант
                           </ButtonGrey>
                         )}
                       </div>

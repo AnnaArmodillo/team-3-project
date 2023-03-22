@@ -8,7 +8,7 @@ import styles from './surveyItem.module.css';
 import { MC, SC, UC } from '../../../utils/constants';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 
-export function SurveyItem({ survey }) {
+export function SurveyItem({ survey, isCatalog }) {
   const user = useSelector(getUserSelector);
   const accessToken = useSelector(getAccessTokenSelector);
 
@@ -65,25 +65,27 @@ export function SurveyItem({ survey }) {
               <i className="fa-solid fa-list-check" />
               {formatSurveysType()}
             </span>
-            <span>
-              {!!isUserDone && (
-                <>
-                  <i className="fa-regular fa-clock" />
-                  <span className={styles.isDone}>пройден</span>
-                </>
-              )}
-              {!isUserDone && (
-                <>
-                  <i className="fa-regular fa-clock" />
-                  <span className={styles.isNoDone}>не пройден</span>
-                </>
-              )}
-            </span>
-            {!isUserAuthor && (
-            <span onClick={deleteFromVisited}>
-              <i className="fa-regular fa-trash-can" />
-              <span className={styles.spanDelete}>удалить</span>
-            </span>
+            {!isCatalog && (
+              <span>
+                {!!isUserDone && (
+                  <>
+                    <i className="fa-regular fa-clock" />
+                    <span className={styles.isDone}>пройден</span>
+                  </>
+                )}
+                {!isUserDone && (
+                  <>
+                    <i className="fa-regular fa-clock" />
+                    <span className={styles.isNoDone}>не пройден</span>
+                  </>
+                )}
+              </span>
+            )}
+            {(!isUserAuthor && !isCatalog) && (
+              <span onClick={deleteFromVisited}>
+                <i className="fa-regular fa-trash-can" />
+                <span className={styles.spanDelete}>удалить</span>
+              </span>
             )}
             {/* {isUserAuthor && (
             <span onClick={deleteFromMySurveys}>
@@ -94,10 +96,10 @@ export function SurveyItem({ survey }) {
           </div>
         </div>
 
-        <div className={styles.containerBottom}>
-          {/* <img src={avatar} alt="avatar" />
-          <p>{user.name}</p> */}
-        </div>
+        {/* <div className={styles.containerBottom}>
+          <img src={avatar} alt="avatar" />
+          <p>{user.name}</p>
+        </div> */}
       </div>
     </Link>
   );

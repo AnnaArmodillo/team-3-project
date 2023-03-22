@@ -38,12 +38,16 @@ async function uploadFile(req, res) {
 }
 
 async function getUploadedFile(req, res) {
+  try {
+    const filename = req.params.filename;
     try {
-        const filename = req.params.filename;
-        res.sendFile(path.resolve(uploadFolderPath, filename));
-      } catch (error) {
-        return res.status(404).json('Файл с таким именем не найден')
-      }
+      res.sendFile(path.resolve(uploadFolderPath, filename));
+    } catch (error) {
+      return res.status(404).json('Файл с таким именем не найден')
+    }
+  } catch (error) {
+    return res.sendStatus(500);
+  }
 }
 
 export const uploadImagesController = {

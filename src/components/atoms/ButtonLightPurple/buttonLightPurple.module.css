@@ -1,0 +1,13 @@
+.button {
+    background-color: var(--button-disabled-purple-color);
+    color: var(---text-purple-color);
+}
+
+.button:hover:not([disabled]) {
+    box-shadow: 2px 2px var(--box-shadow-color);
+}
+
+.button:disabled {
+    cursor: initial;
+    background-color: var(--button-disabled-purple-color);
+}

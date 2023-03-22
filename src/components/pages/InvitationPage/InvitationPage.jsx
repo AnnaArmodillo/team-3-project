@@ -7,7 +7,10 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { useDebounce } from '../../../hooks/useDebounce';
-import { getAccessTokenSelector } from '../../../redux/slices/userSlice';
+import {
+  getAccessTokenSelector,
+  getUserSelector,
+} from '../../../redux/slices/userSlice';
 import { InviteUsersValidationScheme } from '../../../utils/validators';
 import { ButtonGrey } from '../../atoms/ButtonGrey/ButtonGrey';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
@@ -16,13 +19,18 @@ import { Loader } from '../../Loader/Loader';
 import styles from './invitationPage.module.css';
 import { getSurveySelector } from '../../../redux/slices/surveySlice';
 import { getQueryKey } from '../../../utils/constants';
+import { CopyLinkButton } from '../../atoms/CopyLinkButton/CopyLinkButton';
+import { Modal } from '../../organisms/Modal/Modal';
 
 export function InvitationPage() {
   const surveyId = useSelector(getSurveySelector);
   const token = useSelector(getAccessTokenSelector);
+  const { email } = useSelector(getUserSelector);
   const [searchValue, setSearchValue] = useState([]);
+  const [errors, setErrors] = useState([]);
   const [search, setSearch] = useState('');
   const [currentIndex, setCurrentIndex] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const usersGroup = {
     email: '',
   };
@@ -34,16 +42,23 @@ export function InvitationPage() {
   }
   function clearSearchValue(index) {
     const searchArray = [...searchValue];
+    const errorsArray = [...errors];
     searchArray[index] = '';
+    errorsArray[index] = '';
     setSearchValue([...searchArray]);
+    setErrors([...errorsArray]);
   }
-  function deleteWithOptionHandler(index) {
+  function deleteErrorHandler(index) {
     const searchArray = [...searchValue];
+    const errorsArray = [...errors];
+    errorsArray[index] = '';
     searchArray[index] = '';
     setSearchValue([
       ...searchArray.slice(0, index),
       ...searchArray.slice(index + 1),
     ]);
+    setErrors([...errorsArray.slice(0, index),
+      ...errorsArray.slice(index + 1)]);
   }
   function isQueryEnabled() {
     if (!token) {
@@ -56,19 +71,33 @@ export function InvitationPage() {
     }
     return false;
   }
-  const { isFetching, isError } = useQuery({
+  function closeModalHandler() {
+    const searchArray = [...searchValue];
+    searchArray[currentIndex] = '';
+    setSearchValue([...searchArray]);
+    setIsModalOpen(false);
+  }
+  const {
+    data: resEmail,
+    isFetching,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: getQueryKey(search),
     queryFn: () => teamProjectApi.getUserByEmail(search, token),
     enabled: isQueryEnabled(),
   });
   const {
     mutateAsync,
+    data: users,
     isError: isErrorInvite,
     error: errorInvite,
     isLoading: isLoadingInvite,
-    isSuccess,
   } = useMutation({
-    mutationFn: (values) => teamProjectApi.sendInvitations(values, token),
+    mutationFn: (values) => teamProjectApi
+      .sendInvitations(values, token)
+      .then((response) => response.json())
+      .then((res) => res),
   });
   async function valuesPrepareHandler(values) {
     const invitations = { ...values, surveyId };
@@ -81,6 +110,23 @@ export function InvitationPage() {
   useEffect(() => {
     setSearch(debouncedSearchValue);
   }, [debouncedSearchValue]);
+  useEffect(() => {
+    if (isError) {
+      const errorsArray = [...errors];
+      errorsArray[currentIndex] = `Пользователь с email ${search} 
+      не найден. Вы можете пригласить его пройти опрос по прямой ссылке`;
+      setErrors([...errorsArray]);
+    } else {
+      const errorsArray = [...errors];
+      errorsArray[currentIndex] = '';
+      setErrors([...errorsArray]);
+    }
+  }, [isError, search]);
+  useEffect(() => {
+    if (resEmail === email) {
+      setIsModalOpen(true);
+    }
+  }, [resEmail]);
   if (isLoadingInvite) {
     return (
       <MainWrap>
@@ -99,13 +145,35 @@ export function InvitationPage() {
       </MainWrap>
     );
   }
-  if (isSuccess) {
+  if (users) {
     return (
       <MainWrap>
         <div className={styles.invitationPage}>
-          <div className={styles.successMessage}>
-            Приглашения успешно отправлены
-          </div>
+          {users.usersSuccess[0] && (
+            <div className={styles.successMessage}>
+              Приглашения успешно отправлены следующим пользователям:
+              {' '}
+              {users.usersSuccess.join(', ')}
+              .
+            </div>
+          )}
+          {users.usersFail[0] && (
+            <div className={styles.successMessage}>
+              Пользователи со следующими email не найдены:
+              {' '}
+              {users.usersFail.join(', ')}
+              .
+            </div>
+          )}
+          {users.usersDouble[0] && (
+            <div className={styles.successMessage}>
+              Пользователи со следующими email уже получали Ваше приглашение к
+              этому опросу:
+              {' '}
+              {users.usersDouble.join(', ')}
+              .
+            </div>
+          )}
         </div>
       </MainWrap>
     );
@@ -164,7 +232,7 @@ export function InvitationPage() {
                             <ButtonGrey
                               type="button"
                               onClick={() => {
-                                deleteWithOptionHandler(index);
+                                deleteErrorHandler(index);
                                 remove(index);
                               }}
                             >
@@ -176,19 +244,11 @@ export function InvitationPage() {
                           className={styles.validationMessage}
                           name={`users.${index}.email`}
                         >
-                          {isError && index === currentIndex && (
-                          <div className={styles.validationMessage}>
-                            {`Пользователь с email ${search} 
-                        не найден. Вы можете пригласить его пройти опрос по прямой ссылке`}
-                            <button
-                              type="button"
-                              title="копировать ссылку"
-                              className={styles.buttonCopy}
-                              onClick={() => navigator.clipboard.writeText(surveyId)}
-                            >
-                              <i className="fa-solid fa-copy" />
-                            </button>
-                          </div>
+                          {errors[index] && (
+                            <div className={styles.validationMessage}>
+                              {errors[index]}
+                              <CopyLinkButton surveyId={surveyId} />
+                            </div>
                           )}
                         </div>
                       </div>
@@ -196,6 +256,7 @@ export function InvitationPage() {
                     {isFetching && <Loader />}
                     <ButtonPurple
                       type="button"
+                      disabled={isFetching || isLoading}
                       onClick={() => push(usersGroup)}
                     >
                       Добавить пользователя
@@ -212,6 +273,13 @@ export function InvitationPage() {
             </Form>
           )}
         </Formik>
+        <Modal
+          closeHandler={closeModalHandler}
+          isOpen={isModalOpen}
+        >
+          Вы можете пройти данный опрос в любое время. Он доступен в разделе
+          &quot;Мои опросы&quot; на странице Вашего профиля.
+        </Modal>
       </div>
     </MainWrap>
   );

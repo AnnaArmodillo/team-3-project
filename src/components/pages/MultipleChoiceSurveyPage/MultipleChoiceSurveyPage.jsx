@@ -3,11 +3,12 @@ import {
   Form, ErrorMessage, Formik,
 } from 'formik';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   useLocation, useNavigate, useParams,
 } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
+import { setSurvey } from '../../../redux/slices/surveySlice';
 import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
 import { MC } from '../../../utils/constants';
 import { getOptionSuccessRate } from '../../../utils/helper';
@@ -21,6 +22,7 @@ import { Loader } from '../../Loader/Loader';
 import {
   ThankYouForVotingMessage,
 } from '../../molecules/ThankYouForVotingMessage/ThankYouForVotingMessage';
+import { InvitationPageLink } from '../../organisms/InvitationPageLink/InvitationPageLink';
 import { OptionCard } from '../../organisms/OptionCard/OptionCard';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './multipleChoiceSurvey.module.css';
@@ -138,6 +140,7 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
           }}
         </Formik>
         <SurveyTotalVotes counter={votesTotal} />
+        <InvitationPageLink author={mcSurvey.author} id={userId} />
       </div>
     </MainWrap>
   );
@@ -150,6 +153,7 @@ export function MultipleChoiceSurveyPage() {
   const { pathname } = useLocation();
   const accessToken = useSelector(getAccessTokenSelector);
   const { surveyId } = useParams();
+  const dispatch = useDispatch();
 
   const {
     data: mcSurvey, isLoading, isError, error, refetch,
@@ -167,6 +171,11 @@ export function MultipleChoiceSurveyPage() {
       });
     }
   }, [accessToken]);
+  useEffect(() => {
+    if (surveyId) {
+      dispatch(setSurvey(surveyId));
+    }
+  }, [surveyId]);
 
   return (
     <MultipleChoiceSurveyPageInnerWithQuery

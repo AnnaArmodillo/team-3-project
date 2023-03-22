@@ -1,0 +1,8 @@
+.buttonCopy {
+  background-color: var(--text-white-color);
+}
+
+.buttonCopy i {
+  color: var(--arrow-pale-gray);
+  font-size: 20px;
+}

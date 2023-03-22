@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import * as dotenv from 'dotenv';
 import { usersValidationSchema } from '../validators/usersValidator.js';
 import { DB } from '../DB/db.js';
-import { updateDB } from '../helper.js';
+import { getUserIdFromToken, updateDB } from '../helper.js';
 
 dotenv.config();
 
@@ -67,7 +67,7 @@ async function addNewUser(req, res) {
     );
     const newUser = {
       name: userData.name,
-      email: userData.email,
+      email: userData.email.toLowerCase(),
       id: crypto.randomUUID(),
       password: hashPassword,
       invitations: [],
@@ -83,8 +83,8 @@ async function addNewUser(req, res) {
 }
 function searchUserByEmail(req, res) {
   try {
-    const userEmail = req.params.userEmail;
-    const resultUser = DB.users.find((user) => user.email.toLowerCase() === userEmail);
+    const userEmail = req.params.userEmail.toLowerCase();
+    const resultUser = DB.users.find((user) => user.email === userEmail);
     try {
       const {email} = resultUser;
     return res.json(email);
@@ -95,9 +95,29 @@ function searchUserByEmail(req, res) {
     return res.sendStatus(500);
   }
 }
+function deleteUserByID(req, res) {
+  try {
+    const userIDFromReq = req.params.userID;
+    const token = req.headers.authorization.split(' ')[1];
+    const userId = getUserIdFromToken(token);
+    if(userId === userIDFromReq) {
+      const filteredDB = DB.users.filter((user) => user.id !== userIDFromReq);
+      DB.users = filteredDB;
+      const newContent = `export const DB = ${JSON.stringify(DB)}`;
+      updateDB(newContent);
+      return res.sendStatus(202);
+    }
+    else {
+      return res.status(403).json('Невозможно удалить чужой аккаунт');
+    }
+  } catch (error) {
+    return res.sendStatus(500);
+  }
+}
 export const usersController = {
   getAllUsers,
   getUserByID,
   addNewUser,
   searchUserByEmail,
+  deleteUserByID,
 };
