@@ -12,6 +12,7 @@ export const SCREEN_XXL = 1400;
 
 /* Query Keys */
 export const SURVEYS_CATALOG_PAGE = 'SurveysCatalogPage';
+
 export function getQueryKey(search) {
   return ['userByEmail', search];
 }
@@ -20,4 +21,19 @@ export function getQueryKeyUCSurvey(surveyID) {
 }
 export function getQueryKeyImage(image) {
   return ['image', image];
+}
+export function getQueryKeySurveysByAuthor(userId) {
+  return ['SurveysByAuthorFetch', userId];
+}
+export function getQueryKeyUser(userId) {
+  return ['UserFetch', userId];
+}
+export function getQueryKeySСSurvey(surveyId) {
+  return ['scSurvey', surveyId];
+}
+export function getQueryKeySurveysCatalog(search) {
+  return [SURVEYS_CATALOG_PAGE, search];
+}
+export function getQueryKeyVisitedSurveys() {
+  return ['VisitedSurveysFetch'];
 }

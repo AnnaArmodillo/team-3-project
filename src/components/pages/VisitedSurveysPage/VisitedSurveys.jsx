@@ -4,6 +4,7 @@ import { teamProjectApi } from '../../../api/TeamProjectApi';
 import {
   getAccessTokenSelector, getUserSelector,
 } from '../../../redux/slices/userSlice';
+import { getQueryKeyVisitedSurveys } from '../../../utils/constants';
 import { withQuery } from '../../HOCs/withQuery';
 import { SurveyItem } from '../../molecules/SurveyItem/SurveyItem';
 import { Title } from '../../molecules/Title/Title';
@@ -50,7 +51,7 @@ export function VisitedSurveys() {
   const {
     data, isLoading, isError, error, refetch,
   } = useQuery({
-    queryKey: ['VisitedSurveysFetch'],
+    queryKey: getQueryKeyVisitedSurveys(),
     queryFn: () => teamProjectApi.getVisitedSurveys(accessToken),
   });
 

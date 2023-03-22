@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getUserSelector } from '../../../redux/slices/userSlice';
+import { getQueryKeyUser } from '../../../utils/constants';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { withQuery } from '../../HOCs/withQuery';
 import { DeleteProfileButton } from '../../molecules/DeleteProfileButton/DeleteProfileButton';
@@ -80,7 +81,7 @@ export function Profile() {
   const {
     data, isLoading, isError, error, refetch,
   } = useQuery({
-    queryKey: ['UserFetch', userId],
+    queryKey: getQueryKeyUser(userId),
     queryFn: () => teamProjectApi.getUserById(userId),
   });
 

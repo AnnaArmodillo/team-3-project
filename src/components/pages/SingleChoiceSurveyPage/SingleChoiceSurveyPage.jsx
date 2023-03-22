@@ -8,7 +8,7 @@ import {
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { setSurvey } from '../../../redux/slices/surveySlice';
 import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
-import { SC } from '../../../utils/constants';
+import { getQueryKeySСSurvey, SC } from '../../../utils/constants';
 import { getOptionSuccessRate } from '../../../utils/helper';
 import { takeSurveyValidationScheme } from '../../../utils/validators';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
@@ -150,7 +150,7 @@ export function SingleChoiceSurveyPage() {
   const {
     data: scSurvey, isLoading, isError, error, refetch,
   } = useQuery({
-    queryKey: ['scSurvey', surveyId],
+    queryKey: getQueryKeySСSurvey(surveyId),
     queryFn: () => teamProjectApi.getSurveyById(surveyId, accessToken),
     skip: !accessToken,
   });
