@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 import { useResize } from '../../../hooks/useResize';
+import { ButtonLightPurple } from '../../atoms/ButtonLightPurple/ButtonLightPurple';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
-import { ButtonWhite } from '../../atoms/ButtonWhite/ButtonWhite';
 import { FILTERS_BY_TYPE, FILTER_QUERY_NAME } from './constants';
 import styles from './filters.module.css';
 
@@ -47,9 +47,9 @@ export function FilterItem({ filterName, filterType, clickFilterHandler }) {
     );
   }
   return (
-    <ButtonWhite onClick={() => clickFilterHandler(filterType, !isActive)}>
+    <ButtonLightPurple onClick={() => clickFilterHandler(filterType, !isActive)}>
       {isScreenLg && (<i className={classNames('fa-solid fa-list-ul', styles.icon)} />)}
       {filterName}
-    </ButtonWhite>
+    </ButtonLightPurple>
   );
 }
