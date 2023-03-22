@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getSearchSelector } from '../../../redux/slices/filterSlice';
-import { ButtonWhite } from '../../atoms/ButtonWhite/ButtonWhite';
 import { getQueryKeySurveysCatalog } from '../../../utils/constants';
 import { withQuery } from '../../HOCs/withQuery';
 import { SurveyItem } from '../../molecules/SurveyItem/SurveyItem';
@@ -14,9 +13,13 @@ import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import { FILTER_QUERY_NAME, getFilteredSurveys } from '../Filters/constants';
 import { Filters } from '../Filters/Filters';
 import styles from './surveysCatalogPage.module.css';
+import { Title } from '../../molecules/Title/Title';
+import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 
 function SurveysCatalogPageInner({ surveys, search }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const isCatalog = true;
 
   const handleFiltersOpening = () => {
     setIsOpen((prev) => !prev);
@@ -25,36 +28,35 @@ function SurveysCatalogPageInner({ surveys, search }) {
     return (
       <MainWrap>
         <div className={styles.surveysCatalogPage}>
+          <Title title="Все опросы" />
           <div className={styles.flex}>
             <Search />
-            <ButtonWhite onClick={handleFiltersOpening}>
+            <ButtonPurple onClick={handleFiltersOpening}>
+              <span className={styles.filtersOpeningButtonName}>Сортировать</span>
               {!isOpen ? (
-                <>
-                  <span className={styles.filtersOpeningButtonName}>Показать фильтры</span>
-                  <i className="fa-solid fa-chevron-down" />
-                </>
+                <i className="fa-solid fa-chevron-down" />
               ) : (
-                <>
-                  <span className={styles.filtersOpeningButtonName}>Скрыть фильтры</span>
-                  <i className="fa-solid fa-chevron-up" />
-                </>
+                <i className="fa-solid fa-chevron-up" />
               )}
-            </ButtonWhite>
+            </ButtonPurple>
           </div>
           {isOpen && (<div className={classNames(styles.flex, styles.filters)}><Filters /></div>)}
-          <h1>
-            {search
-              ? (
-                ('Опросы по запросу')
-              )
-              : (
-                ('Все опросы')
-              )}
-          </h1>
+          {(search && !surveys.length) && (
+            <p>Ничего не найдено</p>
+          )}
+          {(search && !!surveys.length) && (
+            <p>
+              Найдено
+              {' '}
+              опросов
+              {' '}
+              {surveys.length}
+            </p>
+          )}
           <div className={styles.surveysCatalogContainer}>
             {surveys.map((survey) => (
               <div key={survey.surveyId} className={styles.surveyWr}>
-                <SurveyItem survey={survey} />
+                <SurveyItem survey={survey} isCatalog={isCatalog} />
               </div>
             ))}
           </div>
