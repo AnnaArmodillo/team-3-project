@@ -18,6 +18,7 @@ import { SurveyOptionResult } from '../../atoms/SurveyOptionResult/SurveyOptionR
 import { SurveyTotalVotes } from '../../atoms/SurveyTotalVotes/SurveyTotalVotes';
 import { SurveyTypeInfo } from '../../atoms/SurveyTypeInfo/SurveyTypeInfo';
 import { withQuery } from '../../HOCs/withQuery';
+import { withScrollToTop } from '../../HOCs/withScrollToTop';
 import { Loader } from '../../Loader/Loader';
 import {
   ThankYouForVotingMessage,
@@ -148,7 +149,7 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
 
 const MultipleChoiceSurveyPageInnerWithQuery = withQuery(MultipleChoiceSurveyPageInner);
 
-export function MultipleChoiceSurveyPage() {
+function MultipleChoiceSurveyPageWithQuery() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const accessToken = useSelector(getAccessTokenSelector);
@@ -187,5 +188,13 @@ export function MultipleChoiceSurveyPage() {
       surveyId={surveyId}
       accessToken={accessToken}
     />
+  );
+}
+
+const MultipleChoiceSurveyPageWithScrollToTop = withScrollToTop(MultipleChoiceSurveyPageWithQuery);
+
+export function MultipleChoiceSurveyPage() {
+  return (
+    <MultipleChoiceSurveyPageWithScrollToTop />
   );
 }

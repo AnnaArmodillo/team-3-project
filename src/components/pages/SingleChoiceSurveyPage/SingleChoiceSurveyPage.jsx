@@ -15,6 +15,7 @@ import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { SurveyOptionResult } from '../../atoms/SurveyOptionResult/SurveyOptionResult';
 import { SurveyTotalVotes } from '../../atoms/SurveyTotalVotes/SurveyTotalVotes';
 import { withQuery } from '../../HOCs/withQuery';
+import { withScrollToTop } from '../../HOCs/withScrollToTop';
 import { Loader } from '../../Loader/Loader';
 import {
   ThankYouForVotingMessage,
@@ -140,7 +141,7 @@ function SingleChoiceSurveyPageInner({ scSurvey, surveyId, accessToken }) {
 
 const SingleChoiceSurveyPageInnerWithQuery = withQuery(SingleChoiceSurveyPageInner);
 
-export function SingleChoiceSurveyPage() {
+function SingleChoiceSurveyPageWithQuery() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const accessToken = useSelector(getAccessTokenSelector);
@@ -179,5 +180,13 @@ export function SingleChoiceSurveyPage() {
       surveyId={surveyId}
       accessToken={accessToken}
     />
+  );
+}
+
+const SingleChoiceSurveyPageWithScrollToTop = withScrollToTop(SingleChoiceSurveyPageWithQuery);
+
+export function SingleChoiceSurveyPage() {
+  return (
+    <SingleChoiceSurveyPageWithScrollToTop />
   );
 }

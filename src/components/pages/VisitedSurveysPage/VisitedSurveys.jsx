@@ -6,6 +6,7 @@ import {
 } from '../../../redux/slices/userSlice';
 import { getQueryKeyVisitedSurveys } from '../../../utils/constants';
 import { withQuery } from '../../HOCs/withQuery';
+import { withScrollToTop } from '../../HOCs/withScrollToTop';
 import { SurveyItem } from '../../molecules/SurveyItem/SurveyItem';
 import { Title } from '../../molecules/Title/Title';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
@@ -45,7 +46,7 @@ const VisitedSurveysInner = withQuery(({ data }) => {
   );
 });
 
-export function VisitedSurveys() {
+function VisitedSurveysWithQuery() {
   const accessToken = useSelector(getAccessTokenSelector);
 
   const {
@@ -63,5 +64,13 @@ export function VisitedSurveys() {
       error={error}
       refetch={refetch}
     />
+  );
+}
+
+const VisitedSurveysWithScrollToTop = withScrollToTop(VisitedSurveysWithQuery);
+
+export function VisitedSurveys() {
+  return (
+    <VisitedSurveysWithScrollToTop />
   );
 }

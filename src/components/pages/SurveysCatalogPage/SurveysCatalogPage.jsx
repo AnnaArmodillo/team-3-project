@@ -15,6 +15,7 @@ import { Filters } from '../Filters/Filters';
 import styles from './surveysCatalogPage.module.css';
 import { Title } from '../../molecules/Title/Title';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
+import { withScrollToTop } from '../../HOCs/withScrollToTop';
 
 function SurveysCatalogPageInner({ surveys, search }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,7 +67,7 @@ function SurveysCatalogPageInner({ surveys, search }) {
   }
 }
 const SurveysCatalogPageInnerWithQuery = withQuery(SurveysCatalogPageInner);
-function SurveysCatalogPage() {
+function SurveysCatalogPageWithQuery() {
   const search = useSelector(getSearchSelector);
   const [searchParams] = useSearchParams();
   const currentFilterNameFromQuery = searchParams.get(FILTER_QUERY_NAME);
@@ -124,4 +125,10 @@ function SurveysCatalogPage() {
   );
 }
 
+const SurveysCatalogPageWithScrollToTop = withScrollToTop(SurveysCatalogPageWithQuery);
+function SurveysCatalogPage() {
+  return (
+    <SurveysCatalogPageWithScrollToTop />
+  );
+}
 export default SurveysCatalogPage;
