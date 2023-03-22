@@ -6,18 +6,33 @@
   gap: 1rem;
 }
 
-.filters {
+.flex {
   display: flex;
   gap: 1rem;
+}
+
+.filtersOpeningButtonName {
+  margin-right: 0.2rem;
+}
+
+.filters {
+  flex-wrap: wrap;
 }
 
 .surveysCatalogContainer {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  justify-content: space-between;
 }
 
-.surveyWr {
-  max-width: calc(50% - 1rem);
+@media (max-width: 900px) {
+  .surveysCatalogContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+} 
+
+@media (max-width: 576px) {
+  .surveysCatalogContainer {
+    grid-template-columns: 1fr;
+  }
 }
