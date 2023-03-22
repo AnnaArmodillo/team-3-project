@@ -30,7 +30,21 @@ function getSurveysByAuthor(req, res) {
   }
 }
 
+function searchSurveysDB(req, res) {
+  try {
+    const { title } = req.query;
+    return res.json(
+      DB.surveys.filter((survey) => {
+        if (survey.title.includes(title)) return survey;
+      })
+    );
+  } catch (error) {
+    return res.sendStatus(500);
+  }
+}
+
 export const surveysFilterController = {
   getVisitedSurveys,
   getSurveysByAuthor,
+  searchSurveysDB,
 };
