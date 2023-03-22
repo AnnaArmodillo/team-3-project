@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getSearchSelector } from '../../../redux/slices/filterSlice';
-import { SURVEYS_CATALOG_PAGE } from '../../../utils/constants';
 import { ButtonWhite } from '../../atoms/ButtonWhite/ButtonWhite';
+import { getQueryKeySurveysCatalog } from '../../../utils/constants';
 import { withQuery } from '../../HOCs/withQuery';
 import { SurveyItem } from '../../molecules/SurveyItem/SurveyItem';
 import Search from '../../organisms/Search/Search';
@@ -76,7 +76,7 @@ function SurveysCatalogPage() {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: [SURVEYS_CATALOG_PAGE, search],
+    queryKey: getQueryKeySurveysCatalog(search),
     queryFn: () => teamProjectApi.getAllSurveys(),
     enabled: !search,
   });
@@ -88,7 +88,7 @@ function SurveysCatalogPage() {
     isLoading: isLoadingFromSearch,
     refetch: refetchFromSearch,
   } = useQuery({
-    queryKey: [SURVEYS_CATALOG_PAGE, search],
+    queryKey: getQueryKeySurveysCatalog(search),
     queryFn: () => teamProjectApi.searchSurveys(search),
     enabled: !!search,
   });
