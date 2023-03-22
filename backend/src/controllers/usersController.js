@@ -16,7 +16,6 @@ function getAllUsers(req, res) {
       })
     );
   } catch (error) {
-    console.log(error)
     return res.sendStatus(500);
   }
 }
@@ -105,7 +104,6 @@ function deleteUserByID(req, res) {
     updateDB(newContent);
     return res.sendStatus(202);
   } catch (error) {
-    console.log(error)
     return res.sendStatus(500);
   }
 }

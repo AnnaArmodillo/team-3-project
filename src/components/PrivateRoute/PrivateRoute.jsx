@@ -43,9 +43,6 @@ export const PrivateRoute = ({ children }) => {
       },
     });
   }
-  if (isLoading) {
-    // console.log('teamProjectApi.refreshToken isLoading');
-  }
 
   useEffect(() => {
     let timeoutId;
