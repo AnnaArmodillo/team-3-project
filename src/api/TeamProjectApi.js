@@ -308,6 +308,20 @@ class TeamProjectApi {
     return res.json();
   }
 
+  async searchSurveys(search) {
+    const res = await fetch(`${this.baseUrl}/opensearch?title=${search}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (res.status >= 500) {
+      throw new Error(`Произошла ошибка при получении списка опросов. 
+        Попробуйте сделать запрос позже. Status: ${res.status}`);
+    }
+
+    return res.json();
+  }
+
   async deleteSurveyFromVisited(surveyId, token) {
     this.checkToken(token);
 
