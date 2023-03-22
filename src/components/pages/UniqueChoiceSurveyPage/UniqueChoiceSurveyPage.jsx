@@ -23,8 +23,9 @@ import { UC, getQueryKeyUCSurvey } from '../../../utils/constants';
 import { SurveyTotalVotes } from '../../atoms/SurveyTotalVotes/SurveyTotalVotes';
 import { setSurvey } from '../../../redux/slices/surveySlice';
 import { InvitationPageLink } from '../../organisms/InvitationPageLink/InvitationPageLink';
+import { withScrollToTop } from '../../HOCs/withScrollToTop';
 
-export function UniqueChoiceSurveyPage() {
+function UniqueChoiceSurveyPageInner() {
   const { surveyId } = useParams();
   const { pathname } = useLocation();
   const queryClient = useQueryClient();
@@ -158,5 +159,12 @@ export function UniqueChoiceSurveyPage() {
         <InvitationPageLink author={survey.author} id={id} />
       </div>
     </MainWrap>
+  );
+}
+
+const UniqueChoiceSurveyPageInnerWithScrollToTop = withScrollToTop(UniqueChoiceSurveyPageInner);
+export function UniqueChoiceSurveyPage() {
+  return (
+    <UniqueChoiceSurveyPageInnerWithScrollToTop />
   );
 }
