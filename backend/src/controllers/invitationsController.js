@@ -6,6 +6,8 @@ function sendInvitations(req, res) {
     const { users, surveyId } = req.body;
     const token = req.headers.authorization.split(' ')[1];
     const userID = getUserIdFromToken(token);
+    const author = DB.users.find((user) => user.id === userID);
+    const filteredUsers = users.filter((user) => user.email !== author.email)
     const usersSuccess = [];
     const usersFail = [];
     const usersDouble = [];
@@ -24,20 +26,21 @@ function sendInvitations(req, res) {
           return false;
         }
     }
-    users.map((userFromReq) => {
+    filteredUsers.map((userFromReq) => {
       const currentUser = DB.users.find(
         (user) => user.email === userFromReq.email.toLowerCase()
       );
-      if (currentUser && !isAlreadyInvited(currentUser)) {
+      if (!currentUser) {
+        usersFail.push(userFromReq.email.toLowerCase());
+      } else if (currentUser && !isAlreadyInvited(currentUser) && !usersSuccess.includes(userFromReq.email.toLowerCase())) {
         currentUser.invitations.push({
           survey: surveyId,
           fromUser: userID,
         });
         usersSuccess.push(userFromReq.email.toLowerCase());
-      } else if (currentUser && isAlreadyInvited(currentUser)) {
+      } else if (currentUser && isAlreadyInvited(currentUser) && !usersDouble.includes(userFromReq.email.toLowerCase()) && 
+      !usersSuccess.includes(userFromReq.email.toLowerCase())) {
         usersDouble.push(userFromReq.email.toLowerCase());
-      } else {
-        usersFail.push(userFromReq.email.toLowerCase());
       }
     });
     const newContent = `export const DB = ${JSON.stringify(DB)}`;
