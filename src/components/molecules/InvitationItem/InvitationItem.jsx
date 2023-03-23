@@ -1,6 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getAccessTokenSelector } from '../../../redux/slices/userSlice';
 import { getSurveyURL } from '../../../utils/helper';
@@ -18,6 +20,7 @@ export function InvitationItem({ invitation }) {
   const deleteFromVisited = (e) => {
     e.preventDefault();
     mutateAsync();
+    toast.success('Приглашение удалено!');
   };
 
   return (
