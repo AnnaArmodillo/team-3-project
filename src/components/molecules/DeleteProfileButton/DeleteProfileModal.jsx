@@ -1,6 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { useMutation } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getAccessTokenSelector, getUserSelector, signOut } from '../../../redux/slices/userSlice';
 import { Modal } from '../../organisms/Modal/Modal';
@@ -19,6 +21,7 @@ export function DeleteProfileModal({
   const deleteProfileHandler = async () => {
     await mutateAsync();
     dispatch(signOut());
+    toast.success('Пользователь удален!');
     navigate('/');
   };
 
