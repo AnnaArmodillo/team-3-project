@@ -24,7 +24,7 @@ export function AccordionItem({ accordionItem }) {
       </div>
       {isActive && (
         <div className={styles.accordionContent}>
-          <div>{accordionItem.content.description}</div>
+          <div className={styles.containerText}>{accordionItem.content.description}</div>
           <div className={styles.containerVideo}>
             <video src={accordionItem.content.video} controls />
           </div>
