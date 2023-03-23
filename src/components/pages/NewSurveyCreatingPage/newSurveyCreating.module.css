@@ -6,6 +6,10 @@
   width: 100%;
 }
 
+.pageSuccess {
+  display: flex;
+}
+
 .surveyTitle {
   font-weight: 600;
   padding: 8px;
@@ -270,5 +274,21 @@ button {
   .buttonDeleteOption {
     grid-row: 5;
     grid-column: 2;
+  }
+
+  .pageSuccess {
+    flex-direction: column;
+  }
+
+  .surveyImage {
+    margin: 0 auto;
+  }
+
+  .successMessage {
+    font-size: 20px;
+  }
+
+  .surveyLink {
+    margin: 20px 0 0 0;
   }
 } 

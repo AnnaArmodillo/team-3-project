@@ -161,41 +161,43 @@ export function NewSurveyCreating() {
   if (surveyId) {
     return (
       <MainWrap>
-        <div className={styles.messageWrapper}>
-          <div className={styles.successMessage}>
-            Готово! Созданный опрос доступен по ссылке:
-            {' '}
-            <p
-              className={styles.surveyLink}
-              ref={textAreaRef}
-            >
-              {getSurveyURL(surveyId)}
+        <div className={styles.pageSuccess}>
+          <div className={styles.messageWrapper}>
+            <div className={styles.successMessage}>
+              Готово! Созданный опрос доступен по ссылке:
               {' '}
-              <CopyLinkButton surveyId={surveyId} />
-            </p>
-          </div>
-          <div className={styles.buttonsWrapper}>
-            <Link to={getSurveyURL(surveyId)}>
-              <ButtonPurple>Перейти к опросу</ButtonPurple>
+              <p
+                className={styles.surveyLink}
+                ref={textAreaRef}
+              >
+                {getSurveyURL(surveyId)}
+                {' '}
+                <CopyLinkButton surveyId={surveyId} />
+              </p>
+            </div>
+            <div className={styles.buttonsWrapper}>
+              <Link to={getSurveyURL(surveyId)}>
+                <ButtonPurple>Перейти к опросу</ButtonPurple>
+              </Link>
+              <ButtonPurple
+                type="button"
+                onClick={() => window.location.reload()}
+              >
+                Новый опрос
+              </ButtonPurple>
+            </div>
+            <Link to="/invitation">
+              <ButtonPurple>
+                Пригласить других пользователей пройти опрос
+              </ButtonPurple>
             </Link>
-            <ButtonPurple
-              type="button"
-              onClick={() => window.location.reload()}
-            >
-              Новый опрос
-            </ButtonPurple>
           </div>
-          <Link to="/invitation">
-            <ButtonPurple>
-              Пригласить других пользователей пройти опрос
-            </ButtonPurple>
-          </Link>
-        </div>
-        <div className={styles.surveyImage}>
-          <img
-            src={surveyImage}
-            alt="изображение"
-          />
+          <div className={styles.surveyImage}>
+            <img
+              src={surveyImage}
+              alt="изображение"
+            />
+          </div>
         </div>
       </MainWrap>
     );

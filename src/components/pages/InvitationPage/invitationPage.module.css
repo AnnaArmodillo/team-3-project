@@ -62,7 +62,6 @@
 .validationMessage {
   color: var(--danger-text-color);
   font-size: 16px;
-  grid-column: 3;
   text-align: center;
 }
 
@@ -80,11 +79,9 @@
 
 .userInputWrapper {
   display: flex;
-  grid-column: 1;
 }
 
 .buttonDelete {
-  grid-column: 2;
   display: flex;
   justify-content: center;
 }
@@ -93,3 +90,16 @@
   text-align: left;
   font-size: 28px;
 }
+
+@media (max-width: 900px) {
+  .user:not(:first-child) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 2fr;
+    gap: 8px;
+  }
+  
+  .user:first-child {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr;
+  } 
+} 
