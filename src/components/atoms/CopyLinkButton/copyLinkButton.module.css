@@ -6,3 +6,23 @@
   color: var(--arrow-pale-gray);
   font-size: 20px;
 }
+
+.toast svg {
+  width: 20px;
+  height: 20px;
+}
+
+.toastBody {
+  display: flex;
+  font-weight: 600;
+  gap: 8px;
+  padding: 8px;
+  background-color: var(--bc-toaster);
+  border-radius: 8px;
+  color: var(--text-purple-color);
+}
+
+.toast:nth-child(1) {
+  background: rgba(255, 255, 255, 0);
+  box-shadow: none;
+}
