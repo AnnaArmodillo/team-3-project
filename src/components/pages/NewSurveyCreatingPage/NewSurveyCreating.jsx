@@ -21,6 +21,7 @@ import { setSurvey } from '../../../redux/slices/surveySlice';
 import { MC, SC, UC } from '../../../utils/constants';
 import placeholderImage from '../../../images/placeholder_image.png';
 import { CopyLinkButton } from '../../atoms/CopyLinkButton/CopyLinkButton';
+import { ButtonLightPurple } from '../../atoms/ButtonLightPurple/ButtonLightPurple';
 
 export function NewSurveyCreating() {
   const token = useSelector(getAccessTokenSelector);
@@ -407,13 +408,13 @@ export function NewSurveyCreating() {
                           )}
                         </div>
                         {selectedFile !== '' && (
-                        <ButtonPurple
+                        <ButtonLightPurple
                           type="button"
                           className={styles.buttonUpload}
                           onClick={() => uploadHandler(index)}
                         >
                           Загрузить файл
-                        </ButtonPurple>
+                        </ButtonLightPurple>
                         )}
                         {index > 0 && (
                           <ButtonGrey
