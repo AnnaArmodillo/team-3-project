@@ -6,3 +6,24 @@
   color: var(--arrow-pale-gray);
   font-size: 20px;
 }
+
+.toast {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--text-purple-color);
+  display: flex;
+}
+
+.toast svg {
+  width: 20px;
+  height: 20px;
+}
+
+.toastBody {
+  display: flex;
+  gap: 8px;
+  padding: 4px;
+  background-color: var(--bc-toaster);
+  border-radius: 8px;
+}
