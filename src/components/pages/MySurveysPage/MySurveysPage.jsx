@@ -7,6 +7,7 @@ import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/u
 import { getQueryKeySurveysByAuthor } from '../../../utils/constants';
 import { ArrowLeft } from '../../atoms/ArrowLeft/ArrowLeft';
 import { withQuery } from '../../HOCs/withQuery';
+import { withScrollToTop } from '../../HOCs/withScrollToTop';
 import { SurveyItem } from '../../molecules/SurveyItem/SurveyItem';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './mySurveys.module.css';
@@ -43,7 +44,7 @@ function MySurveysInner({ mySurveys }) {
 
 const MySurveysInnerWithQuery = withQuery(MySurveysInner);
 
-export function MySurveys() {
+function MySurveysWithQuery() {
   const navigate = useNavigate();
   const user = useSelector(getUserSelector);
   const accessToken = useSelector(getAccessTokenSelector);
@@ -70,5 +71,12 @@ export function MySurveys() {
         refetch={refetch}
       />
     )
+  );
+}
+
+const MySurveysWithQueryWithScrollToTop = withScrollToTop(MySurveysWithQuery);
+export function MySurveys() {
+  return (
+    <MySurveysWithQueryWithScrollToTop />
   );
 }
