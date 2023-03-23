@@ -16,14 +16,14 @@
   9. [SASS.]()https://www.npmjs.com/package/sass
   10. [React-Toastify.](https://fkhadra.github.io/react-toastify/introduction)
   11. [Yup.](https://www.npmjs.com/package/yup)
-12. Технологии backend
-  13. [Express.](https://expressjs.com/)
-  14. [Express-fileupload.](https://www.npmjs.com/package/express-fileupload)
-  15. [Cookie-parser.](https://www.npmjs.com/package/cookie-parser)
-  16. [Bcrypt.](https://www.npmjs.com/package/bcrypt)
-  17. [Morgan.](https://www.npmjs.com/package/morgan)
-  18. [JSONWebToken.](https://www.npmjs.com/package/jsonwebtoken)
-  19. [Cors.](https://www.npmjs.com/package/cors)
+2. Технологии backend
+  1. [Express.](https://expressjs.com/)
+  2. [Express-fileupload.](https://www.npmjs.com/package/express-fileupload)
+  3. [Cookie-parser.](https://www.npmjs.com/package/cookie-parser)
+  4. [Bcrypt.](https://www.npmjs.com/package/bcrypt)
+  5. [Morgan.](https://www.npmjs.com/package/morgan)
+  6. [JSONWebToken.](https://www.npmjs.com/package/jsonwebtoken)
+  7. [Cors.](https://www.npmjs.com/package/cors)
 
 ## Доступные скрипты
 
