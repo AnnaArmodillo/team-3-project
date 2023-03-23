@@ -5,25 +5,25 @@
 ## Использованные технологии
 
 1. Технологии frontend
-  1. [Create React App.](https://github.com/facebook/create-react-app)
-  2. [Classnames.](https://www.npmjs.com/package/classnames)
-  3. [React Router.](https://reactrouter.com/en/main)
-  4. [Formik.](https://formik.org/)
-  5. [TanStack Query v4.](https://tanstack.com/query/latest)
-  6. [Redux.](https://redux.js.org/)
-  7. [Redux Toolkit.](https://redux-toolkit.js.org/)
-  8. [Font Awesome.](https://fontawesome.com/)
-  9. [SASS.]()https://www.npmjs.com/package/sass
-  10. [React-Toastify.](https://fkhadra.github.io/react-toastify/introduction)
-  11. [Yup.](https://www.npmjs.com/package/yup)
+    1. [Create React App.](https://github.com/facebook/create-react-app)
+    2. [Classnames.](https://www.npmjs.com/package/classnames)
+    3. [React Router.](https://reactrouter.com/en/main)
+    4. [Formik.](https://formik.org/)
+    5. [TanStack Query v4.](https://tanstack.com/query/latest)
+    6. [Redux.](https://redux.js.org/)
+    7. [Redux Toolkit.](https://redux-toolkit.js.org/)
+    8. [Font Awesome.](https://fontawesome.com/)
+    9. [SASS.]()https://www.npmjs.com/package/sass
+    10. [React-Toastify.](https://fkhadra.github.io/react-toastify/introduction)
+    11. [Yup.](https://www.npmjs.com/package/yup)
 2. Технологии backend
-  1. [Express.](https://expressjs.com/)
-  2. [Express-fileupload.](https://www.npmjs.com/package/express-fileupload)
-  3. [Cookie-parser.](https://www.npmjs.com/package/cookie-parser)
-  4. [Bcrypt.](https://www.npmjs.com/package/bcrypt)
-  5. [Morgan.](https://www.npmjs.com/package/morgan)
-  6. [JSONWebToken.](https://www.npmjs.com/package/jsonwebtoken)
-  7. [Cors.](https://www.npmjs.com/package/cors)
+    1. [Express.](https://expressjs.com/)
+    2. [Express-fileupload.](https://www.npmjs.com/package/express-fileupload)
+    3. [Cookie-parser.](https://www.npmjs.com/package/cookie-parser)
+    4. [Bcrypt.](https://www.npmjs.com/package/bcrypt)
+    5. [Morgan.](https://www.npmjs.com/package/morgan)
+    6. [JSONWebToken.](https://www.npmjs.com/package/jsonwebtoken)
+    7. [Cors.](https://www.npmjs.com/package/cors)
 
 ## Доступные скрипты
 
