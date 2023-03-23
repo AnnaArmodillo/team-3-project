@@ -9,6 +9,7 @@ import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { withQuery } from '../../HOCs/withQuery';
 import { DeleteProfileButton } from '../../molecules/DeleteProfileButton/DeleteProfileButton';
 import { InvitationItem } from '../../molecules/InvitationItem/InvitationItem';
+import { LinkToCreatingForm } from '../../molecules/LinkToCreatingForm/LinkToCreatingForm';
 import { SignOutButton } from '../../molecules/SignOutButton/SignOutButton';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './profile.module.css';
@@ -37,6 +38,9 @@ function ProfileInner({ data }) {
           {' '}
           {id}
         </p>
+        <div className={styles.button}>
+          <LinkToCreatingForm />
+        </div>
         <div className={styles.button}>
           <Link to="/mysurveys">
             <ButtonPurple type="button">
