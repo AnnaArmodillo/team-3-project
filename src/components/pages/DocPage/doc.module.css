@@ -2,10 +2,11 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
+    width: 100%;
 }
 
 .containerList {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
 }
