@@ -14,6 +14,7 @@ import { takeSurveyValidationScheme } from '../../../utils/validators';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { SurveyOptionResult } from '../../atoms/SurveyOptionResult/SurveyOptionResult';
 import { SurveyTotalVotes } from '../../atoms/SurveyTotalVotes/SurveyTotalVotes';
+import { SurveyTypeInfo } from '../../atoms/SurveyTypeInfo/SurveyTypeInfo';
 import { withQuery } from '../../HOCs/withQuery';
 import { Loader } from '../../Loader/Loader';
 import {
@@ -79,8 +80,10 @@ function SingleChoiceSurveyPageInner({ scSurvey, surveyId, accessToken }) {
     <MainWrap>
       <div className={styles.singleChoiceSurveyPage}>
         <h1>{scSurvey.title}</h1>
-        {!isAvailable() && (
+        {!isAvailable() ? (
           <ThankYouForVotingMessage />
+        ) : (
+          <SurveyTypeInfo surveyType={SC} />
         )}
 
         <Formik
