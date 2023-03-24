@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
-import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
+// import { Link } from 'react-router-dom';
+// import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
+import { LinkToCreatingForm } from '../../molecules/LinkToCreatingForm/LinkToCreatingForm';
 import styles from './main.module.css';
 import surveyLayout from './survey_main.gif';
 
@@ -10,11 +11,7 @@ export function Main() {
         <div className={styles.containerLeft}>
           <h1>Создайте опрос в один клик</h1>
           <div className={styles.button}>
-            <Link to="/creating">
-              <ButtonPurple type="button">
-                Новый опрос
-              </ButtonPurple>
-            </Link>
+            <LinkToCreatingForm />
           </div>
         </div>
         <div className={styles.containerRight}>

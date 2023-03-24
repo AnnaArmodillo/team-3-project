@@ -6,6 +6,10 @@
   width: 100%;
 }
 
+.pageSuccess {
+  display: flex;
+}
+
 .surveyTitle {
   font-weight: 600;
   padding: 8px;
@@ -38,21 +42,24 @@
 }
 
 .option {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   margin-bottom: 20px;
-  gap: 80px;
+  column-gap: 20px;
   align-items: flex-start;
 }
 
 .optionInputWrapper {
   display: flex;
   flex-direction: column;
-  width: 40%;
+  width: 80%;
   gap: 12px;
+  grid-row: 1 / span 2;
 }
 
 .image {
-  width: 25%;
+  width: 100%;
   height: auto;
   min-height: 100px;
   max-height: 200px;
@@ -60,6 +67,7 @@
   cursor: pointer;
   display: flex;
   justify-content: flex-end;
+  grid-row: 1 / span 2;
 }
 
 .image img {
@@ -72,13 +80,13 @@ input[type='radio'] {
 }
 
 .typeWrapper {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  max-width: 100%;
 }
 
 .typeCard {
-  width: 200px;
-  height: 200px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -88,6 +96,7 @@ input[type='radio'] {
   padding: 0 20px;
   border-radius: 15px;
   border: 1px solid var(--bc-pale-gray);
+  padding: 8px;
 }
 
 .typeDescription {
@@ -96,6 +105,7 @@ input[type='radio'] {
 }
 
 input[type='radio']:checked + label {
+  background: linear-gradient(120deg, rgb(255, 175, 56) -100%, white 30%, rgb(223, 217, 255) 180%);
   border: 2px solid var(--checked-green-color);
 }
 
@@ -206,8 +216,9 @@ button {
 
 .surveyLink {
   font-size: 20px;
-  margin: 40px 0;
+  margin: 40px 0 0 0;
   text-align: left;
+  word-wrap: break-word;
 }
 
 .successMessage {
@@ -220,3 +231,65 @@ button {
   margin-bottom: 20px;
   gap: 20px;
 }
+
+.buttonUpload {
+  grid-row: 1;
+}
+
+.buttonDeleteOption {
+  grid-row: 2;
+}
+
+@media (max-width: 900px) {
+  .typeWrapper {
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: 1fr;
+  }
+
+  .option {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5, 1fr);
+  }
+
+  .optionInputWrapper {
+    grid-row: 1 / span 2;
+    grid-column: 1 / span 2;
+    display: flex;
+    width: 100%;
+  }
+
+  .image {
+    grid-row: 3 / span 2;
+    grid-column: 1 / span 2;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .buttonUpload {
+    grid-row: 5;
+    grid-column: 1;
+  }
+  
+  .buttonDeleteOption {
+    grid-row: 5;
+    grid-column: 2;
+  }
+
+  .pageSuccess {
+    flex-direction: column;
+  }
+
+  .surveyImage {
+    margin: 0 auto;
+  }
+
+  .successMessage {
+    font-size: 20px;
+  }
+
+  .surveyLink {
+    margin: 20px 0 0 0;
+  }
+} 

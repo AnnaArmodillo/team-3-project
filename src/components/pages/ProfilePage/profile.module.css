@@ -13,3 +13,27 @@
 .button {
   margin-top: 40px;
 }
+
+.listSurveys {
+  display: grid;
+  grid-template-columns: repeat(2, calc(50% - 15px));;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+@media (max-width: 730px) {
+  .listSurveys {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+  }
+  .button {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+}

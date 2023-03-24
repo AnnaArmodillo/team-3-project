@@ -3,6 +3,13 @@ import { surveysValidationSchema } from '../validators/surveysValidator.js';
 import { DB } from '../DB/db.js';
 import { getUserIdFromToken, updateDB } from '../helper.js';
 
+function getAllSurveys(req, res) {
+  try {
+    return res.json(DB.surveys);
+  } catch (error) {
+    return res.sendStatus(500);
+  }
+};
 function getSurveyById(req, res) {
   try {
     const token = req.headers.authorization.split(' ')[1];
@@ -93,8 +100,12 @@ function takeSurveyById(req, res) {
           const checkedOption = currentSurvey.options.find(
             (option) => option.optionId === body.checked
           );
-          checkedOption.checked = userID;
-          currentSurvey.done.push(userID);
+          if (checkedOption.checked === '') {
+            checkedOption.checked = userID;
+            currentSurvey.done.push(userID);
+          } else {
+            return res.sendStatus(404);
+          }
         } catch (error) {
           return res.status(404).json('Такого варианта ответа не существует');
         }
@@ -147,5 +158,6 @@ export const surveysController = {
   addNewSurvey,
   getSurveyById,
   takeSurveyById,
-  deleteSurveyFromVisited
+  deleteSurveyFromVisited,
+  getAllSurveys,
 };

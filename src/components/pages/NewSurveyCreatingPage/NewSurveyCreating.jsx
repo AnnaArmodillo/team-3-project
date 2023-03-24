@@ -10,7 +10,6 @@ import { newSurveyValidationScheme } from '../../../utils/validators';
 import styles from './newSurveyCreating.module.css';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { ButtonGrey } from '../../atoms/ButtonGrey/ButtonGrey';
-import { ButtonWhite } from '../../atoms/ButtonWhite/ButtonWhite';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import { Loader } from '../../Loader/Loader';
@@ -19,6 +18,10 @@ import surveyImage from '../../../images/survey_orange.png';
 import { getSurveyURL } from '../../../utils/helper';
 import { FormSaver } from '../../organisms/FormSaver/FormSaver';
 import { setSurvey } from '../../../redux/slices/surveySlice';
+import { MC, SC, UC } from '../../../utils/constants';
+import placeholderImage from '../../../images/placeholder_image.png';
+import { CopyLinkButton } from '../../atoms/CopyLinkButton/CopyLinkButton';
+import { ButtonLightPurple } from '../../atoms/ButtonLightPurple/ButtonLightPurple';
 
 export function NewSurveyCreating() {
   const token = useSelector(getAccessTokenSelector);
@@ -28,6 +31,7 @@ export function NewSurveyCreating() {
   };
   const LS_FORM_SAVER_KEY = 'Armadillo_NewSurveyForm';
   const [selectedFile, setSelectedFile] = useState('');
+  const textAreaRef = useRef(null);
   const [imageContent, setImageContent] = useState([]);
   const [imageLinkValues, setImageLinkValues] = useState([]);
   const [surveyId, setSurveyID] = useState();
@@ -157,35 +161,43 @@ export function NewSurveyCreating() {
   if (surveyId) {
     return (
       <MainWrap>
-        <div className={styles.messageWrapper}>
-          <div className={styles.successMessage}>
-            Готово! Созданный опрос доступен по ссылке:
-            {' '}
-            <p className={styles.surveyLink}>
-              {getSurveyURL(surveyId)}
-            </p>
-          </div>
-          <div className={styles.buttonsWrapper}>
-            <Link to={getSurveyURL(surveyId)}>
+        <div className={styles.pageSuccess}>
+          <div className={styles.messageWrapper}>
+            <div className={styles.successMessage}>
+              Готово! Созданный опрос доступен по ссылке:
+              {' '}
+              <p
+                className={styles.surveyLink}
+                ref={textAreaRef}
+              >
+                {getSurveyURL(surveyId)}
+                {' '}
+                <CopyLinkButton surveyId={surveyId} />
+              </p>
+            </div>
+            <div className={styles.buttonsWrapper}>
+              <Link to={getSurveyURL(surveyId)}>
+                <ButtonPurple>Перейти к опросу</ButtonPurple>
+              </Link>
+              <ButtonPurple
+                type="button"
+                onClick={() => window.location.reload()}
+              >
+                Новый опрос
+              </ButtonPurple>
+            </div>
+            <Link to="/invitation">
               <ButtonPurple>
-                Перейти к опросу
+                Пригласить других пользователей пройти опрос
               </ButtonPurple>
             </Link>
-            <ButtonPurple type="button" onClick={() => window.location.reload()}>
-              Новый опрос
-            </ButtonPurple>
           </div>
-          {/* <Link to="/invitation">
-            <ButtonPurple>
-              Пригласить других пользователей пройти опрос
-            </ButtonPurple>
-          </Link> */}
-        </div>
-        <div className={styles.surveyImage}>
-          <img
-            src={surveyImage}
-            alt="изображение"
-          />
+          <div className={styles.surveyImage}>
+            <img
+              src={surveyImage}
+              alt="изображение"
+            />
+          </div>
         </div>
       </MainWrap>
     );
@@ -206,9 +218,7 @@ export function NewSurveyCreating() {
             valuesPrepareHandler(values);
           }}
         >
-          {({
-            values, isValid, setFieldValue,
-          }) => (
+          {({ values, isValid, setFieldValue }) => (
             <Form className={styles.formWrapper}>
               <FormSaver
                 name={LS_FORM_SAVER_KEY}
@@ -239,11 +249,11 @@ export function NewSurveyCreating() {
                 <Field
                   type="radio"
                   name="surveyType"
-                  value="SC"
-                  id="SC"
+                  value={SC}
+                  id={SC}
                 />
                 <label
-                  htmlFor="SC"
+                  htmlFor={SC}
                   className={styles.typeCard}
                 >
                   <div className={styles.typeTitle}>Единственный выбор</div>
@@ -255,11 +265,11 @@ export function NewSurveyCreating() {
                 <Field
                   type="radio"
                   name="surveyType"
-                  value="MC"
-                  id="MC"
+                  value={MC}
+                  id={MC}
                 />
                 <label
-                  htmlFor="MC"
+                  htmlFor={MC}
                   className={styles.typeCard}
                 >
                   <div className={styles.typeTitle}>Множественный выбор</div>
@@ -271,11 +281,11 @@ export function NewSurveyCreating() {
                 <Field
                   type="radio"
                   name="surveyType"
-                  value="UC"
-                  id="UC"
+                  value={UC}
+                  id={UC}
                 />
                 <label
-                  htmlFor="UC"
+                  htmlFor={UC}
                   className={styles.typeCard}
                 >
                   <div className={styles.typeTitle}>Уникальный выбор</div>
@@ -352,14 +362,6 @@ export function NewSurveyCreating() {
                             ref={filePicker}
                             onChange={handleChange}
                           />
-                          {selectedFile !== '' && (
-                          <ButtonWhite
-                            type="button"
-                            onClick={() => uploadHandler(index)}
-                          >
-                            Загрузить файл
-                          </ButtonWhite>
-                          )}
                         </div>
                         <div
                           className={styles.image}
@@ -368,57 +370,65 @@ export function NewSurveyCreating() {
                         >
                           {isErrorUpload
                             && !isLoadingUpload
-                            && (currentIndex === index)
-                            && (
+                            && currentIndex === index && (
                               <div className={styles.messageImage}>
                                 {errorUpload.message}
                               </div>
-                            )}
+                          )}
                           {isErrorUpload
                             && !isLoadingUpload
-                            && (currentIndex !== index)
-                            && (
+                            && currentIndex !== index && (
                               <img
-                                src={imageContent[index] || ''}
+                                src={imageContent[index] || placeholderImage}
                                 alt="добавьте изображение"
                               />
-                            )}
-                          {isLoadingUpload && (currentIndex === index) && <Loader />}
-                          {isLoadingUpload && (currentIndex !== index) && (
-                          <img
-                            src={imageContent[index] || ''}
-                            alt="добавьте изображение"
-                          />
+                          )}
+                          {isLoadingUpload && currentIndex === index && (
+                            <Loader />
+                          )}
+                          {isLoadingUpload && currentIndex !== index && (
+                            <img
+                              src={imageContent[index] || placeholderImage}
+                              alt="добавьте изображение"
+                            />
                           )}
                           {imageContent[index] && (
-                          <button
-                            type="button"
-                            title="удалить файл"
-                            className={styles.buttonImageDelete}
-                            onClick={() => deleteImageHandler(index)}
-                          >
-                            <i className="fa-solid fa-xmark" />
-                          </button>
+                            <button
+                              type="button"
+                              title="удалить файл"
+                              className={styles.buttonImageDelete}
+                              onClick={() => deleteImageHandler(index)}
+                            >
+                              <i className="fa-solid fa-xmark" />
+                            </button>
                           )}
-                          {!isLoadingUpload
-                            && !isErrorUpload
-                            && (
-                              <img
-                                src={imageContent[index] || ''}
-                                alt="добавьте изображение"
-                              />
-                            )}
+                          {!isLoadingUpload && !isErrorUpload && (
+                            <img
+                              src={imageContent[index] || placeholderImage}
+                              alt="добавьте изображение"
+                            />
+                          )}
                         </div>
-                        {index > 0 && (
-                        <ButtonGrey
+                        {selectedFile !== '' && (
+                        <ButtonLightPurple
                           type="button"
-                          onClick={() => {
-                            deleteWithOptionHandler(index);
-                            remove(index);
-                          }}
+                          className={styles.buttonUpload}
+                          onClick={() => uploadHandler(index)}
                         >
-                          Удалить
-                        </ButtonGrey>
+                          Загрузить файл
+                        </ButtonLightPurple>
+                        )}
+                        {index > 0 && (
+                          <ButtonGrey
+                            type="button"
+                            className={styles.buttonDeleteOption}
+                            onClick={() => {
+                              deleteWithOptionHandler(index);
+                              remove(index);
+                            }}
+                          >
+                            Удалить этот вариант
+                          </ButtonGrey>
                         )}
                       </div>
                     ))}

@@ -1,0 +1,30 @@
+.buttonCopy {
+  background-color: var(--text-white-color);
+}
+
+.buttonCopy i {
+  color: var(--arrow-pale-gray);
+  font-size: 20px;
+}
+
+.toast svg {
+  width: 20px;
+  height: 20px;
+  color: var(--bc-toaster);
+}
+
+.toastBody {
+  display: flex;
+  font-weight: 600;
+  gap: 8px;
+  padding: 12px;
+  background-color: var(--text-white-color);
+  border-radius: 8px;
+  color: var(--card-grey-color);
+  box-shadow: 2px 2px var(--box-shadow-color)
+}
+
+.toast:nth-child(1) {
+  background: rgba(255, 255, 255, 0);
+  box-shadow: none;
+}

@@ -4,25 +4,19 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
-import { ArrowLeft } from '../../atoms/ArrowLeft/ArrowLeft';
+import { getQueryKeySurveysByAuthor } from '../../../utils/constants';
 import { withQuery } from '../../HOCs/withQuery';
+import { withScrollToTop } from '../../HOCs/withScrollToTop';
 import { SurveyItem } from '../../molecules/SurveyItem/SurveyItem';
+import { Title } from '../../molecules/Title/Title';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './mySurveys.module.css';
 
 function MySurveysInner({ mySurveys }) {
-  const navigate = useNavigate();
-  const clickBackHandler = () => {
-    navigate(-1);
-  };
-
   return (
     <MainWrap>
       <section className={styles.mySurveys}>
-        <div className={styles.title}>
-          <ArrowLeft clickBackHandler={clickBackHandler} />
-          <h2>Мои опросы</h2>
-        </div>
+        <Title title="Мои опросы" />
         {!mySurveys.length && (
           <p>
             Здесь появятся созданные вами опросы
@@ -42,7 +36,7 @@ function MySurveysInner({ mySurveys }) {
 
 const MySurveysInnerWithQuery = withQuery(MySurveysInner);
 
-export function MySurveys() {
+function MySurveysWithQuery() {
   const navigate = useNavigate();
   const user = useSelector(getUserSelector);
   const accessToken = useSelector(getAccessTokenSelector);
@@ -51,7 +45,7 @@ export function MySurveys() {
   const {
     data, isLoading, isError, error, refetch,
   } = useQuery({
-    queryKey: ['SurveysByAuthorFetch', userId],
+    queryKey: getQueryKeySurveysByAuthor(userId),
     queryFn: () => teamProjectApi.getSurveysByAuthor(userId, accessToken),
   });
 
@@ -69,5 +63,12 @@ export function MySurveys() {
         refetch={refetch}
       />
     )
+  );
+}
+
+const MySurveysWithQueryWithScrollToTop = withScrollToTop(MySurveysWithQuery);
+export function MySurveys() {
+  return (
+    <MySurveysWithQueryWithScrollToTop />
   );
 }

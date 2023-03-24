@@ -28,10 +28,12 @@
 }
 
 .user {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
   margin-bottom: 20px;
-  gap: 80px;
   align-items: flex-start;
+  gap: 20px;
+  width: 100%;
 }
 
 .field {
@@ -41,13 +43,13 @@
   padding: 0 20px;
   border-radius: 15px;
   border: 1px solid var(--bc-pale-gray);
-  width: 90%;
+  width: 100%;
 }
 
 .buttonClear {
   position: absolute;
   top: calc(1rem - 12px);
-  right: -30px;
+  right: -20px;
   color: var(--text-purple-color);
   border-radius: 0;
   width: fit-content;
@@ -59,20 +61,15 @@
 
 .validationMessage {
   color: var(--danger-text-color);
-  font-size: 20px;
-  margin-bottom: 12px;
+  font-size: 16px;
+  text-align: center;
+  grid-column: 3;
 }
 
 .inputWrapper {
   display: flex;
-  flex-direction: column;
-  width: 60%;
-  gap: 12px;
+  width: 90%;
   position: relative;
-}
-
-input::-webkit-calendar-picker-indicator {
-  opacity: 0;
 }
 
 .errorMessage {
@@ -80,3 +77,34 @@ input::-webkit-calendar-picker-indicator {
   font-size: 32px;
   margin: 0 0 40px 0;
 }
+
+.userInputWrapper {
+  display: flex;
+}
+
+.buttonDelete {
+  display: flex;
+  justify-content: center;
+}
+
+.successMessage {
+  text-align: left;
+  font-size: 28px;
+}
+
+@media (max-width: 900px) {
+  .user:not(:first-child) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 2fr;
+    gap: 8px;
+  }
+  
+  .user:first-child {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr;
+  } 
+
+  .validationMessage {
+    grid-column: unset;
+  }
+} 

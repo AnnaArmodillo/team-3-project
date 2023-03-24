@@ -1,20 +1,13 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft } from '../../atoms/ArrowLeft/ArrowLeft';
+import { Link } from 'react-router-dom';
+import { Title } from '../../molecules/Title/Title';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
-// import styles from './contacts.module.css';
+import styles from './contacts.module.css';
 
 export function Contacts() {
-  const navigate = useNavigate();
-
-  const clickBackHandler = () => {
-    navigate(-1);
-  };
-
   return (
     <MainWrap>
-      <article>
-        <ArrowLeft clickBackHandler={clickBackHandler} />
-        <h3>Наши контакты</h3>
+      <article className={styles.containerWrapped}>
+        <Title title="Наши контакты" />
         <section>
           <Link to="https://github.com/lev33" target="_blank">
             https://github.com/lev33

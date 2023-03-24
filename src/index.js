@@ -21,7 +21,9 @@ import { MultipleChoiceSurveyPage }
 import { UniqueChoiceSurveyPage }
   from './components/pages/UniqueChoiceSurveyPage/UniqueChoiceSurveyPage';
 import { VisitedSurveys } from './components/pages/VisitedSurveysPage/VisitedSurveys';
-// import { InvitationPage } from './components/pages/InvitationPage/InvitationPage';
+import { InvitationPage } from './components/pages/InvitationPage/InvitationPage';
+import SurveysCatalogPage from './components/pages/SurveysCatalogPage/SurveysCatalogPage';
+import { Doc } from './components/pages/DocPage/Doc';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -69,14 +71,14 @@ const Router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      // {
-      //   path: 'invitation',
-      //   element: (
-      //     <PrivateRoute>
-      //       <InvitationPage />
-      //     </PrivateRoute>
-      //   ),
-      // },
+      {
+        path: 'invitation',
+        element: (
+          <PrivateRoute>
+            <InvitationPage />
+          </PrivateRoute>
+        ),
+      },
       {
         path: 'mysurveys',
         element: (
@@ -84,6 +86,10 @@ const Router = createBrowserRouter([
             <MySurveys />
           </PrivateRoute>
         ),
+      },
+      {
+        path: 'surveys',
+        element: <SurveysCatalogPage />,
       },
       {
         path: '/surveys/sc/:surveyId',
@@ -116,6 +122,10 @@ const Router = createBrowserRouter([
             <VisitedSurveys />
           </PrivateRoute>
         ),
+      },
+      {
+        path: '/doc',
+        element: <Doc />,
       },
     ],
   },

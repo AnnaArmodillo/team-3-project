@@ -1,19 +1,6 @@
+/* eslint-disable no-param-reassign */
 export function getSurveyURL(surveyId) {
-  let route = '';
-  switch (surveyId.slice(0, 2)) {
-    case 'SC':
-      route = 'sc';
-      break;
-    case 'MC':
-      route = 'mc';
-      break;
-    case 'UC':
-      route = 'uc';
-      break;
-
-    default:
-      break;
-  }
+  const route = surveyId.slice(0, 2).toLowerCase();
   const surveyURL = `http://localhost:3000/surveys/${route}/${surveyId}`;
   return surveyURL;
 }
@@ -49,5 +36,12 @@ export const getOptionSuccessRate = (votes, votesTotal) => {
   if (votes === 0) {
     return 0;
   }
-  return ((votes * 100) / votesTotal);
+  return ((votes * 100) / votesTotal).toFixed(2).replace('.', ',');
 };
+
+export function isAuthor(author, id) {
+  if (author === id) {
+    return true;
+  }
+  return false;
+}

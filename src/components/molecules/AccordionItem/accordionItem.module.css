@@ -1,0 +1,58 @@
+.accordionItem {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.accordionTitle {
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+    width: max-content;
+}
+
+.accordionTitle h4 {
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+.accordionTitle i:hover {
+    color: black;   
+}
+
+.iconActive, .titleNotActive {
+    color: black;
+}
+
+.iconNotActive {
+    color: var(--arrow-pale-gray);
+}
+
+.titleActive {
+    color: var(--text-purple-color);
+}
+
+.accordionContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.containerVideo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.containerVideo video {
+    max-width: 360px;
+    border-radius: 15px;
+    border: 2px solid var(--bc-pale-gray);
+}
+
+.containerText {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}

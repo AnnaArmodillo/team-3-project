@@ -1,0 +1,38 @@
+.surveysCatalogPage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.flex {
+  display: flex;
+  gap: 1rem;
+}
+
+.filtersOpeningButtonName {
+  margin-right: 0.2rem;
+}
+
+.filters {
+  flex-wrap: wrap;
+}
+
+.surveysCatalogContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .surveysCatalogContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+} 
+
+@media (max-width: 576px) {
+  .surveysCatalogContainer {
+    grid-template-columns: 1fr;
+  }
+}

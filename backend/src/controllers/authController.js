@@ -8,7 +8,7 @@ dotenv.config();
 
 async function signIn(req, res) {
   const { email, password } = req.body;
-  const currentUser = DB.users.find((user) => user.email === email);
+  const currentUser = DB.users.find((user) => user.email === email.toLowerCase());
   if (currentUser) {
     if (await bcrypt.compare(password, currentUser.password)) {
       const accessToken = jwtCreator.createAccessToken({

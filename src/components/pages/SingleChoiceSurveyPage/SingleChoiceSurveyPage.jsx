@@ -1,23 +1,27 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Form, ErrorMessage, Formik } from 'formik';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   useLocation, useNavigate, useParams,
 } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
+import { setSurvey } from '../../../redux/slices/surveySlice';
 import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
-import { SC } from '../../../utils/constants';
+import { getQueryKeySСSurvey, SC } from '../../../utils/constants';
 import { getOptionSuccessRate } from '../../../utils/helper';
 import { takeSurveyValidationScheme } from '../../../utils/validators';
 import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import { SurveyOptionResult } from '../../atoms/SurveyOptionResult/SurveyOptionResult';
 import { SurveyTotalVotes } from '../../atoms/SurveyTotalVotes/SurveyTotalVotes';
+import { SurveyTypeInfo } from '../../atoms/SurveyTypeInfo/SurveyTypeInfo';
 import { withQuery } from '../../HOCs/withQuery';
+import { withScrollToTop } from '../../HOCs/withScrollToTop';
 import { Loader } from '../../Loader/Loader';
 import {
   ThankYouForVotingMessage,
 } from '../../molecules/ThankYouForVotingMessage/ThankYouForVotingMessage';
+import { InvitationPageLink } from '../../organisms/InvitationPageLink/InvitationPageLink';
 import { OptionCard } from '../../organisms/OptionCard/OptionCard';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './singleChoiceSurvey.module.css';
@@ -77,8 +81,10 @@ function SingleChoiceSurveyPageInner({ scSurvey, surveyId, accessToken }) {
     <MainWrap>
       <div className={styles.singleChoiceSurveyPage}>
         <h1>{scSurvey.title}</h1>
-        {!isAvailable() && (
+        {!isAvailable() ? (
           <ThankYouForVotingMessage />
+        ) : (
+          <SurveyTypeInfo surveyType={SC} />
         )}
 
         <Formik
@@ -130,6 +136,7 @@ function SingleChoiceSurveyPageInner({ scSurvey, surveyId, accessToken }) {
           }}
         </Formik>
         <SurveyTotalVotes counter={votesTotal} />
+        <InvitationPageLink author={scSurvey.author} id={userId} />
       </div>
     </MainWrap>
   );
@@ -137,16 +144,17 @@ function SingleChoiceSurveyPageInner({ scSurvey, surveyId, accessToken }) {
 
 const SingleChoiceSurveyPageInnerWithQuery = withQuery(SingleChoiceSurveyPageInner);
 
-export function SingleChoiceSurveyPage() {
+function SingleChoiceSurveyPageWithQuery() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const accessToken = useSelector(getAccessTokenSelector);
   const { surveyId } = useParams();
+  const dispatch = useDispatch();
 
   const {
     data: scSurvey, isLoading, isError, error, refetch,
   } = useQuery({
-    queryKey: ['scSurvey', surveyId],
+    queryKey: getQueryKeySСSurvey(surveyId),
     queryFn: () => teamProjectApi.getSurveyById(surveyId, accessToken),
     skip: !accessToken,
   });
@@ -159,6 +167,11 @@ export function SingleChoiceSurveyPage() {
       });
     }
   }, [accessToken]);
+  useEffect(() => {
+    if (surveyId) {
+      dispatch(setSurvey(surveyId));
+    }
+  }, [surveyId]);
 
   return (
     <SingleChoiceSurveyPageInnerWithQuery
@@ -170,5 +183,13 @@ export function SingleChoiceSurveyPage() {
       surveyId={surveyId}
       accessToken={accessToken}
     />
+  );
+}
+
+const SingleChoiceSurveyPageWithScrollToTop = withScrollToTop(SingleChoiceSurveyPageWithQuery);
+
+export function SingleChoiceSurveyPage() {
+  return (
+    <SingleChoiceSurveyPageWithScrollToTop />
   );
 }
