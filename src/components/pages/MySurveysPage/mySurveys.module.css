@@ -5,14 +5,16 @@
   gap: 30px;
 }
 
-.title {
-  display: flex;
-  align-items: center;
-  gap: 50px;
-}
-
 .listSurveys {
   display: grid;
   grid-template-columns: repeat(2, calc(50% - 15px));;
   gap: 30px;
+}
+
+@media (max-width: 730px) {
+  .listSurveys {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+  }
 }
