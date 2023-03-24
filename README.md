@@ -16,6 +16,7 @@
     9. [SASS.](https://www.npmjs.com/package/sass)
     10. [React-Toastify.](https://fkhadra.github.io/react-toastify/introduction)
     11. [Yup.](https://www.npmjs.com/package/yup)
+    12. [Framer Motion.](https://www.npmjs.com/package/framer-motion)
 2. Технологии backend
     1. [Express.](https://expressjs.com/)
     2. [Express-fileupload.](https://www.npmjs.com/package/express-fileupload)
