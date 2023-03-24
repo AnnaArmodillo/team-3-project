@@ -16,7 +16,7 @@ import styles from './profile.module.css';
 
 function ProfileInner({ data }) {
   const {
-    name, email, id, invitations,
+    name, email, invitations,
   } = data;
 
   return (
@@ -32,11 +32,6 @@ function ProfileInner({ data }) {
           <b>Email:</b>
           {' '}
           {email}
-        </p>
-        <p>
-          <b>Id:</b>
-          {' '}
-          {id}
         </p>
         <div className={styles.button}>
           <LinkToCreatingForm />
