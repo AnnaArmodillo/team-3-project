@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Title } from '../../molecules/Title/Title';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
-// import styles from './contacts.module.css';
+import styles from './contacts.module.css';
 
 export function Contacts() {
   return (
     <MainWrap>
-      <article>
+      <article className={styles.containerWrapped}>
         <Title title="Наши контакты" />
         <section>
           <Link to="https://github.com/lev33" target="_blank">
