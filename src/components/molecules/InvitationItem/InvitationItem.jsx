@@ -2,7 +2,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Slide, toast } from 'react-toastify';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getAccessTokenSelector } from '../../../redux/slices/userSlice';
 import { getSurveyURL } from '../../../utils/helper';
@@ -20,7 +20,16 @@ export function InvitationItem({ invitation }) {
   const deleteFromVisited = (e) => {
     e.preventDefault();
     mutateAsync();
-    toast.success('Приглашение удалено!');
+    toast.success('Приглашение удалено!', {
+      autoClose: 2000,
+      transition: Slide,
+      className: `${styles.toast}`,
+      bodyClassName: `${styles.toastBody}`,
+      hideProgressBar: true,
+      theme: 'colored',
+      closeButton: false,
+      rtl: false,
+    });
   };
 
   return (
