@@ -13,7 +13,7 @@
     6. [Redux.](https://redux.js.org/)
     7. [Redux Toolkit.](https://redux-toolkit.js.org/)
     8. [Font Awesome.](https://fontawesome.com/)
-    9. [SASS.]()https://www.npmjs.com/package/sass
+    9. [SASS.](https://www.npmjs.com/package/sass)
     10. [React-Toastify.](https://fkhadra.github.io/react-toastify/introduction)
     11. [Yup.](https://www.npmjs.com/package/yup)
 2. Технологии backend
@@ -66,3 +66,4 @@
 
 ## Известные баги
 -  [WONTFIX] При загрузке изображения на бэкенд сервере идет проверка только по mimetype, что может привести к потенциальным проблемам в плане безопасности. Разработка этого сервера не входит в задачи команды по фронтенду и потому работы по исправлению здесь вестись не будут. 
+- [IN PROGRESS] На мобильных устройствах страница регистрации в проекте растягивается по ширине больше ширины экрана. Ошибка найдена и будет исправлена в следующем релизе.
