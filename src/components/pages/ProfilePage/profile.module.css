@@ -20,3 +20,16 @@
   gap: 30px;
   margin-top: 30px;
 }
+
+@media (max-width: 730px) {
+  .listSurveys {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+  }
+  .button {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+}
+}
