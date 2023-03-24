@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styles from './buttonPurple.module.css';
 
 export function ButtonPurple({
@@ -5,8 +6,14 @@ export function ButtonPurple({
 }) {
   return (
     // eslint-disable-next-line react/button-has-type
-    <button type={type} className={styles.button} onClick={onClick} disabled={disabled}>
+    <motion.button
+      type={type}
+      className={styles.button}
+      onClick={onClick}
+      disabled={disabled}
+      whileTap={{ scale: 0.95 }}
+    >
       {children}
-    </button>
+    </motion.button>
   );
 }
