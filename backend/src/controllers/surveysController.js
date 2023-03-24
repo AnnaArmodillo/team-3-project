@@ -100,8 +100,12 @@ function takeSurveyById(req, res) {
           const checkedOption = currentSurvey.options.find(
             (option) => option.optionId === body.checked
           );
-          checkedOption.checked = userID;
-          currentSurvey.done.push(userID);
+          if (checkedOption.checked === '') {
+            checkedOption.checked = userID;
+            currentSurvey.done.push(userID);
+          } else {
+            return res.sendStatus(404);
+          }
         } catch (error) {
           return res.status(404).json('Такого варианта ответа не существует');
         }
