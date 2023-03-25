@@ -1,37 +1,64 @@
 .surveyItem {
-    min-height: 100px;
-    height: calc(100%);
-    background-color: var(--bc-pale-gray);
-    border-radius: 15px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 15px;
-    cursor: pointer;
+  min-height: 100px;
+  height: calc(100%);
+  background-color: var(--bc-pale-gray);
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 15px;
+  cursor: pointer;
 }
 
 .surveyItem:hover {
-    background: var(--bc-gradient);
+  background: var(--bc-gradient);
 }
 
 .containerSubinfo {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 50px;
 }
 
 .containerSubinfo span {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .spanDelete {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .spanDelete:hover {
-    text-decoration: underline var(--orange-color);
-    text-underline-position: under;
+  text-decoration: underline var(--orange-color);
+  text-underline-position: under;
 }
+
+.toast svg {
+  width: 20px;
+  height: 20px;
+  color: var(--bc-toaster);
+}
+
+.toastBody {
+  display: flex;
+  font-weight: 600;
+  gap: 8px;
+  padding: 12px;
+  background-color: var(--text-white-color);
+  border-radius: 8px;
+  color: var(--card-grey-color);
+  box-shadow: 2px 2px var(--box-shadow-color);
+}
+
+.toast:nth-child(1) {
+  background: rgba(255, 255, 255, 0);
+  box-shadow: none;
+}
+
+.toast:not(:nth-child(1)) {
+    background: rgba(255, 255, 255, 0);
+    box-shadow: none;
+  }

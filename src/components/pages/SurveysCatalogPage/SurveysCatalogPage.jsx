@@ -29,7 +29,7 @@ function SurveysCatalogPageInner({ surveys, search }) {
     return (
       <MainWrap>
         <div className={styles.surveysCatalogPage}>
-          <Title title="Все опросы" />
+          <Title title={search ? 'Опросы по запросу' : 'Все опросы'} />
           <div className={styles.flex}>
             <Search />
             <ButtonPurple onClick={handleFiltersOpening}>

@@ -10,16 +10,18 @@
 .toast svg {
   width: 20px;
   height: 20px;
+  color: var(--bc-toaster);
 }
 
 .toastBody {
   display: flex;
   font-weight: 600;
   gap: 8px;
-  padding: 8px;
-  background-color: var(--bc-toaster);
+  padding: 12px;
+  background-color: var(--text-white-color);
   border-radius: 8px;
-  color: var(--text-purple-color);
+  color: var(--card-grey-color);
+  box-shadow: 2px 2px var(--box-shadow-color)
 }
 
 .toast:nth-child(1) {

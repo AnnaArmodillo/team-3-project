@@ -63,6 +63,7 @@
   color: var(--danger-text-color);
   font-size: 16px;
   text-align: center;
+  grid-column: 3;
 }
 
 .inputWrapper {
@@ -102,4 +103,8 @@
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 2fr;
   } 
+
+  .validationMessage {
+    grid-column: unset;
+  }
 } 

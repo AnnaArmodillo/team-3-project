@@ -80,6 +80,7 @@ export function InvitationPage() {
   const {
     data: resEmail,
     isFetching,
+    // eslint-disable-next-line no-unused-vars
     isLoading,
     isError,
   } = useQuery({
@@ -256,7 +257,7 @@ export function InvitationPage() {
                     {isFetching && <Loader />}
                     <ButtonPurple
                       type="button"
-                      disabled={isFetching || isLoading}
+                      // disabled={isFetching || isLoading}
                       onClick={() => push(usersGroup)}
                     >
                       Добавить пользователя
