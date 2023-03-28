@@ -28,7 +28,13 @@ export function AccordionItem({ accordionItem }) {
   );
 
   return (
-    <div className={styles.accordionItem}>
+    <motion.div
+      className={styles.accordionItem}
+      initial={{ y: 10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -10, opacity: 0 }}
+      transition={{ duration: 0.2 }}
+    >
       <div
         className={styles.accordionTitle}
         onClick={() => setIsActive(!isActive)}
@@ -47,6 +53,6 @@ export function AccordionItem({ accordionItem }) {
       <AnimatePresence>
         {isActive && accordionContent()}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }

@@ -6,7 +6,51 @@
 }
 
 .containerList {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: auto 1fr;
     gap: 30px;
 }
+
+.nav {
+    padding: 10px;
+    background-color: var(--bc-pale-gray);
+    border-radius: 10px;
+    height: min-content;
+}
+
+.ul, .li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.li {
+    border-radius: 5px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0; 
+    padding: 10px 15px;
+    cursor: pointer;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* flex: 1; */
+    /* min-width: 0; */
+    position: relative;
+    user-select: none;
+  }
+
+  .li.selected {
+    background-color: rgba(255, 255, 255, 0.676);
+    transition: background-color 0.5s;
+  }
+
+  .underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--orange-color);
+  }

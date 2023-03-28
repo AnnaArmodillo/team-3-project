@@ -1,12 +1,15 @@
-import { AccordionItem } from '../../molecules/AccordionItem/AccordionItem';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
+import classNames from 'classnames';
 import { Title } from '../../molecules/Title/Title';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './doc.module.css';
 import createSurveyVideo from '../../../video/createSurvey.mp4';
 import allSurveysVideo from '../../../video/allSurveys.mp4';
+import { AccordionItem } from '../../molecules/AccordionItem/AccordionItem';
 
 export function Doc() {
-  const accordionData = [
+  const tabs = [
     {
       title: 'Cтраница создания опроса',
       content: {
@@ -133,10 +136,9 @@ export function Doc() {
               страницы которых Вы переходили.
             </p>
             <p>
-              Опрос можно удалить из списка
-              посещенных, нажав на кнопку «Удалить» в карточке опроса. Кроме
-              этого, в карточке отображается информация о том,
-              проголосовали ли Вы уже в этом опросе, или нет.
+              Опрос можно удалить из списка посещенных, нажав на кнопку
+              «Удалить» в карточке опроса. Кроме этого, в карточке отображается
+              информация о том, проголосовали ли Вы уже в этом опросе, или нет.
             </p>
           </>
         ),
@@ -144,15 +146,48 @@ export function Doc() {
       },
     },
   ];
+  const [selectedTab, setSelectedTab] = useState(tabs[0]);
+
   return (
     <MainWrap>
       <article className={styles.containerWrapped}>
         <Title title="Основной функционал приложения" />
         <section className={styles.containerList}>
-          {accordionData.map((item, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <AccordionItem key={index} accordionItem={item} />
-          ))}
+          <nav className={styles.nav}>
+            <ul className={styles.ul}>
+              {tabs.map((item) => (
+                <li
+                  key={item.title}
+                  className={classNames(styles.li, {
+                    [styles.selected]: item.title === selectedTab.title,
+                  })}
+                  onClick={() => setSelectedTab(item)}
+                  role="presentation"
+                >
+                  {item.title}
+                  {item.title === selectedTab.title ? (
+                    <motion.div
+                      className={styles.underline}
+                      initial={{ opacity: 0, width: 0 }}
+                      animate={{ opacity: 1, width: 'auto' }}
+                      transition={{
+                        type: 'tween',
+                        duration: 0.5,
+                      }}
+                    />
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <AnimatePresence mode="wait">
+            <AccordionItem
+              accordionItem={selectedTab}
+              key={selectedTab.title}
+            />
+
+          </AnimatePresence>
         </section>
       </article>
     </MainWrap>
