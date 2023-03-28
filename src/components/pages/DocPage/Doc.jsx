@@ -12,6 +12,7 @@ export function Doc() {
   const tabs = [
     {
       title: 'Cтраница создания опроса',
+      link: '/creating',
       content: {
         description: (
           <>
@@ -49,6 +50,7 @@ export function Doc() {
     },
     {
       title: 'Cтраница всех опросов',
+      link: '/surveys',
       content: {
         description: (
           <>
@@ -67,6 +69,7 @@ export function Doc() {
     },
     {
       title: 'Cтраница профиля',
+      link: '/profile',
       content: {
         description: (
           <>
@@ -115,6 +118,7 @@ export function Doc() {
     },
     {
       title: 'Cтраница «Мои опросы»',
+      link: '/mysurveys',
       content: {
         description: (
           <p>
@@ -128,6 +132,7 @@ export function Doc() {
     },
     {
       title: 'Cтраница «Посещенные опросы»',
+      link: '/visited',
       content: {
         description: (
           <>

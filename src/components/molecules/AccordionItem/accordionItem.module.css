@@ -5,35 +5,46 @@
 }
 
 .accordionTitle {
-    display: flex;
-    gap: 10px;
-    cursor: pointer;
-    width: max-content;
+    width: 100%;
 }
 
 .accordionTitle h4 {
     font-weight: 400;
     font-size: 1.2rem;
+    width: max-content;
+    position: relative;
 }
 
-.accordionTitle i:hover {
+.accordionTitle span {
+    color: var(--arrow-pale-gray);
+    font-weight: 600;
+    position: absolute;
+    top: 0;
+    right: -20px;
+    cursor: pointer;
+}
+
+.accordionTitle span:hover {
+    color: var(--button-purple-color);
+}
+
+/* .accordionTitle i:hover {
     color: black;   
-}
+} */
 
-.iconActive, .titleNotActive {
+/* .iconActive, .titleNotActive {
     color: black;
-}
+} */
 
-.iconNotActive {
+/* .iconNotActive {
     color: var(--arrow-pale-gray);
 }
 
 .titleActive {
     color: var(--text-purple-color);
-}
+} */
 
 .accordionContent {
-    /* width: 100%; */
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -42,7 +53,7 @@
 .containerVideo {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .containerVideo video {
