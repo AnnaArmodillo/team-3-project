@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   ErrorMessage, Field, Form, Formik,
 } from 'formik';
@@ -20,6 +20,7 @@ const initialValues = {
 
 export function Signup() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const {
     mutateAsync,
     isLoading,
@@ -39,7 +40,13 @@ export function Signup() {
           <p>
             {error.message}
           </p>
-          <Link to="/signin" className={styles.linkError}>Перейти на страницу входа</Link>
+          <Link
+            to="/signin"
+            className={styles.linkError}
+            state={{ from: pathname }}
+          >
+            Перейти на страницу входа
+          </Link>
         </div>
       </MainWrap>
     );
@@ -65,7 +72,13 @@ export function Signup() {
         <p className={styles.alreadyRegistered}>
           Уже зарегистрированы?
           {' '}
-          <Link to="/signin" className={styles.link}>Перейти на страницу входа</Link>
+          <Link
+            to="/signin"
+            className={styles.linkError}
+            state={{ from: pathname }}
+          >
+            Перейти на страницу входа
+          </Link>
         </p>
         <Formik
           initialValues={initialValues}
