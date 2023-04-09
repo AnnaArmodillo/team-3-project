@@ -75,6 +75,14 @@
   max-height: 100%;
 }
 
+.buttonsOptionWrapper {
+  display: flex;
+  flex-direction: column;
+  grid-row: 1 / span 2;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
 input[type='radio'] {
   display: none;
 }
@@ -105,7 +113,12 @@ input[type='radio'] {
 }
 
 input[type='radio']:checked + label {
-  background: linear-gradient(120deg, rgb(255, 175, 56) -100%, white 30%, rgb(223, 217, 255) 180%);
+  background: linear-gradient(
+    120deg,
+    rgb(255, 175, 56) -100%,
+    white 30%,
+    rgb(223, 217, 255) 180%
+  );
   border: 2px solid var(--checked-green-color);
 }
 
@@ -247,34 +260,29 @@ button {
   }
 
   .option {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(5, 1fr);
+    display: flex;
+    flex-direction: column;
   }
 
   .optionInputWrapper {
-    grid-row: 1 / span 2;
-    grid-column: 1 / span 2;
     display: flex;
+    flex-direction: column;
     width: 100%;
+  }
+
+  .validationMessage {
+    text-align: center;
   }
 
   .image {
-    grid-row: 3 / span 2;
-    grid-column: 1 / span 2;
-    width: 100%;
     display: flex;
-    justify-content: center;
-    margin: 0 auto;
+    justify-content: flex-end;
+    margin: 0 auto 20px;
+    width: fit-content;
   }
 
-  .buttonUpload {
-    grid-row: 5;
-    grid-column: 1;
-  }
-  
-  .buttonDeleteOption {
-    grid-row: 5;
-    grid-column: 2;
+  .image img {
+    object-fit: contain;
   }
 
   .pageSuccess {
@@ -292,4 +300,11 @@ button {
   .surveyLink {
     margin: 20px 0 0 0;
   }
-} 
+
+  .buttonsOptionWrapper {
+    flex-direction: row;
+    width: 100%;
+    height: unset;
+    gap: 20px;
+  }
+}
