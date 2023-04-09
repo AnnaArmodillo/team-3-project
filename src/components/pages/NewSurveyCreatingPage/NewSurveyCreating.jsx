@@ -409,16 +409,17 @@ export function NewSurveyCreating() {
                             />
                           )}
                         </div>
-                        {selectedFile !== '' && (
-                        <ButtonLightPurple
-                          type="button"
-                          className={styles.buttonUpload}
-                          onClick={() => uploadHandler(index)}
-                        >
-                          Загрузить файл
-                        </ButtonLightPurple>
-                        )}
-                        {index > 0 && (
+                        <div className={styles.buttonsOptionWrapper}>
+                          {selectedFile !== '' && (
+                          <ButtonLightPurple
+                            type="button"
+                            className={styles.buttonUpload}
+                            onClick={() => uploadHandler(index)}
+                          >
+                            Загрузить файл
+                          </ButtonLightPurple>
+                          )}
+                          {index > 0 && (
                           <ButtonGrey
                             type="button"
                             className={styles.buttonDeleteOption}
@@ -429,7 +430,8 @@ export function NewSurveyCreating() {
                           >
                             Удалить этот вариант
                           </ButtonGrey>
-                        )}
+                          )}
+                        </div>
                       </div>
                     ))}
                     <ButtonPurple
