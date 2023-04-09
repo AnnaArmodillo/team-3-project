@@ -22,8 +22,9 @@ class TeamProjectApi {
     });
 
     if (res.status === 409) {
-      throw new Error('Пользователь с указанным email уже существует');
+      return res.json();
     }
+
     if (res.status === 400) {
       throw new Error('Не пройдена валидация');
     }

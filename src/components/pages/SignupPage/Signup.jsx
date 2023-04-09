@@ -15,6 +15,7 @@ import { ButtonGrey } from '../../atoms/ButtonGrey/ButtonGrey';
 const initialValues = {
   email: '',
   name: '',
+  login: '',
   password: '',
 };
 
@@ -27,7 +28,14 @@ export function Signup() {
     isError,
     error,
   } = useMutation({
-    mutationFn: (values) => teamProjectApi.addNewUser(values).then(),
+    mutationFn: (values) => teamProjectApi.addNewUser(values).then((res) => {
+      if (res === 'Пользователь с таким логином уже существует') {
+        throw new Error('Пользователь с таким логином уже существует');
+      }
+      if (res === 'Пользователь с таким email уже существует') {
+        throw new Error('Пользователь с таким email уже существует');
+      }
+    }),
   });
 
   if (isError) {
@@ -119,6 +127,24 @@ export function Signup() {
               <ErrorMessage
                 component="p"
                 name="name"
+                className={styles.Error}
+              />
+            </div>
+
+            <div className={styles.Form_Group}>
+              <p className={styles.Form_Label}>
+                Логин
+                <RequiredFieldTooltip />
+              </p>
+              <Field
+                name="login"
+                type="text"
+                placeholder="Введите ваш логин"
+                className={styles.Form_Field}
+              />
+              <ErrorMessage
+                component="p"
+                name="login"
                 className={styles.Error}
               />
             </div>

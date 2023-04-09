@@ -38,8 +38,11 @@ function getUserByID(req, res) {
 async function addNewUser(req, res) {
   try {
     const { body } = req;
-    if (DB.users.find((user) => user.email === body.email)) {
+    console.log(body)
+    if (DB.users.find((user) => user.email.toLowerCase() === body.email.toLowerCase())) {
       return res.status(409).json('Пользователь с таким email уже существует');
+    } else if (DB.users.find((user) => user.login.toLowerCase() === body.login.toLowerCase())) {
+      return res.status(409).json('Пользователь с таким логином уже существует');
     }
     let userData = {};
     try {
@@ -68,6 +71,7 @@ async function addNewUser(req, res) {
     const newUser = {
       name: userData.name,
       email: userData.email.toLowerCase(),
+      login: userData.login,
       id: crypto.randomUUID(),
       password: hashPassword,
       invitations: [],
@@ -78,6 +82,7 @@ async function addNewUser(req, res) {
     updateDB(newContent);
     return res.status(201).json(noPasswordUser);
   } catch (error) {
+    console.log(error)
     return res.sendStatus(500);
   }
 }

@@ -8,6 +8,10 @@ export const usersValidationSchema = Yup.object().shape({
   email: Yup.string()
     .email('Некорректный email')
     .required('Email является обязательным полем'),
+    login: Yup.string()
+    .min(2, 'Логин должен состоять минимум из двух символов')
+    .max(20, 'Логин должен содержать не более 20 символов')
+    .required('Логин является обязательным полем'),
   password: Yup.string()
     .min(6, 'Пароль должен содержать не менее 6 символов')
     .max(20, 'Пароль должен содержать не более 20 символов')
