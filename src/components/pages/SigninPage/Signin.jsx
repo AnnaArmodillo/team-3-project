@@ -17,7 +17,7 @@ import { ButtonGrey } from '../../atoms/ButtonGrey/ButtonGrey';
 export function Signin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { state: locationState } = useLocation();
+  const { state: locationState, pathname } = useLocation();
 
   const {
     mutateAsync,
@@ -38,7 +38,13 @@ export function Signin() {
           <p>
             {error.message}
           </p>
-          <Link to="/signup" className={styles.linkError}>Зарегистрироваться</Link>
+          <Link
+            to="/signup"
+            className={styles.linkError}
+            state={{ from: pathname }}
+          >
+            Зарегистрироваться
+          </Link>
         </div>
       </MainWrap>
     );
@@ -69,7 +75,13 @@ export function Signin() {
         <p className={styles.notRegistered}>
           Еще нет профиля?
           {' '}
-          <Link to="/signup" className={styles.link}>Зарегистрироваться</Link>
+          <Link
+            to="/signup"
+            className={styles.link}
+            state={{ from: pathname }}
+          >
+            Зарегистрироваться
+          </Link>
         </p>
         <Formik
           initialValues={{ email: '', password: '' }}

@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Slide, toast } from 'react-toastify';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getAccessTokenSelector } from '../../../redux/slices/userSlice';
@@ -9,6 +9,7 @@ import { getSurveyURL } from '../../../utils/helper';
 import styles from './invitationItem.module.css';
 
 export function InvitationItem({ invitation }) {
+  const { pathname } = useLocation();
   const accessToken = useSelector(getAccessTokenSelector);
   const client = useQueryClient();
 
@@ -33,7 +34,7 @@ export function InvitationItem({ invitation }) {
   };
 
   return (
-    <Link to={getSurveyURL(invitation.survey)}>
+    <Link to={getSurveyURL(invitation.survey)} state={{ from: pathname }}>
       <div className={styles.surveyItem}>
         <div className={styles.containerSubinfo}>
           <span>

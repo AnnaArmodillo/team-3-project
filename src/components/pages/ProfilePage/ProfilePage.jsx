@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import { getUserSelector } from '../../../redux/slices/userSlice';
 import { getQueryKeyUser } from '../../../utils/constants';
@@ -15,6 +15,7 @@ import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './profile.module.css';
 
 function ProfileInner({ data }) {
+  const { pathname } = useLocation();
   const {
     name, email, invitations,
   } = data;
@@ -37,13 +38,13 @@ function ProfileInner({ data }) {
           <LinkToCreatingForm />
         </div>
         <div className={styles.button}>
-          <Link to="/mysurveys">
+          <Link to="/mysurveys" state={{ from: pathname }}>
             <ButtonPurple type="button">
               Мои опросы
             </ButtonPurple>
           </Link>
           {' '}
-          <Link to="/visited">
+          <Link to="/visited" state={{ from: pathname }}>
             <ButtonPurple type="button">
               Посещенные опросы
             </ButtonPurple>

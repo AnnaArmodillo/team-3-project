@@ -25,23 +25,11 @@ import { InvitationPageLink } from '../../organisms/InvitationPageLink/Invitatio
 import { OptionCard } from '../../organisms/OptionCard/OptionCard';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './singleChoiceSurvey.module.css';
+import { Title } from '../../molecules/Title/Title';
 
 function SingleChoiceSurveyPageInner({ scSurvey, surveyId, accessToken }) {
   const { id: userId } = useSelector(getUserSelector);
   const queryClient = useQueryClient();
-  if (!scSurvey) {
-    return (
-      <MainWrap>
-        <div className={styles.multipleChoiceSurveyPage}>
-          <div className={styles.message}>
-            <p>Данные опроса не получены</p>
-          </div>
-        </div>
-      </MainWrap>
-    );
-  }
-
-  const votesTotal = scSurvey.done.length;
 
   const {
     mutateAsync: sendSurveyResponse, isError, error, isLoading,
@@ -64,6 +52,19 @@ function SingleChoiceSurveyPageInner({ scSurvey, surveyId, accessToken }) {
       </MainWrap>
     );
   }
+  if (!scSurvey) {
+    return (
+      <MainWrap>
+        <div className={styles.multipleChoiceSurveyPage}>
+          <div className={styles.message}>
+            <p>Данные опроса не получены</p>
+          </div>
+        </div>
+      </MainWrap>
+    );
+  }
+
+  const votesTotal = scSurvey.done.length;
 
   function isAvailable() {
     return !(scSurvey.done.includes(userId));
@@ -80,7 +81,7 @@ function SingleChoiceSurveyPageInner({ scSurvey, surveyId, accessToken }) {
   return (
     <MainWrap>
       <div className={styles.singleChoiceSurveyPage}>
-        <h1>{scSurvey.title}</h1>
+        <Title title={scSurvey.title} />
         {!isAvailable() ? (
           <ThankYouForVotingMessage />
         ) : (

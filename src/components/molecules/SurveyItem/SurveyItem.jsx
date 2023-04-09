@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getAccessTokenSelector, getUserSelector } from '../../../redux/slices/userSlice';
 import { getSurveyURL } from '../../../utils/helper';
@@ -11,6 +11,7 @@ import { teamProjectApi } from '../../../api/TeamProjectApi';
 export function SurveyItem({ survey, isCatalog }) {
   const user = useSelector(getUserSelector);
   const accessToken = useSelector(getAccessTokenSelector);
+  const { pathname } = useLocation();
 
   const isUserDone = survey.done.find((userId) => userId === user.id);
   const isUserAuthor = survey.author === user.id;
@@ -56,7 +57,7 @@ export function SurveyItem({ survey, isCatalog }) {
   };
 
   return (
-    <Link to={getSurveyURL(survey.surveyId)}>
+    <Link to={getSurveyURL(survey.surveyId)} state={{ from: pathname }}>
       <div className={styles.surveyItem}>
         <div className={styles.containerTop}>
           <h5>{survey.title}</h5>
