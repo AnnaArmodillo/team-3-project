@@ -2,7 +2,7 @@
   min-height: calc(100vh - 280px);
   display: flex;
   flex-direction: column;
-  max-width: 100%;
+  width: 80%;
   align-items: center;
   gap: 1rem;
 }

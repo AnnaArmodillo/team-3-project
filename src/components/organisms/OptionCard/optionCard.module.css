@@ -94,10 +94,6 @@ input[type='radio']:hover:not([disabled])+label {
 .checkbox+label {
   cursor: pointer;
 }
-.checkbox:checked+label {
-  background: linear-gradient(120deg, rgb(255, 175, 56) -100%, white 30%, rgb(223, 217, 255) 180%);
-    border: 2px solid var(--checked-green-color);
-  }
   
   .checkbox+label {
     transition: all 0.5s ease;
@@ -112,3 +108,13 @@ input[type='radio']:hover:not([disabled])+label {
   cursor: initial;
   border: 1px dotted var(--card-grey-color);
 }
+
+.checkbox+label.checked {
+  background: linear-gradient(120deg, rgb(255, 175, 56) -100%, white 30%, rgb(223, 217, 255) 180%);
+    border: 2px solid var(--checked-green-color);
+  }
+
+  .checkbox:checked+label {
+    background: linear-gradient(120deg, rgb(255, 175, 56) -100%, white 30%, rgb(223, 217, 255) 180%);
+      border: 2px solid var(--checked-green-color);
+    }
