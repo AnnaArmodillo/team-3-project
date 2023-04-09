@@ -17,7 +17,7 @@ import styles from './profile.module.css';
 function ProfileInner({ data }) {
   const { pathname } = useLocation();
   const {
-    name, email, invitations,
+    name, email, login, invitations,
   } = data;
 
   return (
@@ -33,6 +33,11 @@ function ProfileInner({ data }) {
           <b>Email:</b>
           {' '}
           {email}
+        </p>
+        <p>
+          <b>Логин:</b>
+          {' '}
+          {login}
         </p>
         <div className={styles.button}>
           <LinkToCreatingForm />
