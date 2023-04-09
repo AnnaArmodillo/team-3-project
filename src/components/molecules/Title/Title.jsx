@@ -1,11 +1,15 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from '../../atoms/ArrowLeft/ArrowLeft';
 import styles from './title.module.css';
 
 export function Title({ title }) {
   const navigate = useNavigate();
+  const { state: locationState } = useLocation();
   const clickBackHandler = () => {
-    navigate(-1);
+    if (locationState?.from) {
+      return navigate(locationState.from);
+    }
+    return navigate(-1 ?? '/');
   };
 
   return (
