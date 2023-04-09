@@ -24,6 +24,7 @@ import { SurveyTotalVotes } from '../../atoms/SurveyTotalVotes/SurveyTotalVotes'
 import { setSurvey } from '../../../redux/slices/surveySlice';
 import { InvitationPageLink } from '../../organisms/InvitationPageLink/InvitationPageLink';
 import { withScrollToTop } from '../../HOCs/withScrollToTop';
+import { Title } from '../../molecules/Title/Title';
 
 function UniqueChoiceSurveyPageInner() {
   const { surveyId } = useParams();
@@ -108,7 +109,7 @@ function UniqueChoiceSurveyPageInner() {
   return (
     <MainWrap>
       <div className={styles.surveyPage}>
-        <h1>{survey.title}</h1>
+        <Title title={survey.title} />
         {!isAvailable() ? (
           <ThankYouForVotingMessage />
         ) : (

@@ -27,23 +27,11 @@ import { InvitationPageLink } from '../../organisms/InvitationPageLink/Invitatio
 import { OptionCard } from '../../organisms/OptionCard/OptionCard';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './multipleChoiceSurvey.module.css';
+import { Title } from '../../molecules/Title/Title';
 
 function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
   const { id: userId } = useSelector(getUserSelector);
   const queryClient = useQueryClient();
-  if (!mcSurvey) {
-    return (
-      <MainWrap>
-        <div className={styles.multipleChoiceSurveyPage}>
-          <div className={styles.message}>
-            <p>Данные опроса не получены</p>
-          </div>
-        </div>
-      </MainWrap>
-    );
-  }
-
-  const votesTotal = mcSurvey.done.length;
 
   const {
     mutateAsync: sendSurveyResponse, isError, error, isLoading,
@@ -68,6 +56,18 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
       </MainWrap>
     );
   }
+  if (!mcSurvey) {
+    return (
+      <MainWrap>
+        <div className={styles.multipleChoiceSurveyPage}>
+          <div className={styles.message}>
+            <p>Данные опроса не получены</p>
+          </div>
+        </div>
+      </MainWrap>
+    );
+  }
+  const votesTotal = mcSurvey.done.length;
   function isAvailable() {
     return !(mcSurvey.done.includes(userId));
   }
@@ -82,7 +82,7 @@ function MultipleChoiceSurveyPageInner({ mcSurvey, surveyId, accessToken }) {
   return (
     <MainWrap>
       <div className={styles.multipleChoiceSurveyPage}>
-        <h1>{mcSurvey.title}</h1>
+        <Title title={mcSurvey.title} />
         {!isAvailable()
           ? (
             <ThankYouForVotingMessage />
