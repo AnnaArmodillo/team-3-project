@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQueries } from '@tanstack/react-query';
 import {
   Field, FieldArray, Form, Formik,
 } from 'formik';
@@ -57,15 +57,20 @@ export function InvitationPage() {
       ...searchArray.slice(0, index),
       ...searchArray.slice(index + 1),
     ]);
-    setErrors([...errorsArray.slice(0, index),
-      ...errorsArray.slice(index + 1)]);
+    setErrors([
+      ...errorsArray.slice(0, index),
+      ...errorsArray.slice(index + 1),
+    ]);
   }
-  function isQueryEnabled() {
+  function isQueryEnabled(userEmail) {
     if (!token) {
       return false;
     }
+    if (userEmail === email) {
+      return false;
+    }
     const regExp = '[a-z0-9]+@[a-z]+\\.[a-z]{2,3}';
-    const userData = search.match(regExp);
+    const userData = userEmail.match(regExp);
     if (userData) {
       return true;
     }
@@ -77,16 +82,20 @@ export function InvitationPage() {
     setSearchValue([...searchArray]);
     setIsModalOpen(false);
   }
-  const {
-    data: resEmail,
-    isFetching,
-    // eslint-disable-next-line no-unused-vars
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: getQueryKey(search),
-    queryFn: () => teamProjectApi.getUserByEmail(search, token),
-    enabled: isQueryEnabled(),
+  const resEmail = useQueries({
+    queries: searchValue.map((userEmail, index) => ({
+      queryKey: getQueryKey(userEmail),
+      queryFn: () => teamProjectApi.getUserByEmail(userEmail, token)
+        .then((res) => res)
+        .catch((err) => {
+          const errorsArray = [...errors];
+          errorsArray[index] = `Пользователь с email ${searchValue[index]}
+                 не найден. Вы можете пригласить его пройти опрос по прямой ссылке`;
+          setErrors([...errorsArray]);
+          return err;
+        }),
+      enabled: isQueryEnabled(userEmail),
+    })),
   });
   const {
     mutateAsync,
@@ -106,28 +115,16 @@ export function InvitationPage() {
   }
   const debouncedSearchValue = useDebounce(
     searchValue[currentIndex] || '',
-    1500,
+    1000,
   );
   useEffect(() => {
     setSearch(debouncedSearchValue);
   }, [debouncedSearchValue]);
   useEffect(() => {
-    if (isError) {
-      const errorsArray = [...errors];
-      errorsArray[currentIndex] = `Пользователь с email ${search} 
-      не найден. Вы можете пригласить его пройти опрос по прямой ссылке`;
-      setErrors([...errorsArray]);
-    } else {
-      const errorsArray = [...errors];
-      errorsArray[currentIndex] = '';
-      setErrors([...errorsArray]);
-    }
-  }, [isError, search]);
-  useEffect(() => {
-    if (resEmail === email) {
+    if (search === email) {
       setIsModalOpen(true);
     }
-  }, [resEmail]);
+  }, [search]);
   if (isLoadingInvite) {
     return (
       <MainWrap>
@@ -194,7 +191,9 @@ export function InvitationPage() {
             valuesPrepareHandler(values);
           }}
         >
-          {({ values, isValid, setFieldValue }) => (
+          {({
+            values, isValid, dirty, setFieldValue,
+          }) => (
             <Form className={styles.formWrapper}>
               <FieldArray name="users">
                 {({ push, remove }) => (
@@ -229,35 +228,33 @@ export function InvitationPage() {
                           </div>
                         </div>
                         {index > 0 && (
-                          <div className={styles.buttonDelete}>
-                            <ButtonGrey
-                              type="button"
-                              onClick={() => {
-                                deleteErrorHandler(index);
-                                remove(index);
-                              }}
-                            >
-                              Удалить
-                            </ButtonGrey>
-                          </div>
+                        <div className={styles.buttonDelete}>
+                          <ButtonGrey
+                            type="button"
+                            onClick={() => {
+                              deleteErrorHandler(index);
+                              remove(index);
+                            }}
+                          >
+                            Удалить
+                          </ButtonGrey>
+                        </div>
                         )}
                         <div
                           className={styles.validationMessage}
                           name={`users.${index}.email`}
                         >
                           {errors[index] && (
-                            <div className={styles.validationMessage}>
-                              {errors[index]}
-                              <CopyLinkButton surveyId={surveyId} />
-                            </div>
+                          <div className={styles.validationMessage}>
+                            {errors[index]}
+                            <CopyLinkButton surveyId={surveyId} />
+                          </div>
                           )}
                         </div>
                       </div>
                     ))}
-                    {isFetching && <Loader />}
                     <ButtonPurple
                       type="button"
-                      // disabled={isFetching || isLoading}
                       onClick={() => push(usersGroup)}
                     >
                       Добавить пользователя
@@ -265,9 +262,10 @@ export function InvitationPage() {
                   </div>
                 )}
               </FieldArray>
+              {(resEmail.some((res) => res.status === 'loading')) && <Loader />}
               <ButtonPurple
                 type="submit"
-                disabled={!isValid}
+                disabled={!isValid || !dirty || (resEmail.some((res) => res.status === 'loading'))}
               >
                 Отправить приглашения
               </ButtonPurple>
