@@ -17,10 +17,18 @@ const userSlice = createSlice({
     signOut() {
       return { ...initState.user };
     },
+    updateUser(state, action) {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
   },
 });
 
-export const { setUser, refreshTokens, signOut } = userSlice.actions;
+export const {
+  setUser, refreshTokens, signOut, updateUser,
+} = userSlice.actions;
 
 export const getUserSelector = (state) => state.user;
 export const getAccessTokenSelector = (state) => state.user.accessToken;

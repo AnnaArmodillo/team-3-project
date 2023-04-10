@@ -1,0 +1,38 @@
+.Form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    min-width: 300px;
+    max-width: 880px;
+  }
+  
+  .Form_Group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: left;
+    gap: 0.2rem;
+    width: 100%
+  }
+  
+  .Form_Field {
+    width: 100%;
+    font-size: 1rem;
+    color: #333;
+    height: 2rem;
+    padding: 0 20px;
+    border-radius: 15px;
+    border: 1px solid #eee;
+  }
+  
+  .Error {
+    color: brown;
+  }
+
+  .btnWr {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }

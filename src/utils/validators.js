@@ -70,3 +70,10 @@ export const InviteUsersValidationScheme = Yup.object({
     }),
   ),
 });
+
+export const editUserNameValidationSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, 'Имя должно состоять минимум из двух символов')
+    .max(20, 'Имя должно содержать не более 20 символов')
+    .required('Имя является обязательным полем'),
+});

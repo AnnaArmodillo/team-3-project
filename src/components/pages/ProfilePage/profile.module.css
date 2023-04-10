@@ -10,6 +10,46 @@
   margin-bottom: 40px;
 }
 
+.card {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 40px;
+}
+
+.photo {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  margin: 0 auto;
+}
+
+.infoWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.nameWrapper {
+  display: flex;
+}
+
+.infoWrapper div {
+  font-size: 20px;
+}
+
+.nameWrapper button {
+  margin: 0 20px;
+  padding: 8px;
+  font-size: 12px;
+  line-height: 12px;
+  min-height: unset;
+  border-radius: 8px;
+}
+
 .button {
   margin-top: 40px;
 }
@@ -19,6 +59,12 @@
   grid-template-columns: repeat(2, calc(50% - 15px));;
   gap: 30px;
   margin-top: 30px;
+}
+
+.buttonsWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 @media (max-width: 730px) {
@@ -35,5 +81,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.buttonsWrapper {
+  flex-direction: column;
+}
+
+.card {
+  flex-direction: column;
 }
 }

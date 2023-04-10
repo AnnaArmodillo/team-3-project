@@ -13,32 +13,49 @@ import { LinkToCreatingForm } from '../../molecules/LinkToCreatingForm/LinkToCre
 import { SignOutButton } from '../../molecules/SignOutButton/SignOutButton';
 import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './profile.module.css';
+import { EditUserNameButton } from '../../molecules/EditUserNameButton/EditUserNameButton';
+import avatar from '../../../images/avatar.png';
 
 function ProfileInner({ data }) {
   const { pathname } = useLocation();
   const {
     name, email, login, invitations,
   } = data;
-
+  const photo = avatar;
   return (
     <MainWrap>
       <div className={styles.profilePage}>
         <h1>Пользователь</h1>
-        <p>
-          <b>Имя:</b>
-          {' '}
-          {name}
-        </p>
-        <p>
-          <b>Email:</b>
-          {' '}
-          {email}
-        </p>
-        <p>
-          <b>Логин:</b>
-          {' '}
-          {login}
-        </p>
+        <div className={styles.card}>
+          <div className={styles.photo}>
+            <img
+              src={photo}
+              alt="фото профиля"
+            />
+          </div>
+          <div className={styles.infoWrapper}>
+            <div className={styles.nameWrapper}>
+              <div>
+                <b>Имя:</b>
+                {' '}
+                {name}
+              </div>
+              <EditUserNameButton />
+            </div>
+            <div>
+              <b>Email:</b>
+              {' '}
+              {email}
+            </div>
+            <div>
+              <b>Логин:</b>
+              {' '}
+              {login}
+            </div>
+          </div>
+
+        </div>
+
         <div className={styles.button}>
           <LinkToCreatingForm />
         </div>
@@ -65,11 +82,16 @@ function ProfileInner({ data }) {
             ))}
           </div>
         )}
-        <div className={styles.button}>
-          <SignOutButton />
-        </div>
-        <div className={styles.button}>
-          <DeleteProfileButton />
+        <div className={styles.buttonsWrapper}>
+          <div className={styles.button}>
+            <SignOutButton />
+          </div>
+          {/* <div className={styles.button}>
+            <EditProfileButton />
+          </div> */}
+          <div className={styles.button}>
+            <DeleteProfileButton />
+          </div>
         </div>
       </div>
     </MainWrap>

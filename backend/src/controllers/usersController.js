@@ -38,7 +38,6 @@ function getUserByID(req, res) {
 async function addNewUser(req, res) {
   try {
     const { body } = req;
-    console.log(body)
     if (DB.users.find((user) => user.email.toLowerCase() === body.email.toLowerCase())) {
       return res.status(409).json('Пользователь с таким email уже существует');
     } else if (DB.users.find((user) => user.login.toLowerCase() === body.login.toLowerCase())) {
@@ -82,7 +81,6 @@ async function addNewUser(req, res) {
     updateDB(newContent);
     return res.status(201).json(noPasswordUser);
   } catch (error) {
-    console.log(error)
     return res.sendStatus(500);
   }
 }
@@ -119,10 +117,36 @@ function deleteUserByID(req, res) {
     return res.sendStatus(500);
   }
 }
+function editUserByID(req, res) {
+  try {
+    const userIDFromReq = req.params.userID;
+    const token = req.headers.authorization.split(' ')[1];
+    const userId = getUserIdFromToken(token);
+    const { body } = req;
+    if(userId === userIDFromReq) {
+      const currentUser = DB.users.find((user) => user.id === userId);
+      if (body.name) {
+        currentUser.name = body.name;
+      }
+      if(body.photo) {
+        currentUser.photo = body.photo;
+      }
+      const newContent = `export const DB = ${JSON.stringify(DB)}`;
+      updateDB(newContent);
+      return res.sendStatus(202);
+    }
+    else {
+      return res.status(403).json('Невозможно отредактировать чужой аккаунт');
+    }
+  } catch (error) {
+    return res.sendStatus(500);
+  }
+}
 export const usersController = {
   getAllUsers,
   getUserByID,
   addNewUser,
   searchUserByEmail,
   deleteUserByID,
+  editUserByID,
 };
