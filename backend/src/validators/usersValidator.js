@@ -22,3 +22,29 @@ export const usersValidationSchema = Yup.object().shape({
     )
     .required('Пароль является обязательным полем'),
 });
+
+export const userNameValidationSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, 'Имя должно состоять минимум из двух символов')
+    .max(20, 'Имя должно содержать не более 20 символов')
+    .required('Имя является обязательным полем'),
+});
+
+export const passwordValidationSchema = Yup.object().shape({
+  newPassword: Yup.string()
+    .min(6, 'Пароль должен содержать не менее 6 символов')
+    .max(20, 'Пароль должен содержать не более 20 символов')
+    .test(
+      'Пароль не должен содержать пробел',
+      { spaces: 'Пароль не должен содержать пробел' },
+      (value) => !/\s+/.test(value)
+    )
+    .required('Пароль является обязательным полем'),
+});
+
+export const userPhotoValidationSchema = Yup.object().shape({
+  photo: Yup.string()
+    .min(2, 'Имя должно состоять минимум из двух символов')
+    .max(20, 'Имя должно содержать не более 20 символов')
+    .required('Имя является обязательным полем'),
+});

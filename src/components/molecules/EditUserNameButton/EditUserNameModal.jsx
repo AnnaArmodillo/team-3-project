@@ -25,7 +25,7 @@ export function EditUserNameModal({
   const initialValues = {
     name,
   };
-  const { mutateAsync } = useMutation({
+  const { mutateAsync, isError, error } = useMutation({
     mutationFn: (values) => teamProjectApi.editUserById(id, accessToken, values),
   });
   const editUserNameHandler = async (values) => {
@@ -76,6 +76,7 @@ export function EditUserNameModal({
                 Отменить изменения
               </ButtonGrey>
             </div>
+            {isError && <div>{error.message}</div>}
           </Form>
         )}
       </Formik>

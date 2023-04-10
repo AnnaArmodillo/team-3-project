@@ -472,7 +472,7 @@ class TeamProjectApi {
     });
 
     if (res.status === 401) {
-      throw new Error('Необходимо авторизоваться');
+      throw new Error('Указан неверный пароль');
     }
     if (res.status >= 400 && res.status < 500) {
       throw new Error(`Произошла ошибка при редактировании пользователя. Status: ${res.status}`);
@@ -481,7 +481,7 @@ class TeamProjectApi {
       throw new Error(`Произошла ошибка при редактировании пользователя. 
         Попробуйте сделать запрос позже. Status: ${res.status}`);
     }
-    return res;
+    return res.json();
   }
 
   async deleteInvitation(values, token) {

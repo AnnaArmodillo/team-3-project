@@ -15,6 +15,7 @@ import { MainWrap } from '../../templates/MainWrap/MainWrap';
 import styles from './profile.module.css';
 import { EditUserNameButton } from '../../molecules/EditUserNameButton/EditUserNameButton';
 import avatar from '../../../images/avatar.png';
+import { ChangePasswordButton } from '../../molecules/ChangePasswordButton/ChangePasswordButton';
 
 function ProfileInner({ data }) {
   const { pathname } = useLocation();
@@ -86,9 +87,9 @@ function ProfileInner({ data }) {
           <div className={styles.button}>
             <SignOutButton />
           </div>
-          {/* <div className={styles.button}>
-            <EditProfileButton />
-          </div> */}
+          <div className={styles.button}>
+            <ChangePasswordButton />
+          </div>
           <div className={styles.button}>
             <DeleteProfileButton />
           </div>
