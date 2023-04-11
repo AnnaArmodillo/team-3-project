@@ -4,6 +4,7 @@ import {
   ErrorMessage, Field, Form, Formik,
 } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+import { Slide, toast } from 'react-toastify';
 import { teamProjectApi } from '../../../api/TeamProjectApi';
 import {
   getAccessTokenSelector, getUserSelector, updateUser,
@@ -25,16 +26,48 @@ export function EditUserNameModal({
   const initialValues = {
     name,
   };
-  const { mutateAsync, isError, error } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: (values) => teamProjectApi.editUserById(id, accessToken, values),
+    onMutate: async (values) => {
+      await queryClient.cancelQueries({ queryKey: getQueryKeyUser(id) });
+      const previousValues = queryClient.getQueryData(getQueryKeyUser(id));
+      queryClient.setQueryData(getQueryKeyUser(id), values);
+      closeHandler();
+      return { previousValues, values };
+    },
+    onError: (context) => {
+      queryClient.setQueryData(getQueryKeyUser(id), context.previousValues);
+      toast.error('Не удалось изменить имя пользователя', {
+        autoClose: 2000,
+        transition: Slide,
+        className: `${styles.toast}`,
+        bodyClassName: `${styles.toastBody}`,
+        hideProgressBar: true,
+        theme: 'colored',
+        closeButton: false,
+        rtl: false,
+      });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(getQueryKeyUser(id));
+    },
   });
   const editUserNameHandler = async (values) => {
     await mutateAsync(values);
-    closeHandler();
     queryClient.invalidateQueries({
       queryKey: getQueryKeyUser(id),
     });
     dispatch(updateUser(values));
+    toast.success('Имя пользователя изменено', {
+      autoClose: 2000,
+      transition: Slide,
+      className: `${styles.toast}`,
+      bodyClassName: `${styles.toastBody}`,
+      hideProgressBar: true,
+      theme: 'colored',
+      closeButton: false,
+      rtl: false,
+    });
   };
   return (
     <Modal isOpen={isOpen} closeHandler={closeHandler}>
@@ -76,7 +109,6 @@ export function EditUserNameModal({
                 Отменить изменения
               </ButtonGrey>
             </div>
-            {isError && <div>{error.message}</div>}
           </Form>
         )}
       </Formik>

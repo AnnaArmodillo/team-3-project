@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   ErrorMessage, Field, Form, Formik,
 } from 'formik';
@@ -15,11 +15,13 @@ import { ButtonPurple } from '../../atoms/ButtonPurple/ButtonPurple';
 import styles from './changePasswordModal.module.css';
 import { changePasswordValidationSchema } from '../../../utils/validators';
 import { RequiredFieldTooltip } from '../RequiredFieldTooltip/RequiredFieldTooltip';
+import { getQueryKeyUser } from '../../../utils/constants';
 
 export function ChangePasswordModal({
   closeHandler, isOpen,
 }) {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const accessToken = useSelector(getAccessTokenSelector);
   const { id } = useSelector(getUserSelector);
   const initialValues = {
@@ -27,13 +29,35 @@ export function ChangePasswordModal({
     password: '',
   };
   const {
-    mutateAsync, isError, error,
+    mutateAsync,
   } = useMutation({
     mutationFn: (values) => teamProjectApi.editUserById(id, accessToken, values),
+    onMutate: async (values) => {
+      await queryClient.cancelQueries({ queryKey: getQueryKeyUser(id) });
+      const previousValues = queryClient.getQueryData(getQueryKeyUser(id));
+      queryClient.setQueryData(getQueryKeyUser(id), values);
+      closeHandler();
+      return { previousValues, values };
+    },
+    onError: (context) => {
+      queryClient.setQueryData(getQueryKeyUser(id), context.previousValues);
+      toast.error('Не удалось изменить пароль', {
+        autoClose: 2000,
+        transition: Slide,
+        className: `${styles.toast}`,
+        bodyClassName: `${styles.toastBody}`,
+        hideProgressBar: true,
+        theme: 'colored',
+        closeButton: false,
+        rtl: false,
+      });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(getQueryKeyUser(id));
+    },
   });
   const changePasswordHandler = async (values) => {
     const data = await mutateAsync(values);
-    closeHandler();
     dispatch(setUser(data));
     toast.success('Пароль изменен', {
       autoClose: 2000,
@@ -105,7 +129,6 @@ export function ChangePasswordModal({
                 Отменить изменения
               </ButtonGrey>
             </div>
-            {isError && <div>{error.message}</div>}
           </Form>
         )}
       </Formik>

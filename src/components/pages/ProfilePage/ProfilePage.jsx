@@ -23,7 +23,6 @@ import { ChangePhotoButton } from '../../molecules/ChangePhotoButton/ChangePhoto
 import { Loader } from '../../Loader/Loader';
 
 function ProfileInner({ data }) {
-  console.log('render');
   const { pathname } = useLocation();
   const [url, setUrl] = useState('');
   const queryClient = useQueryClient();
@@ -32,7 +31,7 @@ function ProfileInner({ data }) {
     name, email, login, invitations, photo,
   } = data;
   function checkIsImageUploaded() {
-    if (photo.startsWith('data') || photo.startsWith('http') || !photo) {
+    if (!photo || photo.startsWith('data') || photo.startsWith('http')) {
       return false;
     }
     return true;
@@ -61,12 +60,16 @@ function ProfileInner({ data }) {
         <div className={styles.card}>
           <div className={styles.photoWrapper}>
             <div className={styles.photo}>
-              {isLoading && checkIsImageUploaded() && <Loader />}
+              {isLoading && checkIsImageUploaded()
+              && <div className={styles.loader}><Loader /></div>}
               {isError && <div className={styles.message}>{error.message}</div>}
-              <img
-                src={url || photo || avatar}
-                alt="фото профиля"
-              />
+              {(!checkIsImageUploaded()
+              || (checkIsImageUploaded && (!isLoading && !isError))) && (
+                <img
+                  src={url || photo || avatar}
+                  alt="фото профиля"
+                />
+              )}
             </div>
             <ChangePhotoButton />
           </div>
@@ -109,7 +112,7 @@ function ProfileInner({ data }) {
             <ButtonPurple type="button">Посещенные опросы</ButtonPurple>
           </Link>
         </div>
-        {!!invitations.length && (
+        {invitations && !!invitations.length && (
           <div className={styles.listSurveys}>
             {invitations.map((invitation) => (
               <InvitationItem
