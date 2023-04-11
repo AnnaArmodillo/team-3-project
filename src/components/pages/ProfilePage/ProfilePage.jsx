@@ -94,10 +94,8 @@ function ProfileInner({ data }) {
             </div>
           </div>
         </div>
-        <div className={styles.button}>
+        <div className={styles.buttonsWrapper}>
           <LinkToCreatingForm />
-        </div>
-        <div className={styles.button}>
           <Link
             to="/mysurveys"
             state={{ from: pathname }}
