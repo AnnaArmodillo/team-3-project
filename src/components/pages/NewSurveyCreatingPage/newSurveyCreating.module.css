@@ -137,7 +137,6 @@ input[type='checkbox'] + label {
   right: 0;
   color: var(--text-purple-color);
   border-radius: 0;
-  width: fit-content;
   height: auto;
   min-height: unset;
   padding: 4px;

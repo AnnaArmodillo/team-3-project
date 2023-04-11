@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import * as dotenv from 'dotenv';
-import { passwordValidationSchema, userNameValidationSchema, userPhotoValidationSchema, usersValidationSchema } from '../validators/usersValidator.js';
+import { passwordValidationSchema, userNameValidationSchema, usersValidationSchema } from '../validators/usersValidator.js';
 import { DB } from '../DB/db.js';
 import { createTokens, getUserIdFromToken, updateDB } from '../helper.js';
 
@@ -81,6 +81,7 @@ async function addNewUser(req, res) {
       name: userData.name,
       email: userData.email.toLowerCase(),
       login: userData.login,
+      photo: '',
       id: crypto.randomUUID(),
       password: hashPassword,
       invitations: [],
@@ -141,8 +142,7 @@ async function editUserByID(req, res) {
         currentUser.name = userData.name;
       }
       if (body.photo) {
-        const userData = await userPhotoValidationSchema.validate(body);
-        currentUser.photo = userData.photo;
+        currentUser.photo = body.photo;
       }
       if (body.newPassword) {
         if (await bcrypt.compare(body.password, currentUser.password)) {

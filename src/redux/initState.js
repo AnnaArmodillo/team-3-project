@@ -5,6 +5,8 @@ export const initState = {
   user: {
     name: '',
     email: '',
+    login: '',
+    photo: '',
     id: '',
     accessToken: '',
     refreshToken: '',

@@ -20,15 +20,15 @@
   .Form_Field {
     width: 100%;
     font-size: 1rem;
-    color: #333;
+    color: var(--text-purple-color);
     height: 2rem;
     padding: 0 20px;
     border-radius: 15px;
-    border: 1px solid #eee;
+    border: 1px solid var(--bc-pale-gray);
   }
   
   .Error {
-    color: brown;
+    color: var(--danger-text-color);
   }
 
   .btnWr {

@@ -37,3 +37,6 @@ export function getQueryKeySurveysCatalog(search) {
 export function getQueryKeyVisitedSurveys() {
   return ['VisitedSurveysFetch'];
 }
+export function getQueryKeyPhoto() {
+  return ['photo'];
+}

@@ -41,10 +41,3 @@ export const passwordValidationSchema = Yup.object().shape({
     )
     .required('Пароль является обязательным полем'),
 });
-
-export const userPhotoValidationSchema = Yup.object().shape({
-  photo: Yup.string()
-    .min(2, 'Имя должно состоять минимум из двух символов')
-    .max(20, 'Имя должно содержать не более 20 символов')
-    .required('Имя является обязательным полем'),
-});
