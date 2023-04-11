@@ -1,0 +1,66 @@
+.field {
+  width: 100%;
+  font-size: 1rem;
+  color: var(--text-purple-color);
+  height: 2rem;
+  padding: 0 20px;
+  border-radius: 15px;
+  border: 1px solid var(-bc-pale-gray);
+  margin: 20px auto;
+}
+
+.hidden {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  line-height: 0;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.btnWr {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+input[type='file'],
+input[type='checkbox'] + label {
+  cursor: pointer;
+}
+
+.image {
+  width: fit-content;
+  height: auto;
+  max-height: 200px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px auto;
+  max-width: 50%;
+}
+
+.image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.messageImage {
+  text-align: center;
+}
+
+.buttonImageDelete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: var(--text-purple-color);
+  border-radius: 0;
+  height: auto;
+  min-height: unset;
+  padding: 4px;
+  background-color: var(--text-white-color);
+}

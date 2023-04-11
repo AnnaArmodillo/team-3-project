@@ -1,9 +1,9 @@
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import * as dotenv from 'dotenv';
-import { usersValidationSchema } from '../validators/usersValidator.js';
+import { passwordValidationSchema, userNameValidationSchema, usersValidationSchema } from '../validators/usersValidator.js';
 import { DB } from '../DB/db.js';
-import { getUserIdFromToken, updateDB } from '../helper.js';
+import { createTokens, getUserIdFromToken, updateDB } from '../helper.js';
 
 dotenv.config();
 
@@ -38,11 +38,20 @@ function getUserByID(req, res) {
 async function addNewUser(req, res) {
   try {
     const { body } = req;
-    console.log(body)
-    if (DB.users.find((user) => user.email.toLowerCase() === body.email.toLowerCase())) {
+    if (
+      DB.users.find(
+        (user) => user.email.toLowerCase() === body.email.toLowerCase()
+      )
+    ) {
       return res.status(409).json('Пользователь с таким email уже существует');
-    } else if (DB.users.find((user) => user.login.toLowerCase() === body.login.toLowerCase())) {
-      return res.status(409).json('Пользователь с таким логином уже существует');
+    } else if (
+      DB.users.find(
+        (user) => user.login.toLowerCase() === body.login.toLowerCase()
+      )
+    ) {
+      return res
+        .status(409)
+        .json('Пользователь с таким логином уже существует');
     }
     let userData = {};
     try {
@@ -72,6 +81,7 @@ async function addNewUser(req, res) {
       name: userData.name,
       email: userData.email.toLowerCase(),
       login: userData.login,
+      photo: '',
       id: crypto.randomUUID(),
       password: hashPassword,
       invitations: [],
@@ -82,7 +92,6 @@ async function addNewUser(req, res) {
     updateDB(newContent);
     return res.status(201).json(noPasswordUser);
   } catch (error) {
-    console.log(error)
     return res.sendStatus(500);
   }
 }
@@ -91,10 +100,12 @@ function searchUserByEmail(req, res) {
     const userEmail = req.params.userEmail.toLowerCase();
     const resultUser = DB.users.find((user) => user.email === userEmail);
     try {
-      const {email} = resultUser;
-    return res.json(email);
+      const { email } = resultUser;
+      return res.json(email);
     } catch (error) {
-      return res.status(404).json(`Пользователь с email ${userEmail} не найден`);
+      return res
+        .status(404)
+        .json(`Пользователь с email ${userEmail} не найден`);
     }
   } catch (error) {
     return res.sendStatus(500);
@@ -105,15 +116,53 @@ function deleteUserByID(req, res) {
     const userIDFromReq = req.params.userID;
     const token = req.headers.authorization.split(' ')[1];
     const userId = getUserIdFromToken(token);
-    if(userId === userIDFromReq) {
+    if (userId === userIDFromReq) {
       const filteredDB = DB.users.filter((user) => user.id !== userIDFromReq);
       DB.users = filteredDB;
       const newContent = `export const DB = ${JSON.stringify(DB)}`;
       updateDB(newContent);
       return res.sendStatus(202);
-    }
-    else {
+    } else {
       return res.status(403).json('Невозможно удалить чужой аккаунт');
+    }
+  } catch (error) {
+    return res.sendStatus(500);
+  }
+}
+async function editUserByID(req, res) {
+  try {
+    const userIDFromReq = req.params.userID;
+    const token = req.headers.authorization.split(' ')[1];
+    const userId = getUserIdFromToken(token);
+    const { body } = req;
+    if (userId === userIDFromReq) {
+      const currentUser = DB.users.find((user) => user.id === userId);
+      if (body.name) {
+        const userData = await userNameValidationSchema.validate(body);
+        currentUser.name = userData.name;
+      }
+      if (body.photo) {
+        currentUser.photo = body.photo;
+      }
+      if (body.newPassword) {
+        if (await bcrypt.compare(body.password, currentUser.password)) {
+          const userData = await passwordValidationSchema.validate(body);
+          const hashNewPassword = await bcrypt.hash(
+            userData.newPassword,
+            +process.env.BCRYPT_SALT_ROUND
+          );
+          currentUser.password = hashNewPassword;
+          createTokens(currentUser);
+        } else {
+          return res.status(401).json('Неверный email или пароль');
+        }
+      }
+      const newContent = `export const DB = ${JSON.stringify(DB)}`;
+      updateDB(newContent);
+      const { password, ...noPasswordUser } = currentUser;
+      return res.status(202).json(noPasswordUser);
+    } else {
+      return res.status(403).json('Невозможно отредактировать чужой аккаунт');
     }
   } catch (error) {
     return res.sendStatus(500);
@@ -125,4 +174,5 @@ export const usersController = {
   addNewUser,
   searchUserByEmail,
   deleteUserByID,
+  editUserByID,
 };

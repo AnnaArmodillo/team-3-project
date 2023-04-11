@@ -49,7 +49,7 @@ export function Modal({ closeHandler, isOpen = false, children }) {
     if (!isOpen) return null;
     return (
       <div
-        onClick={clickHandler}
+        onMouseDown={clickHandler}
         className={modalStyles.modalWr}
       >
         <ModalContent closeHandler={closeHandler}>{children}</ModalContent>

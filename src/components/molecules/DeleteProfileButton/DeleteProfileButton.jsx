@@ -19,7 +19,7 @@ export function DeleteProfileButton() {
         type="button"
         onClick={openDeleteModalHandler}
       >
-        Удалить пользователя
+        Удалить аккаунт
       </ButtonGrey>
       <DeleteProfileModal
         closeHandler={closeDeleteModalHandler}

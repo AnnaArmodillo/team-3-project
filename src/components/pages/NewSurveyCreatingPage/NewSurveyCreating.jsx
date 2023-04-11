@@ -91,7 +91,6 @@ export function NewSurveyCreating() {
     linksArray[currentIndex] = '';
     setImageContent([...imageArray]);
     setImageLinkValues([...linksArray]);
-    setImageLinkValues([...linksArray]);
   }
   useEffect(() => {
     if (isErrorUpload) {
@@ -104,7 +103,6 @@ export function NewSurveyCreating() {
     imageArray[index] = '';
     linksArray[index] = '';
     setImageContent([...imageArray]);
-    setImageLinkValues([...linksArray]);
     setImageLinkValues([...linksArray]);
   }
   function changeImageLinkHandler(event, index) {

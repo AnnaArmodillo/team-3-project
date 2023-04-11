@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import * as dotenv from 'dotenv';
 import { DB } from '../DB/db.js';
 import { jwtCreator } from '../jwtCreator.js';
-import { updateDB } from '../helper.js';
+import { createTokens, updateDB } from '../helper.js';
 
 dotenv.config();
 
@@ -11,16 +11,7 @@ async function signIn(req, res) {
   const currentUser = DB.users.find((user) => user.email === email.toLowerCase());
   if (currentUser) {
     if (await bcrypt.compare(password, currentUser.password)) {
-      const accessToken = jwtCreator.createAccessToken({
-        email: currentUser.email,
-        id: currentUser.id,
-      });
-      const refreshToken = jwtCreator.createRefreshToken({
-        email: currentUser.email,
-        id: currentUser.id,
-      });
-      currentUser.accessToken = accessToken;
-      currentUser.refreshToken = refreshToken;
+      createTokens(currentUser);
       const { password, ...noPasswordUser } = currentUser;
       const newContent = `export const DB = ${JSON.stringify(DB)}`;
       updateDB(newContent);
